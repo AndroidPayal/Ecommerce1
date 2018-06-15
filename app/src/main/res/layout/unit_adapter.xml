@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+
+        <TextView
+            android:id="@+id/unit_Sno"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3"
+            android:gravity="center"
+            android:layout_gravity="center_vertical"
+            android:textColor="#000"
+            android:text="0"/>
+        <View
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimaryDark"/>
+        <TextView
+            android:id="@+id/unit_name"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_gravity="center_vertical"
+            android:textColor="#000"
+            android:text="dummy unit name"/>
+        <TextView
+            android:id="@+id/unit_options"
+            android:layout_width="25dp"
+            android:layout_height="match_parent"
+            android:text="&#8942;"
+            android:textColor="#000000"
+            android:gravity="center"
+           />
+    </LinearLayout>

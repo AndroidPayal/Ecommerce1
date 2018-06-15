@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorPrimary"
+    tools:context="payal.cluebix.www.ecommerce.Cart">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="?attr/actionBarSize"
+    ></LinearLayout>
+<LinearLayout
+    android:id="@+id/linear_subtotal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginTop="?attr/actionBarSize"
+    android:background="@color/White"
+    android:visibility="gone"
+    >
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    android:paddingBottom="8dp">
+    <TextView
+        android:id="@+id/cart_subtotal1"
+        android:layout_width="wrap_content"
+        android:textSize="19dp"
+        android:layout_height="wrap_content"
+        android:text="Cart Subtotal (n items): "
+        android:textColor="@color/Black"/>
+    <TextView
+        android:id="@+id/cart_subtotal2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#de1a1a"
+        android:textStyle="bold|italic"
+        android:textSize="19dp"
+        android:text="Rs.n.00"/>
+</LinearLayout>
+<!--
+<TextView
+    android:id="@+id/t_checkout"
+    android:layout_width="match_parent"
+    android:layout_height="52dp"
+    android:layout_margin="7dp"
+    android:text="Proceed to Checkout"
+    android:gravity="center"
+    android:textColor="@color/Black"
+    android:textSize="18dp"
+    android:elevation="5dp"
+    android:background="@drawable/button_selector"/>-->
+</LinearLayout>
+  <!--  <View
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:background="#c0c0c0"/>-->
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_cart"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <TextView
+        android:id="@+id/t_checkout"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:text="Generate Quotation"
+        android:gravity="center"
+        android:textColor="@color/Black"
+        android:textSize="18dp"
+        android:elevation="5dp"
+        android:textAllCaps="true"
+        android:layout_marginBottom="60dp"
+        android:background="@drawable/gradient_background"/>
+
+</LinearLayout>

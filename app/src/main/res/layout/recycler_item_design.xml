@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="420dp"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="420dp"
+        app:cardCornerRadius="10dp"
+        android:layout_margin="7dp"
+
+        >
+
+        <LinearLayout
+            android:id="@+id/product_item"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="5.7"
+            android:orientation="vertical"
+            >
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4"
+                android:clipChildren="false"
+                >
+                <!--<ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="3"
+                android:clipChildren="false"
+                android:scaleType="fitXY"
+                android:src="@drawable/logo"
+                >
+            </ImageView>-->
+
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:id="@+id/new_tag"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:stateListAnimator="@null"
+                        android:background="@drawable/newimage"/>
+
+                    <LinearLayout
+                        android:id="@+id/ll_dots"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_gravity="bottom"
+                        android:gravity="center"
+                        android:orientation="horizontal"/>
+
+                    <android.support.v4.view.ViewPager
+                        android:id="@+id/vp_slider"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        />
+               <!--     <ProgressBar
+                        android:id="@+id/progress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:visibility="gone"/>-->
+                </FrameLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1.2"
+                android:orientation="vertical"
+                android:layout_marginHorizontal="5dp"
+                android:weightSum="3">
+
+
+                <TextView
+                    android:id="@+id/product_name"
+                    android:layout_marginLeft="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:baselineAligned="false"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="1dp"
+                    android:textSize="18sp"
+                    android:text="Cycle Product listed as a"
+                    android:textColor="#000" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:weightSum="10">
+
+                    <ImageView
+                        android:paddingTop="4dp"
+                        android:paddingBottom="4dp"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="left"
+                        android:layout_weight="1"
+                        android:src="@drawable/ic_indian_rupee"
+
+                        />
+
+                    <TextView
+                        android:id="@+id/text_prize"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="3.9"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="2dp"
+                        android:textSize="22sp"
+                        android:text="15000"
+                        android:textColor="#355C7D" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/add_to_cart"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Add to Cart"
+                    android:visibility="gone"
+                    android:textColor="@color/Black" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="0.8"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="2dp"
+                    android:weightSum="2">
+
+
+                    <TextView
+                        android:id="@+id/sample"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginHorizontal="3.5dp"
+
+                        android:layout_weight="1"
+                        android:background="#bf120c"
+                        android:gravity="center"
+                        android:text="Sample Available"
+                        android:textColor="#fff"
+                        android:textSize="14sp" />
+
+
+                    <TextView
+                        android:id="@+id/manufacture"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginHorizontal="3.5dp"
+
+                        android:layout_weight="1"
+
+                        android:gravity="center"
+                        android:text="In Stock : 12"
+
+                        android:textColor="#0eba0b"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/viewDetail"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:elevation="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginHorizontal="5dp"
+                android:layout_weight="0.5"
+                android:textColor="#fff"
+                android:background="@drawable/gradient_background"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:text="View Details"
+                android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Subtitle">
+
+
+            </TextView>
+
+
+
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>
+
+<!--
+
+
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="6dp"
+    android:background="@color/colorPrimary"
+    card_view:cardCornerRadius="5dp">
+
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        card_view:cardElevation="5dp"
+        card_view:cardBackgroundColor="@color/White"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp"
+        android:clickable="true"
+        card_view:cardCornerRadius="8dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        >
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="220dp"
+    android:orientation="vertical"
+    android:elevation="4dp">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/new_tag"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:stateListAnimator="@null"
+            android:background="@drawable/newimage"/>
+
+        <LinearLayout
+        android:id="@+id/ll_dots"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        android:gravity="center"
+        android:orientation="horizontal"/>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vp_slider"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"/>
+    </FrameLayout>
+</LinearLayout>
+
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="225dp"
+    android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/linear_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            >
+            <TextView
+                android:id="@+id/product_name"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="@color/Black"
+                android:text="Product Name"
+                android:gravity="center"
+                android:textStyle="italic"
+                android:textSize="17dp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            >
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="0.9"
+                android:layout_height="match_parent"
+                android:text="Rs."
+                android:gravity="right|top"
+                android:textStyle="bold|italic"
+                android:paddingRight="5dp"
+                android:textColor="#b40b0b"
+                android:textSize="20dp"/>
+            <TextView
+                android:id="@+id/text_prize"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textColor="#b40b0b"
+                android:text="prize"
+                android:gravity="left|top"
+                android:textStyle="bold|italic"
+                android:textSize="20dp"
+                />
+        </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/manufacture"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@color/colorAccent"
+            android:layout_margin="1dp"/>
+        <TextView
+            android:id="@+id/sample"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@color/colorAccent"
+            android:layout_margin="1dp"/>
+    </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+
+           >
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="0.1"
+                android:layout_height="match_parent"/>
+            <TextView
+                android:id="@+id/viewDetail"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="View Product"
+                android:background="@drawable/btn_opposite_selector"
+                android:textColor="@color/Black"
+                android:layout_gravity="center"
+               />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="0.1"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+           android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:orientation="horizontal"
+            >
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="0.1"
+                android:layout_height="match_parent"/>
+            <TextView
+                android:id="@+id/add_to_cart"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="Add to Cart"
+                android:background="@drawable/button_selector"
+                android:textColor="@color/Black" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="0.1"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+
+</LinearLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>
+&lt;!&ndash;
+
+
+-->
+

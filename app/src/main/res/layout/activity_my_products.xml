@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorPrimary"
+    android:id="@+id/main_container"
+    tools:context="payal.cluebix.www.ecommerce.My_products">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:orientation="vertical"
+        android:background="@color/colorPrimaryDark">
+
+
+        <TextView
+            android:id="@+id/user_name1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:text="user name"
+           android:layout_marginLeft="10dp"
+            android:textColor="@color/White"
+            android:textAllCaps="true"/>
+        <TextView
+            android:id="@+id/user_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"
+            android:text="Joining date: 12/10/18"
+            android:textColor="@color/White"
+            android:textAllCaps="true"/>
+     <!--   <Button
+            android:id="@+id/notApproved"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="not approved product"/>-->
+    </LinearLayout>
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <GridView
+        android:id="@+id/grid_view"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:numColumns="auto_fit"
+        android:columnWidth="130dp"
+        android:horizontalSpacing="10dp"
+        android:verticalSpacing="10dp"
+        android:gravity="center"
+        android:layout_margin="5dp"
+        android:stretchMode="columnWidth" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:elevation="8dp"
+        android:padding="2dp"
+        android:src="@drawable/ic_plus_black_symbol" />
+</FrameLayout>
+</LinearLayout>
+

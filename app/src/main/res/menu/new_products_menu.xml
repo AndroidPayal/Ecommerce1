@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_category"
+        android:title="Category"
+        app:showAsAction="never"
+        android:orderInCategory="100"/>
+    <item
+        android:id="@+id/menu_unit"
+        android:title="Unit"
+        app:showAsAction="never"
+        android:orderInCategory="101"/>
+    <item
+        android:id="@+id/menu_color"
+        android:title="Color"
+        app:showAsAction="never"
+        android:orderInCategory="102"/>
+    <item
+        android:id="@+id/menu_company"
+        android:title="Company"
+        app:showAsAction="never"
+        android:orderInCategory="103"/>
+
+</menu>

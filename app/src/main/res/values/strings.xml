@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Ecommerce</string>
+
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+    <string name="register_page">Register</string>
+    <string name="ProductDetail">Product Detail</string>
+    <string name="title_activity_add_new_product">Add_new_product</string>
+</resources>

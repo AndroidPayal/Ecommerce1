@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/linear_product"
+    tools:context="payal.cluebix.www.ecommerce.Add_New_product">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="4dp"
+            android:padding="1dp">
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:text="Category : "
+              android:gravity="center"
+              android:textColor="@color/Black"/>
+            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                android:id="@+id/spin_category"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textColor="@color/Black"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="4dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Product Name : "
+                android:gravity="center"
+                android:textColor="@color/Black"/>
+            <EditText
+                android:id="@+id/edit_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/Black"/>
+            </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="4dp"
+            android:padding="1dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Company Name : "
+                android:gravity="center"
+                android:textColor="@color/Black"/>
+            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                android:id="@+id/spin_company"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textColor="@color/Black"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="4dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Description : "
+                android:gravity="center"
+                android:textColor="@color/Black"/>
+            <EditText
+                android:id="@+id/edit_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/Black"
+                android:inputType="textMultiLine"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="4dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Color's Available : "
+                android:gravity="center"
+                android:textColor="@color/Black"/>
+            <com.androidbuts.multispinnerfilter.MultiSpinnerSearch
+                android:id="@+id/spin_color"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/Black"
+                android:inputType="textMultiLine"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="3dp">
+            <EditText
+                android:id="@+id/edit_price"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:hint="prize"
+                android:gravity="center"
+                android:textColor="@color/Black"
+                android:inputType="number"/>
+            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                android:id="@+id/spin_unit"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/Black"
+                android:inputType="textMultiLine"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="3dp">
+            <EditText
+                android:id="@+id/edit_quantity"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:hint="Quantity Available"
+                android:gravity="center"
+                android:textColor="@color/Black"
+                android:inputType="number"/>
+            <CheckBox
+                android:id="@+id/check_manufacture"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/Black"
+                android:text="I'm Manufacturer"
+               />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <CheckBox
+            android:id="@+id/check_sample"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textColor="@color/Black"
+            android:text="Product Sample Available"
+            android:padding="3dp"
+            android:layout_margin="2dp"
+            />
+            <EditText
+                android:id="@+id/sample_price"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                android:inputType="number"
+                android:textColor="@color/Black"
+                android:hint="Sample price"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/ParentLinearLayout">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:textColor="@color/Black"
+                android:text="Prize Range/Discounts(Optional) :-"/>
+             <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                 android:background="#93dc62"
+                 android:text="ADD"
+                 android:onClick="onAddField"
+                />
+            </LinearLayout>
+      <!--      <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal" >
+
+                <EditText
+                    android:id="@+id/from_edit_text"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:hint="from"
+                    android:inputType="phone"/>
+                <EditText
+                    android:id="@+id/to_edit_text"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:hint="to"
+                    android:inputType="phone"/>
+                <EditText
+                    android:id="@+id/prize_edit_text"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:hint="Prize"
+                    android:inputType="phone"/>
+                <Button
+                    android:id="@+id/delete_button"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1.5"
+                    android:background="@android:drawable/ic_delete"
+                    android:onClick="onDelete"/>
+
+            </LinearLayout>
+-->
+        </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_margin="5dp"
+        android:background="@color/colorAccent">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_gravity="center">
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_margin="2dp"
+                    android:background="@color/Black"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_margin="1dp"
+                    android:background="@color/Black"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="PRODUCT IMAGES"
+                android:gravity="bottom|center"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="bold"
+                android:textSize="20dp"/>
+              <View
+                  android:layout_width="match_parent"
+                  android:layout_height="1dp"
+                  android:layout_margin="2dp"
+                  android:background="@color/Black"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_margin="1dp"
+                    android:background="@color/Black"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_dots"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="bottom"
+                android:gravity="center"
+                android:orientation="horizontal"/>
+            <android.support.v4.view.ViewPager
+                android:id="@+id/vp1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+        </FrameLayout>
+
+    </LinearLayout>
+        <Button
+            android:id="@+id/button_image_add"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
+            android:gravity="center"
+            android:textColor="#e70808"
+            android:textSize="15dp"
+            android:text="Click here to select image"/>
+
+
+        <Button
+            android:id="@+id/submit_new_prod"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="SUBMIT"
+            android:background="@drawable/button_selector"/>
+    </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

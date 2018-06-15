@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="payal.cluebix.www.ecommerce.Register">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.6"
+        android:scaleType="fitXY"
+        android:src="@drawable/online_shop" />
+
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+        android:background="@color/colorPrimary"
+    android:layout_weight="1"/>
+
+</LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/White"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="170dp"
+            android:orientation="vertical"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="registration"
+                    android:textStyle="bold"
+                    android:gravity="center_horizontal"
+                    android:textAllCaps="true"
+                    android:textSize="20dp"
+                    android:layout_margin="15dp"
+                    android:textColor="@color/Black"
+                    android:elevation="5dp"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="*Please go to the link below for Registration*"
+                    android:textAllCaps="true"
+                    android:textColor="@color/Black"
+                    android:gravity="center"
+                    android:layout_marginTop="9dp"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="We would like to imform you that this app is targeted for a closed group and you need administrator's approval for Application Login."
+                    android:textColor="@color/colorPrimaryDark"
+                    android:padding="5dp"
+                    android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:padding="5dp"
+                    android:layout_marginTop="40dp"
+                    android:text="for any query please contact:"
+                    android:textAllCaps="true"
+                    android:textStyle="bold"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/Black"
+                    android:padding="5dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Cluebix Software Developer's"
+                    android:gravity="center"
+                    android:textAllCaps="true"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:padding="8dp"
+                    android:layout_marginTop="10dp"
+                    android:drawablePadding="8dp"
+                    android:textIsSelectable="true"
+                    android:drawableLeft="@drawable/ic_location_pin"
+                    android:text=" HIG C-65, NEAR NAVKAR HOSPITAL,SHAILENDRA NAGAR RAIPUR-492001"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:padding="8dp"
+                    android:layout_marginTop="10dp"
+                    android:drawablePadding="8dp"
+                    android:drawableLeft="@drawable/ic_telephone"
+                    android:text="+91-74151-65000"
+                    android:textIsSelectable="true"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:padding="8dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:drawablePadding="8dp"
+                    android:drawableLeft="@drawable/ic_email_filled_closed_envelope"
+                    android:text="connect@cluebixsoftware.com"
+                    android:textIsSelectable="true"
+                    />
+
+                </LinearLayout>
+
+            </ScrollView>
+            </LinearLayout>
+            <TextView
+                android:id="@+id/text_register_link"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.1"
+                android:autoLink="web"
+                android:gravity="center"
+                android:textColor="#8f0a0a"
+                android:textStyle="bold"
+                android:text="@string/register_page"
+                android:background="@color/colorTransparent"/>
+        </LinearLayout>
+    </FrameLayout>
+</LinearLayout>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/people_login1"
+    tools:context="payal.cluebix.www.ecommerce.Otp_varify">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/colorTransparent">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.4"
+        android:src="@drawable/logo"
+        android:layout_marginBottom="20dp"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginTop="28dp"
+        android:text="Please varify your\nRegisterd Mobile Number"
+        android:textColor="@color/White"
+        android:gravity="center_horizontal"
+        android:textSize="18dp"
+        />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+android:layout_marginTop="15dp"
+            android:layout_height="25dp"
+            android:gravity="center_horizontal"
+            android:text="(Enter the OTP Below)"
+            android:textColor="#f5f4f4" />
+
+        <EditText
+        android:id="@+id/edit_otp"
+        android:layout_width="140dp"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/White"
+        android:textColor="@color/Black"
+        android:textStyle="bold"
+        android:hint="Enter OTP"
+
+        />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="57dp"
+            android:layout_marginTop="40dp"
+
+            android:orientation="horizontal"
+            >
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"></LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1.9"
+                android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/button_otp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/button_selector"
+                    android:elevation="10dp"
+                    android:text="DONE"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:textSize="16dp"
+                    android:textColor="@color/Black"
+                    /><!-- android:src="@drawable/ic_next"-->
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"></LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

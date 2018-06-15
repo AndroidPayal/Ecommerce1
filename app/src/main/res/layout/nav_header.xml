@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+   android:background="@drawable/nav_strip">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/navigation_image"
+            android:layout_width="100dp"
+            android:layout_gravity="center"
+            android:layout_margin="8dp"
+            android:layout_height="100dp"
+            android:src="@drawable/back1"
+            />
+        <TextView
+            android:id="@+id/navigation_email"
+            android:textSize="19dp"
+            android:textColor="@color/White"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_gravity="bottom"
+            android:text="WELCOME"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</LinearLayout>

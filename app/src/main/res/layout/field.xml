@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:orientation="horizontal" >
+
+    <EditText
+        android:id="@+id/from_edit_text"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="5"
+        android:hint="from"
+        android:inputType="phone"/>
+    <EditText
+        android:id="@+id/to_edit_text"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="5"
+        android:hint="to"
+        android:inputType="phone"/>
+    <EditText
+        android:id="@+id/prize_edit_text"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="5"
+        android:hint="Prize"
+        android:inputType="phone"/>
+    <Button
+        android:id="@+id/delete_button"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_weight="1.5"
+        android:background="@android:drawable/ic_delete"
+        android:onClick="onDelete"/>
+
+</LinearLayout>

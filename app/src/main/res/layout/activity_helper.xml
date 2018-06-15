@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="payal.cluebix.www.ecommerce.helper">
+
+    <Button
+        android:id="@+id/unit1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="unit"/>
+    <Button
+        android:id="@+id/category1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="category"/>
+    <Button
+    android:id="@+id/company1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="company"/>
+    <Button
+    android:id="@+id/color1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="color"/>
+    <Button
+        android:id="@+id/newProduct1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="new product"/>
+
+</LinearLayout>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="7dp"
+    android:background="@color/colorPrimary">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <ProgressBar
+        android:id="@+id/progBar"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        />
+    <TextView
+        android:id="@+id/textProgress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/Black"
+        android:textSize="30dp"
+        android:text="progress"
+        android:gravity="center"
+        />
+    <TextView
+        android:id="@+id/textResponse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#b61c1c"
+        android:textSize="30dp"
+        android:text="Please wait.."
+        android:gravity="center"
+        />
+    <TextView
+        android:id="@+id/text_ok"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:textColor="@color/Black"
+        android:textSize="20dp"
+        android:text="OK"
+        android:gravity="center"
+        android:layout_gravity="right"
+        android:background="@drawable/button_selector"
+        />
+</LinearLayout>
+    </ScrollView>
+</LinearLayout>
