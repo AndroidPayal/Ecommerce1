@@ -44,6 +44,9 @@ public class Base_url {
     public static final String List_all_category=base_url+"ApiController/getCategories";
     public static final String Add_new_category=base_url+"ApiController/storeCategory";
 
+    public static final String Product_price_range=base_url+"ApiController/getPriceRange/";/*range id*/
+
+
     public static  String id ="";
     public static  String name="";
     public static  String email="" ;

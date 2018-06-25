@@ -173,7 +173,6 @@ public class Recycler_item_adapter extends RecyclerView.Adapter<Recycler_item_ad
              void itemClicked(View view, int position);
              void onLongClick(View view, int position);
              void Add_to_cart(View view, int position);
-
         }
 
     private void init(List<String> slider_image,final ProductViewHolder holder) {

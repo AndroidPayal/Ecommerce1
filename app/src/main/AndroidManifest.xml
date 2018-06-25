@@ -15,7 +15,7 @@
 
     <application
         android:allowBackup="true"
-        android:hardwareAccelerated="false"
+
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:largeHeap="true"
@@ -55,9 +55,6 @@
             android:parentActivityName=".CenterActivity"
             android:theme="@style/AppThemeNoActionBar" />
         <activity
-            android:name=".New_product"
-            android:theme="@style/AppThemeNoActionBar" />
-        <activity
             android:name=".My_products"
             android:theme="@style/AppThemes2" />
         <activity
@@ -66,6 +63,8 @@
         <activity
             android:name=".ProductDetail"
             android:parentActivityName=".CenterActivity" />
+
+
         <activity
             android:name=".Product_My_Detail"
             android:label="@string/ProductDetail"
@@ -87,7 +86,7 @@
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/dummy_logo" />
+            android:resource="@drawable/logo" />
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorAccent" />

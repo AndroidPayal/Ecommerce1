@@ -8,11 +8,11 @@
     android:background="@color/colorPrimary"
     tools:context="payal.cluebix.www.ecommerce.Cart">
 
-<LinearLayout
+<!--<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="?attr/actionBarSize"
-    ></LinearLayout>
+    ></LinearLayout>-->
 <LinearLayout
     android:id="@+id/linear_subtotal"
     android:layout_width="match_parent"
@@ -20,7 +20,7 @@
     android:orientation="vertical"
     android:layout_marginTop="?attr/actionBarSize"
     android:background="@color/White"
-    android:visibility="gone"
+
     >
 <LinearLayout
     android:layout_width="match_parent"
@@ -45,33 +45,37 @@
         android:textSize="19dp"
         android:text="Rs.n.00"/>
 </LinearLayout>
-<!--
-<TextView
-    android:id="@+id/t_checkout"
-    android:layout_width="match_parent"
-    android:layout_height="52dp"
-    android:layout_margin="7dp"
-    android:text="Proceed to Checkout"
-    android:gravity="center"
-    android:textColor="@color/Black"
-    android:textSize="18dp"
-    android:elevation="5dp"
-    android:background="@drawable/button_selector"/>-->
+
+    <TextView
+        android:id="@+id/t_checkout"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:text="Generate Quotation"
+        android:gravity="center"
+        android:textColor="#fff"
+        android:textSize="18dp"
+        android:elevation="3dp"
+        android:textAllCaps="true"
+        android:layout_margin="5dp"
+
+        android:background="@drawable/gradient_background"/>
+
 </LinearLayout>
-  <!--  <View
+    <View
         android:layout_width="fill_parent"
         android:layout_height="2dp"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="4dp"
-        android:background="#c0c0c0"/>-->
+        android:background="#c0c0c0"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_cart"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginBottom="60dp"
         android:layout_weight="1"/>
 
-    <TextView
+   <!-- <TextView
         android:id="@+id/t_checkout"
         android:layout_width="match_parent"
         android:layout_height="52dp"
@@ -82,6 +86,6 @@
         android:elevation="5dp"
         android:textAllCaps="true"
         android:layout_marginBottom="60dp"
-        android:background="@drawable/gradient_background"/>
+        android:background="@drawable/gradient_background"/>-->
 
 </LinearLayout>

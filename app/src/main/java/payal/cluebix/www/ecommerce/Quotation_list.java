@@ -185,13 +185,20 @@ public class Quotation_list extends AppCompatActivity implements View.OnClickLis
                         drawerLayout.closeDrawers();
                         break;
                     case R.id.cart:
-                        Fragment newFragment = new CartFragment();
-                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-                        transaction.replace(R.id.main_container, newFragment);
-                        transaction.addToBackStack(null);
+                        Intent intent = new Intent(Quotation_list.this,CenterActivity.class);
 
-                        transaction.commit();
+                        intent.putExtra("cartTransition",true);
+
+                        startActivity(intent);
+//
+//                        Fragment newFragment = new CartFragment();
+//                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//
+//                        transaction.replace(R.id.main_container, newFragment);
+//                        transaction.addToBackStack(null);
+//
+//                        transaction.commit();
                         /*i= new Intent(Quotation_list.this,Cart.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

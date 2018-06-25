@@ -54,8 +54,9 @@ import payal.cluebix.www.ecommerce.R;
  * Created by speed on 11-Jun-18.
  */
 
-public class DashboardFragment extends Fragment implements Recycler_item_adapter.ClickListener, SearchView.OnQueryTextListener {
+public class DashboardFragment extends Fragment implements Recycler_item_adapter.ClickListener {
 
+    FragmentTransaction fragmentTransaction;
     private String Tag="Dashboard_screen";
     RecyclerView recyclerView;
     Recycler_item_adapter adapter;
@@ -66,7 +67,7 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
 
     ArrayList<String> Product_id_array=new ArrayList<>();
     ArrayList<String> P_id_array_of_cartItems=new ArrayList<>();
-    List<data_dashboard> product_item;
+    ArrayList<data_dashboard> product_item;
 
     SessionManager session;
     String Uid;String Uname,Umail,Udate1,Udate2,Umob;
@@ -79,7 +80,6 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
     List<Bitmap> slider_image=new ArrayList<>();
     Slider_adap_add_product sliderPagerAdapter;
 
-    SearchView search;
 
     public DashboardFragment() {
     }
@@ -87,10 +87,40 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
          v =inflater.inflate(R.layout.updated, container, false);
 
-        slider_image.add(((BitmapDrawable) getResources().getDrawable(R.drawable.sl1)).getBitmap());
-        slider_image.add(((BitmapDrawable) getResources().getDrawable(R.drawable.sl2)).getBitmap());
-        slider_image.add(((BitmapDrawable) getResources().getDrawable(R.drawable.sl3)).getBitmap());
-        slider_image.add(((BitmapDrawable) getResources().getDrawable(R.drawable.sl2)).getBitmap());
+
+
+        // Fragment transition of cart
+
+
+  /*      Bundle extras = getActivity().getIntent().getExtras();
+
+        if(extras != null)
+        {
+            Log.d(Tag,"opening cart");
+            if(extras.getBoolean("cartTransition"))
+            {
+                Fragment newFragment = new CartFragment();
+                fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+
+                fragmentTransaction.replace(R.id.main_container, newFragment);
+                fragmentTransaction.addToBackStack(null);
+
+                fragmentTransaction.commit();
+            }
+        }
+*/
+
+
+        slider_image.clear();
+        slider_image.add(((BitmapDrawable) getResources().getDrawable(R.drawable.people_login1)).getBitmap());
+
+/*
+
+        slider_image.add(((BitmapDrawable) getResources().getDrawable(R.drawable.people_login1)).getBitmap());
+        slider_image.add(((BitmapDrawable) getResources().getDrawable(R.drawable.logo)).getBitmap());
+        slider_image.add(((BitmapDrawable) getResources().getDrawable(R.drawable.people_login)).getBitmap());
+        slider_image.add(((BitmapDrawable) getResources().getDrawable(R.drawable.logo)).getBitmap());
+*/
 
         setHasOptionsMenu(true);
 
@@ -112,7 +142,7 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
         recyclerView=(RecyclerView)v.findViewById(R.id.recycler1);
         viewPager=(ViewPager)v.findViewById(R.id.front_viewPager);
         l2_dots=(LinearLayout)v.findViewById(R.id.l2_dots);
-        search=(SearchView)v.findViewById(R.id.search);
+
 
         init();
         Timer timer = new Timer();
@@ -130,7 +160,7 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
         adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
 
-        search.setOnQueryTextListener(this);
+
         return v;
     }
 
@@ -346,7 +376,7 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
         menuItem.setIcon(buildCounterDrawable(count, R.drawable.ic_shopping_cart));
         MenuItem menuItem2 = menu.findItem(R.id.action_search);
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem2);
-        searchView.setOnQueryTextListener(this);
+        //searchView.setOnQueryTextListener(this);
 
     }
     @Override
@@ -394,17 +424,6 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
         return new BitmapDrawable(getResources(), bitmap);
     }
 
-    @Override
-    public boolean onQueryTextSubmit(String query) {
-        return false;
-    }
-
-    @Override
-    public boolean onQueryTextChange(String newText) {
-        String text = newText;
-        adapter.filter(text);
-        return false;
-    }
 
 
     private class SliderTimer extends TimerTask {
@@ -426,5 +445,7 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
         }
 
  }
+
+
 }
 

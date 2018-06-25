@@ -1,6 +1,8 @@
 package payal.cluebix.www.ecommerce;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
@@ -341,6 +343,8 @@ public class CartFragment extends Fragment implements CartAdapter.ClickListener 
         Log.d("cartscreen","before return="+product_item);
         return product_item;
     }
+
+
 
 
 }

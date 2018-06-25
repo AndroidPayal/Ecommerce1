@@ -11,14 +11,9 @@
 <FrameLayout
     android:layout_width="match_parent"
     android:layout_height="0dp"
-    android:layout_weight="1">
-    <ImageView
-        android:id="@+id/PhotoCaptured"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:srcCompat="@drawable/splash7"
-        android:scaleType="centerCrop"
-        />
+    android:layout_weight="1"
+    android:background="@drawable/splash7">
+
 
   <ImageView
       android:layout_width="match_parent"

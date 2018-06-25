@@ -16,8 +16,9 @@
             android:layout_width="100dp"
             android:layout_gravity="center"
             android:layout_margin="8dp"
-            android:layout_height="100dp"
-            android:src="@drawable/back1"
+            android:layout_height="90dp"
+
+
             />
         <TextView
             android:id="@+id/navigation_email"

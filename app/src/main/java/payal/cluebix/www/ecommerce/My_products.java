@@ -218,13 +218,18 @@ public class My_products extends AppCompatActivity {
                         drawerLayout.closeDrawers();
                         break;
                     case R.id.cart:
-                        Fragment newFragment = new CartFragment();
+                       /* Fragment newFragment = new CartFragment();
                         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
                         transaction.replace(R.id.main_container, newFragment);
                         transaction.addToBackStack(null);
 
-                        transaction.commit();
+                        transaction.commit();*/
+                        Intent intent = new Intent(My_products.this,CenterActivity.class);
+
+                        intent.putExtra("cartTransition",true);
+
+                        startActivity(intent);
 
                         drawerLayout.closeDrawers();
                         break;

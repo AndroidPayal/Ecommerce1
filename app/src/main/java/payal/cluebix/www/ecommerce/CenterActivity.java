@@ -1,6 +1,7 @@
 package payal.cluebix.www.ecommerce;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
@@ -27,7 +28,6 @@ import payal.cluebix.www.ecommerce.Handlers.SessionManager;
 
 public class CenterActivity extends AppCompatActivity {
 
-    private BottomNavigationView bottomNavigation;
     private Fragment fragment;
     private FragmentManager fragmentManager;
     private DrawerLayout drawerLayout;
@@ -36,11 +36,14 @@ public class CenterActivity extends AppCompatActivity {
 
     SessionManager session;
     String Uid;String Uname,Umail,Udate1,Udate2,Umob;
+    BottomNavigationView bottomNavigation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.drawer_main);
+
+
 
 
         session=new SessionManager(getApplicationContext());
@@ -60,13 +63,43 @@ public class CenterActivity extends AppCompatActivity {
 
         initNavigationDrawer();
 
-        bottomNavigation = (BottomNavigationView)findViewById(R.id.bottom_navigation);
-        bottomNavigation.inflateMenu(R.menu.bottom_navigation);
+        bottomNavigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+       // bottomNavigation.inflateMenu(R.menu.bottom_navigation);
         fragmentManager = getSupportFragmentManager();
 
         fragment = new DashboardFragment();
-        final FragmentTransaction transaction = fragmentManager.beginTransaction();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.main_container, fragment).commit();
+
+        // Fragment transition of cart
+
+
+        Bundle extras = null;
+        extras = getIntent().getExtras();
+
+        if(extras != null)
+        {
+
+            Log.d("center_screen","inside extras");
+            if(extras.getBoolean("cartTransition"))
+            {
+
+                Fragment newFragment = new CartFragment();
+                 transaction = getSupportFragmentManager().beginTransaction();
+
+                transaction.replace(R.id.main_container, newFragment);
+                transaction.addToBackStack(null);
+
+                transaction.commit();
+
+
+                bottomNavigation.setSelectedItemId(R.id.bottom_nav_cart);
+
+            }
+        }
+
+
+
 
         floatb.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,7 +128,6 @@ public class CenterActivity extends AppCompatActivity {
             }
         });
 
-       floatb.bringToFront();
     }
 
 
@@ -157,6 +189,7 @@ public class CenterActivity extends AppCompatActivity {
 
         View header = navigationView.getHeaderView(0);
         TextView tv_email = (TextView)header.findViewById(R.id.navigation_email);
+        tv_email.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Lato-Semibold.ttf"));
         tv_email.setText("WELCOME "+Uname);
 
         drawerLayout = (DrawerLayout)findViewById(R.id.drawer);
@@ -176,5 +209,9 @@ public class CenterActivity extends AppCompatActivity {
 
     }
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }

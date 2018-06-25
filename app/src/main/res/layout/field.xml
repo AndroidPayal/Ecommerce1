@@ -2,28 +2,40 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    android:orientation="horizontal" >
+    android:orientation="horizontal"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardBackgroundColor="@color/White"
+        app:cardElevation="1dp"
+        android:layout_margin="1dp"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal">
     <EditText
         android:id="@+id/from_edit_text"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="5"
-        android:hint="from"
+        android:hint="From"
         android:inputType="phone"/>
     <EditText
         android:id="@+id/to_edit_text"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="5"
-        android:hint="to"
+        android:hint="To"
         android:inputType="phone"/>
     <EditText
         android:id="@+id/prize_edit_text"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="5"
-        android:hint="Prize"
+        android:hint="Price"
         android:inputType="phone"/>
     <Button
         android:id="@+id/delete_button"
@@ -32,5 +44,6 @@
         android:layout_weight="1.5"
         android:background="@android:drawable/ic_delete"
         android:onClick="onDelete"/>
-
+     </LinearLayout>
+</android.support.v7.widget.CardView>
 </LinearLayout>

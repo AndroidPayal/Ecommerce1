@@ -2,17 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="420dp"
-
     xmlns:app="http://schemas.android.com/apk/res-auto"
 >
 
-    <android.support.v7.widget.CardView
+    <com.github.captain_miao.optroundcardview.OptRoundCardView
         android:layout_width="match_parent"
         android:layout_height="420dp"
-        app:cardCornerRadius="10dp"
-        android:layout_margin="7dp"
+        android:layout_marginRight="6dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="6dp"
 
-        >
+        app:optRoundCardBottomEdges="true"
+        app:optRoundCardCornerRadius="9dp"
+        app:optRoundCardTopEdges="true"
+app:optRoundCardElevation="3dp"        >
 
         <LinearLayout
             android:id="@+id/product_item"
@@ -26,7 +29,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="4"
+                android:layout_weight="3.9"
                 android:clipChildren="false"
                 >
                 <!--<ImageView
@@ -164,13 +167,9 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginHorizontal="3.5dp"
-
                         android:layout_weight="1"
-
                         android:gravity="center"
-                        android:text="In Stock : 12"
-
-                        android:textColor="#0eba0b"
+                        android:text="In Stock : 12"                        android:textColor="#0eba0b"
                         android:textSize="15sp" />
 
                 </LinearLayout>
@@ -188,7 +187,7 @@
                 android:layout_marginLeft="2dp"
                 android:layout_marginRight="2dp"
                 android:layout_marginHorizontal="5dp"
-                android:layout_weight="0.5"
+                android:layout_weight="0.6"
                 android:textColor="#fff"
                 android:background="@drawable/gradient_background"
                 android:gravity="center"
@@ -203,7 +202,7 @@
 
 
         </LinearLayout>
-    </android.support.v7.widget.CardView>
+    </com.github.captain_miao.optroundcardview.OptRoundCardView>
 </LinearLayout>
 
 <!--

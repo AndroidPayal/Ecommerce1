@@ -86,7 +86,7 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
     private TextView[] dots;
     LinearLayout l2_dots;
     List<Bitmap> slider_image=new ArrayList<>();
-    Button button_image_add;
+    TextView button_image_add;
 
     ProgressBar prog;
     TextView textProg;
@@ -150,7 +150,7 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
         onAddField(new View(getApplicationContext()));
 
         vp=(ViewPager)findViewById(R.id.vp1);
-        button_image_add=(Button)findViewById(R.id.button_image_add);
+        button_image_add=(TextView)findViewById(R.id.button_image_add);
         l2_dots=(LinearLayout)findViewById(R.id.l2_dots);
         submit=(Button)findViewById(R.id.submit_new_prod);
         spin_color=(MultiSpinnerSearch)findViewById(R.id.spin_color);
@@ -240,7 +240,6 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
             }
         });
 
-
     }
 
     @Override// button to choose image
@@ -253,16 +252,16 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
         }
 
         if (view.getId()==R.id.submit_new_prod){
-            if(!(selected_category.isEmpty()||edit_P_name.getText().toString().isEmpty()||selected_company.isEmpty()
-                    ||edit_price.getText().toString().isEmpty()||selected_unit.isEmpty())) {
+            if(!(selected_category.equals(null)||edit_P_name.getText().toString().isEmpty()||selected_company.equals(null)
+                    ||edit_price.getText().toString().isEmpty()||selected_unit.equals(null))) {
 
                     new Add_New_product.UploadFileToServer().execute();
             }else{
-                LinearLayout linear=(LinearLayout)findViewById(R.id.linear_product);
+            /*    LinearLayout linear=(LinearLayout)findViewById(R.id.linear_product);
                 Snackbar snackbar = Snackbar
                     .make(linear, "Fill all empty fields!!", Snackbar.LENGTH_LONG);
 
-                snackbar.show();
+                snackbar.show();*/
             }
         }
     }

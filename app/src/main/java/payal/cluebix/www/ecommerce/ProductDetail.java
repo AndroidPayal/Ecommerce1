@@ -53,29 +53,31 @@ public class ProductDetail extends AppCompatActivity {
     String url1= Base_url.Product_Detail_url;/*/product id*/
     String url2= Base_url.Add_prod_to_Cart;/*/product id*/
     String url3=Base_url.My_cart_item_count;/*userid*/
+    String url4=Base_url.Product_price_range;/*range id*/
 
 
-    TextView p_name,desc,prize,more,tcolor,tbrand,add_cart,category;
+    TextView p_name,desc,prize,tcolor,add_cart,category,p_available,t_sample,t_unit;
     LinearLayout linear_more_detail;
     TextView first1,first2,first3,second1,second2,second3,third1,third2,third3,p_code;
 
     SessionManager session;
     String Uid;String Uname,Umail,Udate1,Udate2,Umob;
     public static int count=0;
+    String range_id="0";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_product_detail);
+        setContentView(R.layout.ns_view_details);
         count=0;
 
         p_name=(TextView)findViewById(R.id.p_name);
         desc=(TextView)findViewById(R.id.description);
         prize=(TextView)findViewById(R.id.prise_detail);
-        more=(TextView)findViewById(R.id.more);
+      //  more=(TextView)findViewById(R.id.more);
         tcolor=(TextView)findViewById(R.id.text_color);
-        tbrand=(TextView)findViewById(R.id.text_brand);
+   //     tbrand=(TextView)findViewById(R.id.text_brand);
         first1=(TextView)findViewById(R.id.first_1);
         first2=(TextView)findViewById(R.id.first_2);
         first3=(TextView)findViewById(R.id.first_3);
@@ -90,6 +92,9 @@ public class ProductDetail extends AppCompatActivity {
         category=(TextView)findViewById(R.id.category);
         vp_slider = (ViewPager) findViewById(R.id.view_slider);
         l2_dots = (LinearLayout) findViewById(R.id.l2_dots);
+        p_available=(TextView)findViewById(R.id.product_available);
+        t_sample=(TextView)findViewById(R.id.sample);
+        t_unit=(TextView)findViewById(R.id.product_unit);
 
 
         prod_id=getIntent().getStringExtra("selected_prod_id");
@@ -112,14 +117,6 @@ public class ProductDetail extends AppCompatActivity {
         get_current_product_Detail();
         count=cart_item_count();
 
-        more.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                 linear_more_detail=(LinearLayout)findViewById(R.id.linear_more_detail);
-                linear_more_detail.setVisibility(View.VISIBLE);
-
-            }
-        });
         add_cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -160,7 +157,6 @@ public class ProductDetail extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
 
-                Log.d(Tag,"counting elements");
                 JSONObject post_data;
                 try {
                     JSONObject jsonObject=new JSONObject(response);
@@ -226,21 +222,26 @@ public class ProductDetail extends AppCompatActivity {
                          amount = post_data.getString("amount");
                          percent = post_data.getString("percent");
                     }
+                    range_id=rangId;
                     slider_image = Arrays.asList(product_images.split(","));
                     p_name.setText(product_name);
                     desc.setText(description);
-                    if (sample.equals("1"))
-                    prize.setText(price+" "+unit+"\nSample Available");
+                    if (sample.equals("1")){}
+                   // t_sample.setText(price+" "+unit+"\nSample Available");
                     else
-                    prize.setText(price+" "+unit+"\nSample not Available");
+                        t_sample.setVisibility(View.GONE);
+                   // prize.setText(price+" "+unit+"\nSample not Available");
 
                     tcolor.setText("Available in Color: "+color);
-                    tbrand.setText("BRAND: "+brand);
+                 //   tbrand.setText("BRAND: "+brand);
                     category.setText("CATEGORY: "+category_name);
                     p_code.setText("ProductCode: "+product_code);
-
+                    p_available.setText("Available : "+qty);
+                    t_unit.setText(unit);
+                    prize.setText(price);
                     init();
                     addBottomDots(0);
+                    apply_ranges();
 /*
 * {"success":"true","product":[{"id":"1","category_name":"","product_name":"Demo1","brand":"normal","product_code":"855577",
 * "price":"200.00","manufacturing":"0","qty":"0","sample":"1","unit":"","color":"Red,Grey","description":"This is a demo product.",
@@ -312,8 +313,56 @@ public class ProductDetail extends AppCompatActivity {
 
     }
 
+    private void apply_ranges() {
+        String rangeid="24";//range_id;
+
+
+        StringRequest stringRequest=new StringRequest(Request.Method.POST, url4+rangeid, new Response.Listener<String>(){
+            @Override
+            public void onResponse(String response) {
+                Log.d(Tag,"product ranges="+response);
+/*{"success":"true","price_range":[{"id":"3","created_by":"39","pid":"24",
+"product_id":"24","min":"1","max":"2","price_range":"235.00"}]}*/
+                    JSONObject jsonObj;
+                try {
+                    jsonObj=new JSONObject(response);
+                    String success=jsonObj.getString("success");
+                    JSONArray array=jsonObj.getJSONArray("price_range");
+                    for(int i=0;i<array.length();i++){
+                        JSONObject data=array.getJSONObject(i);
+                        String id=data.getString("id");
+                        String created_by=data.getString("created_by");
+                        String pid=data.getString("pid");
+                        String product_id=data.getString("product_id");
+                        String min=data.getString("min");
+                        String max=data.getString("max");
+                        String price_range=data.getString("price_range");
+
+                        Log.d(Tag,"id=+"+id+" range 1="+min+" 2="+max+" 3="+price_range);
+
+                    }
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError error) {
+        Log.d("dashboard_error_res",error+"");
+        Toast.makeText(ProductDetail.this, "Server Connection Failed!", Toast.LENGTH_SHORT).show();
+        }
+        });
+        RquestHandler.getInstance(ProductDetail.this).addToRequestQueue(stringRequest);
+
+
+        }
+
 
     private void init() {
+        Log.d("images",slider_image+"");
 
         sliderPagerAdapter = new Slider_adapter(ProductDetail.this, slider_image);
         vp_slider.setAdapter(sliderPagerAdapter);
