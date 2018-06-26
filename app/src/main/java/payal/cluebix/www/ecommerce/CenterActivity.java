@@ -22,8 +22,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import net.yazeed44.imagepicker.model.ImageEntry;
+import net.yazeed44.imagepicker.util.Picker;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 
+import payal.cluebix.www.ecommerce.Datas.Base_url;
 import payal.cluebix.www.ecommerce.Handlers.SessionManager;
 
 public class CenterActivity extends AppCompatActivity {
@@ -31,9 +36,10 @@ public class CenterActivity extends AppCompatActivity {
     private Fragment fragment;
     private FragmentManager fragmentManager;
     private DrawerLayout drawerLayout;
-    Toolbar toolbar;
+    Toolbar toolbar,search_tool2;
     FloatingActionButton floatb;
 
+    private ArrayList<ImageEntry> mSelectedImages=new ArrayList<>();
     SessionManager session;
     String Uid;String Uname,Umail,Udate1,Udate2,Umob;
     BottomNavigationView bottomNavigation;
@@ -42,9 +48,6 @@ public class CenterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.drawer_main);
-
-
-
 
         session=new SessionManager(getApplicationContext());
         HashMap<String, String> user = session.getUserDetails();
@@ -59,6 +62,7 @@ public class CenterActivity extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         floatb=(FloatingActionButton)findViewById(R.id.float_newProduct);
+        search_tool2=(Toolbar)findViewById(R.id.toolbar_search2);
         setSupportActionBar(toolbar);
 
         initNavigationDrawer();
@@ -70,8 +74,6 @@ public class CenterActivity extends AppCompatActivity {
         fragment = new DashboardFragment();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.main_container, fragment).commit();
-
-        // Fragment transition of cart
 
 
         Bundle extras = null;
@@ -90,7 +92,9 @@ public class CenterActivity extends AppCompatActivity {
                 transaction.replace(R.id.main_container, newFragment);
                 transaction.addToBackStack(null);
 
+                search_tool2.setVisibility(View.GONE);
                 transaction.commit();
+
 
 
                 bottomNavigation.setSelectedItemId(R.id.bottom_nav_cart);
@@ -104,8 +108,28 @@ public class CenterActivity extends AppCompatActivity {
         floatb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i=new Intent(CenterActivity.this,Add_New_product.class);
-                startActivity(i);
+               /* Intent i=new Intent(CenterActivity.this,Add_New_product.class);
+                startActivity(i);*/
+                new Picker.Builder(getApplicationContext(),
+                        new Picker.PickListener() {
+                            @Override
+                            public void onPickedSuccessfully(ArrayList<ImageEntry> images) {
+                                mSelectedImages = images;
+                               // setupImageSamples();
+                                Log.d("CenterActivity_screen", "Picked images  " + images.toString());
+                            }
+
+                            @Override
+                            public void onCancel() {
+                                Log.i("CenterActivity_screen", "User canceled picker activity");
+                                Toast.makeText(getApplicationContext(), "User canceld picker activtiy", Toast.LENGTH_SHORT).show();
+
+                            }
+                        }, R.style.MIP_theme)
+                        .setPickMode(Picker.PickMode.MULTIPLE_IMAGES)
+                        .setLimit(Base_url.numberOfImagesToSelect)
+                        .build()
+                        .startActivity();
             }
         });
 
@@ -115,10 +139,12 @@ public class CenterActivity extends AppCompatActivity {
                 int id = item.getItemId();
                  switch (id){
                     case R.id.bottom_nav_home:
+                        search_tool2.setVisibility(View.VISIBLE);
                         fragment = new DashboardFragment();
 
                                   break;
                     case R.id.bottom_nav_cart:
+                        search_tool2.setVisibility(View.GONE);
                         fragment = new CartFragment();
                         break;
                 }
@@ -214,4 +240,7 @@ public class CenterActivity extends AppCompatActivity {
         super.onBackPressed();
         finish();
     }
+
+
+
 }

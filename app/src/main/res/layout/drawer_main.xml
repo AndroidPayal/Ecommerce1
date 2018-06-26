@@ -35,6 +35,7 @@
             </android.support.v7.widget.Toolbar>
 
             <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar_search2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:contentInsetStart="0dp"
