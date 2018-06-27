@@ -49,6 +49,7 @@ public class CenterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.drawer_main);
 
+
         session=new SessionManager(getApplicationContext());
         HashMap<String, String> user = session.getUserDetails();
         Uname = user.get(SessionManager.KEY_NAME);
@@ -64,6 +65,8 @@ public class CenterActivity extends AppCompatActivity {
         floatb=(FloatingActionButton)findViewById(R.id.float_newProduct);
         search_tool2=(Toolbar)findViewById(R.id.toolbar_search2);
         setSupportActionBar(toolbar);
+
+
 
         initNavigationDrawer();
 
@@ -108,9 +111,9 @@ public class CenterActivity extends AppCompatActivity {
         floatb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               /* Intent i=new Intent(CenterActivity.this,Add_New_product.class);
-                startActivity(i);*/
-                new Picker.Builder(getApplicationContext(),
+                Intent i=new Intent(CenterActivity.this,Add_New_product.class);
+                startActivity(i);
+              /*  new Picker.Builder(getApplicationContext(),
                         new Picker.PickListener() {
                             @Override
                             public void onPickedSuccessfully(ArrayList<ImageEntry> images) {
@@ -129,7 +132,7 @@ public class CenterActivity extends AppCompatActivity {
                         .setPickMode(Picker.PickMode.MULTIPLE_IMAGES)
                         .setLimit(Base_url.numberOfImagesToSelect)
                         .build()
-                        .startActivity();
+                        .startActivity();*/
             }
         });
 

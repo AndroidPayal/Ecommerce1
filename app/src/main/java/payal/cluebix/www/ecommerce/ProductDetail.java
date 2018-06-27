@@ -3,6 +3,7 @@ package payal.cluebix.www.ecommerce;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
@@ -10,14 +11,20 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.Html;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,27 +57,34 @@ public class ProductDetail extends AppCompatActivity {
     private TextView[] dots;
     List<String> slider_image=new ArrayList<>();
     String prod_id,ParentScreen="1";
+
     String url1= Base_url.Product_Detail_url;/*/product id*/
     String url2= Base_url.Add_prod_to_Cart;/*/product id*/
     String url3=Base_url.My_cart_item_count;/*userid*/
     String url4=Base_url.Product_price_range;/*range id*/
 
 
-    TextView p_name,desc,prize,tcolor,add_cart,category,p_available,t_sample,t_unit;
-    LinearLayout linear_more_detail;
+    TextView p_name,desc,prize,tcolor,add_cart,category,p_available,t_sample,t_unit,t_unit2,text_sample_price;
     TextView first1,first2,first3,second1,second2,second3,third1,third2,third3,p_code;
 
     SessionManager session;
-    String Uid;String Uname,Umail,Udate1,Udate2,Umob;
-    public static int count=0;
+    String Uid;String Uname,Umail,Udate1,Udate2,Umob;String sample_price;
+//    public static int count=0;
     String range_id="0";
+    public static String quantity,sample;
 
+    ArrayList<String> min1=new ArrayList<>();
+    ArrayList<String> max1=new ArrayList<>();
+    ArrayList<String> price1=new ArrayList<>();
+
+    EditText prodruct_quantity;
+    CheckBox orderSample;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.ns_view_details);
-        count=0;
+        setContentView(R.layout.view_details);
+//        count=0;
 
         p_name=(TextView)findViewById(R.id.p_name);
         desc=(TextView)findViewById(R.id.description);
@@ -93,8 +107,12 @@ public class ProductDetail extends AppCompatActivity {
         vp_slider = (ViewPager) findViewById(R.id.view_slider);
         l2_dots = (LinearLayout) findViewById(R.id.l2_dots);
         p_available=(TextView)findViewById(R.id.product_available);
-        t_sample=(TextView)findViewById(R.id.sample);
+       // t_sample=(TextView)findViewById(R.id.sample);
         t_unit=(TextView)findViewById(R.id.product_unit);
+        t_unit2=(TextView)findViewById(R.id.unit2);
+        text_sample_price=(TextView)findViewById(R.id.text_sample_price);
+        prodruct_quantity=(EditText) findViewById(R.id.prodruct_quantity);
+        orderSample=(CheckBox)findViewById(R.id.check_order_sample);
 
 
         prod_id=getIntent().getStringExtra("selected_prod_id");
@@ -113,27 +131,76 @@ public class ProductDetail extends AppCompatActivity {
 
 
         if (!ParentScreen.equals("0")){add_cart.setVisibility(View.GONE);}
+        if (!ParentScreen.equals("01")){
+            add_cart.setVisibility(View.GONE);
+            orderSample.setChecked(true);
+        }
 
         get_current_product_Detail();
-        count=cart_item_count();
+//        count=cart_item_count();
 
+        check_for_cart();
         add_cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                 add_item_to_cart(prod_id) ;
+
+                add_item_to_cart(prod_id) ;
             }
         });
 
     }
 
+    private void check_for_cart() {
+        StringRequest stringRequest2=new StringRequest(Request.Method.POST, url3+Uid, new Response.Listener<String>(){
+            @Override
+            public void onResponse(String response) {
+
+                JSONObject post_data;
+                try {
+                    JSONObject jsonObject=new JSONObject(response);
+                    String success=jsonObject.getString("success");
+                    JSONArray jsonArray=jsonObject.getJSONArray("addedCarts");
+                    for(int i=0;i<jsonArray.length();i++) {
+                        post_data = jsonArray.getJSONObject(i);
+                        String product_id=post_data.getString("product_id");
+                        if(product_id.equals(prod_id)){
+                            add_cart.setText("Added To Cart");
+                            add_cart.setClickable(false);
+                        }
+/*
+ {"id":"100","product_id":"2","product_name":"Demo1","price":"200.00","qty":"1","user_id":"51","is_active":"1"}*/
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }}
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("dashboard_error_res",error+"");
+                Toast.makeText(ProductDetail.this, "Server Connection Failed!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        RquestHandler.getInstance(ProductDetail.this).addToRequestQueue(stringRequest2);
+
+    }
+
     private boolean add_item_to_cart(String Current_prod_id) {
 
-        Log.e("dashboardscreen", url2+Current_prod_id+"/"+Uid);
-        StringRequest stringRequest=new StringRequest(Request.Method.POST, url2+Current_prod_id+"/"+Uid, new Response.Listener<String>(){
+        add_cart.setText("Added To Cart");
+        add_cart.setClickable(false);
+        if (orderSample.isChecked()){
+            sample="on";
+        }
+        else sample="off";
+        String quantity=prodruct_quantity.getText().toString().trim();
+
+        Log.e("dashboardscreen", url2+Current_prod_id+"/"+quantity+"/"+sample+"/"+Uid);
+        StringRequest stringRequest=new StringRequest(Request.Method.POST, url2+Current_prod_id+"/"+quantity+"/"+sample+"/"+Uid, new Response.Listener<String>(){
             @Override
             public void onResponse(String response) {
                 Log.d("dashboard_cart:",response);
-                count++;
+//                count++;
                 invalidateOptionsMenu();
                 Toast.makeText(ProductDetail.this, "Cart response: "+response, Toast.LENGTH_SHORT).show();
             }
@@ -149,10 +216,13 @@ public class ProductDetail extends AppCompatActivity {
         return false;
     }
 
+/*
 
     public int cart_item_count(){
-      /*
-        * get cart item count*/
+      */
+/*
+        * get cart item count*//*
+
         StringRequest stringRequest2=new StringRequest(Request.Method.POST, url3+Uid, new Response.Listener<String>(){
             @Override
             public void onResponse(String response) {
@@ -167,8 +237,10 @@ public class ProductDetail extends AppCompatActivity {
                         count++;//counting total element in cart
                         Log.d(Tag,"count value="+count);
                         invalidateOptionsMenu();
+*/
 /*
-* {"id":"100","product_id":"2","product_name":"Demo1","price":"200.00","qty":"1","user_id":"51","is_active":"1"}*/
+* {"id":"100","product_id":"2","product_name":"Demo1","price":"200.00","qty":"1","user_id":"51","is_active":"1"}*//*
+
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -187,6 +259,7 @@ public class ProductDetail extends AppCompatActivity {
 
         return count;
     }
+*/
 
     private void get_current_product_Detail() {
 
@@ -213,6 +286,7 @@ public class ProductDetail extends AppCompatActivity {
                          manufacturing = post_data.getString("manufacturing");
                          qty = post_data.getString("qty");
                          sample = post_data.getString("sample");
+                         sample_price=post_data.getString("sample_price");
                          unit = post_data.getString("unit");
                          color = post_data.getString("color");
                          description = post_data.getString("description");
@@ -222,79 +296,31 @@ public class ProductDetail extends AppCompatActivity {
                          amount = post_data.getString("amount");
                          percent = post_data.getString("percent");
                     }
+
+                    if(manufacturing.equals("1")){
+                        p_available.setText("Manufacturing");
+                    }
+                    else
+                    p_available.setText("Available : "+qty);
+
+                    text_sample_price.setText("Sample price : "+sample_price);
+
                     range_id=rangId;
+
                     slider_image = Arrays.asList(product_images.split(","));
                     p_name.setText(product_name);
                     desc.setText(description);
-                    if (sample.equals("1")){}
-                   // t_sample.setText(price+" "+unit+"\nSample Available");
-                    else
-                        t_sample.setVisibility(View.GONE);
-                   // prize.setText(price+" "+unit+"\nSample not Available");
 
                     tcolor.setText("Available in Color: "+color);
-                 //   tbrand.setText("BRAND: "+brand);
+
                     category.setText("CATEGORY: "+category_name);
                     p_code.setText("ProductCode: "+product_code);
-                    p_available.setText("Available : "+qty);
                     t_unit.setText(unit);
+                    t_unit2.setText(unit);
                     prize.setText(price);
                     init();
                     addBottomDots(0);
-                    apply_ranges();
-/*
-* {"success":"true","product":[{"id":"1","category_name":"","product_name":"Demo1","brand":"normal","product_code":"855577",
-* "price":"200.00","manufacturing":"0","qty":"0","sample":"1","unit":"","color":"Red,Grey","description":"This is a demo product.",
-* "product_images":"200.png,cluebix (1).png,cluebix.png","user_id":"1","rangId":"0","amount":"10.00","percent":"%"}]}*/
-
-/*
-                    JSONArray jsonArray=new JSONArray(response);
-                    for(int i=0;i<jsonArray.length();i++) {
-                        post_data = jsonArray.getJSONObject(i);
-                        if(post_data.getString("id").equals(prod_id)) {
-                            String product_id = post_data.getString("id");
-                            String product_name = post_data.getString("product_name");
-                            String brand = post_data.getString("brand");
-                            String description = post_data.getString("description");
-                            String product_code = post_data.getString("product_code");
-                            String color = post_data.getString("color");
-                            String price = post_data.getString("price");
-                            String first_min = post_data.getString("first_min");
-                            String first_max = post_data.getString("first_max");
-                            String first_price = post_data.getString("first_price");
-                            String second_min = post_data.getString("second_min");
-                            String second_max = post_data.getString("second_max");
-                            String second_price = post_data.getString("second_price");
-                            String third_min = post_data.getString("third_min");
-                            String third_max = post_data.getString("third_max");
-                            String third_price = post_data.getString("third_price");
-                            String product_images = post_data.getString("product_images");
-                            String created_date = post_data.getString("created_date");
-
-                            slider_image = Arrays.asList(product_images.split(","));
-                            p_name.setText(product_name);
-                            desc.setText(description);
-                            prize.setText("Rs. "+price);
-                            tcolor.setText("Available in Color: "+color);
-                            tbrand.setText("BRAND: "+brand);
-                            first1.setText(first_min);
-                            first2.setText(first_max);
-                            first3.setText(first_price);
-                            second1.setText(second_min);
-                            second2.setText(second_max);
-                            second3.setText(second_price);
-                            third1.setText(third_min);
-                            third2.setText(third_max);
-                            third3.setText(third_price);
-                            p_code.setText("ProductCode: "+product_code);
-
-                            init();
-                            addBottomDots(0);
-                            break;
-                        }
-
-                     }
-*/
+                    apply_ranges(product_id);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -313,20 +339,26 @@ public class ProductDetail extends AppCompatActivity {
 
     }
 
-    private void apply_ranges() {
-        String rangeid="24";//range_id;
+    private void apply_ranges(String pro_id) {
+        final String rangeid="24";//range_id;
 
 
-        StringRequest stringRequest=new StringRequest(Request.Method.POST, url4+rangeid, new Response.Listener<String>(){
+        StringRequest stringRequest=new StringRequest(Request.Method.POST, url4+pro_id, new Response.Listener<String>(){
             @Override
             public void onResponse(String response) {
-                Log.d(Tag,"product ranges="+response);
+                Log.d(Tag,"product ranges="+response+"\nrangeid="+rangeid);
 /*{"success":"true","price_range":[{"id":"3","created_by":"39","pid":"24",
 "product_id":"24","min":"1","max":"2","price_range":"235.00"}]}*/
                     JSONObject jsonObj;
                 try {
                     jsonObj=new JSONObject(response);
                     String success=jsonObj.getString("success");
+                /*    String error="";error=jsonObj.getString("error");
+                    if (error.equals("true")){
+                        LinearLayout layout=(LinearLayout)findViewById(R.id.Linear_discount);
+                        layout.setVisibility(View.GONE);
+                    }*/
+
                     JSONArray array=jsonObj.getJSONArray("price_range");
                     for(int i=0;i<array.length();i++){
                         JSONObject data=array.getJSONObject(i);
@@ -338,16 +370,25 @@ public class ProductDetail extends AppCompatActivity {
                         String max=data.getString("max");
                         String price_range=data.getString("price_range");
 
-                        Log.d(Tag,"id=+"+id+" range 1="+min+" 2="+max+" 3="+price_range);
+                        Log.d(Tag,"id="+id+" range 1="+min+" 2="+max+" 3="+price_range);
+
+                        min1.add(min);
+                        max1.add(max);
+                        price1.add(price_range);
 
                     }
 
+                    if (!min1.isEmpty()) {
+                        create_table();
+                    }
 
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
 
             }
+
+
         }, new Response.ErrorListener() {
         @Override
         public void onErrorResponse(VolleyError error) {
@@ -357,8 +398,73 @@ public class ProductDetail extends AppCompatActivity {
         });
         RquestHandler.getInstance(ProductDetail.this).addToRequestQueue(stringRequest);
 
+        }
+
+    private void create_table() {
+
+        final TableLayout stk = (TableLayout) findViewById(R.id.tableLayout1);
+        TableRow tbrow0 = new TableRow(this);
+
+
+        TextView tv1 = new TextView(this);
+        tv1.setText("From");
+        tv1.setTextColor(Color.BLACK);
+        tv1.setGravity(Gravity.CENTER);
+        tv1.setTypeface(null, Typeface.BOLD_ITALIC);
+        tbrow0.addView(tv1);
+
+        TextView tv2 = new TextView(this);
+        tv2.setText("Upto");
+        tv2.setTextColor(Color.BLACK);
+        tv2.setGravity(Gravity.CENTER);
+        tv2.setTypeface(null, Typeface.BOLD_ITALIC);
+        tbrow0.addView(tv2);
+
+        TextView tv3 = new TextView(this);
+        tv3.setText("Price");
+        tv3.setTextColor(Color.BLACK);
+        tv3.setGravity(Gravity.CENTER);
+        tv3.setTypeface(null, Typeface.BOLD_ITALIC);
+        tbrow0.addView(tv3);
+
+        tbrow0.setBackgroundResource(R.color.colorExtra);
+        stk.addView(tbrow0);
+
+        for(int i=0;i<min1.size();i++){
+
+            TableRow tbrow = new TableRow(getApplicationContext());
+
+
+            TextView t2v = new TextView(getApplicationContext());
+            t2v.setText(min1.get(i));
+            t2v.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+            t2v.setGravity(Gravity.CENTER);
+            t2v.setBackgroundResource(R.drawable.table_row);
+            tbrow.addView(t2v);
+
+            TextView t3v = new TextView(getApplicationContext());
+            t3v.setText(max1.get(i));
+            t3v.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+            t3v.setGravity(Gravity.CENTER);
+            t3v.setBackgroundResource(R.drawable.table_row);
+            tbrow.addView(t3v);
+
+            TextView t4v = new TextView(getApplicationContext());
+            t4v.setText(price1.get(i));
+            t4v.setTextColor(Color.BLACK);
+            t4v.setGravity(Gravity.CENTER);
+            t4v.setBackgroundResource(R.drawable.table_row);
+            tbrow.addView(t4v);
+
+            stk.addView(tbrow);
+
+
+
 
         }
+
+
+    }
 
 
     private void init() {
@@ -405,8 +511,10 @@ public class ProductDetail extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_cart, menu);
 
         MenuItem menuItem = menu.findItem(R.id.action_cart);
+/*
         menuItem.setIcon(buildCounterDrawable(count, R.drawable.ic_shopping_cart));
 
+*/
         return true;
     }
     @Override

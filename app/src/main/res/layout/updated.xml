@@ -385,35 +385,5 @@
 </android.support.v4.widget.NestedScrollView>
 
 
-
-
-<!--
-    <android.support.design.widget.BottomNavigationView
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:layout_alignParentBottom="true"
-        app:menu="@menu/bottom_navigation"
-        android:background="?android:attr/windowBackground"
-        >-->
-
-        <!--<android.support.design.widget.FloatingActionButton
-
-            android:id="@+id/upload_product_nav_button"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:src="@drawable/ic_upload_white_24dp"
-            app:fabSize="normal"
-            android:layout_marginBottom="20dp"
-            android:layout_gravity="center"
-
-
-            />-->
-<!--
-
-    </android.support.design.widget.BottomNavigationView>
-
-
--->
-
     </RelativeLayout>
 

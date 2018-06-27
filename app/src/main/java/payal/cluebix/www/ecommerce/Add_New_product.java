@@ -44,6 +44,7 @@ import com.androidbuts.multispinnerfilter.SpinnerListener;
 import com.darsh.multipleimageselect.activities.AlbumSelectActivity;
 import com.darsh.multipleimageselect.helpers.Constants;
 import com.darsh.multipleimageselect.models.Image;
+import com.itextpdf.text.pdf.parser.Line;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import org.apache.http.HttpEntity;
@@ -122,15 +123,15 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
     String url_Unit_fetch=Base_url.List_all_unit;
     String url_Company_fetch=Base_url.List_all_company;
 
-    CheckBox sample_availability;
+    CheckBox sample_availability,check_manufacture;
     Button submit;
     EditText edit_P_name,edit_price,edit_sample_price,edit_qty,edit_desc;
     SearchableSpinner spinner_category,spin_company,spin_unit;
     public static String selected_category=null;
     public static String selected_company=null;
-    public static String selected_unit=null;
+    public static String selected_unit1=null;
     public static String selected_description=null;
-    public static String sample_state="0";
+    public static String sample_state="0",manufacture_state="0";
 
     public static int editTextId=0;
     ArrayList<Integer> min_range=new ArrayList<>();
@@ -151,7 +152,7 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
 
         vp=(ViewPager)findViewById(R.id.vp1);
         button_image_add=(TextView)findViewById(R.id.button_image_add);
-        l2_dots=(LinearLayout)findViewById(R.id.l2_dots);
+        l2_dots=(LinearLayout)findViewById(R.id.ll_dots);
         submit=(Button)findViewById(R.id.submit_new_prod);
         spin_color=(MultiSpinnerSearch)findViewById(R.id.spin_color);
         spinner_category=(SearchableSpinner) findViewById(R.id.spin_category);
@@ -163,6 +164,7 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
         edit_sample_price=(EditText)findViewById(R.id.sample_price);
         sample_availability=(CheckBox)findViewById(R.id.check_sample);
         edit_desc=(EditText)findViewById(R.id.edit_desc);
+        check_manufacture=(CheckBox)findViewById(R.id.check_manufacture);
 
         session=new SessionManager(getApplicationContext());
         HashMap<String, String> user = session.getUserDetails();
@@ -195,9 +197,23 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (sample_availability.isChecked()){
                     sample_state="1";
-                    edit_sample_price.setVisibility(View.VISIBLE);
+                    LinearLayout sample_layout=(LinearLayout)findViewById(R.id.linear_sample);
+                    sample_layout.setVisibility(View.VISIBLE);
                 }
                 else sample_state="0";
+                Log.d(Tag,"sample state="+sample_state);
+
+            }
+        });
+        check_manufacture.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(check_manufacture.isChecked()){
+                    manufacture_state="1";
+
+                }
+                else manufacture_state="0";
+                Log.d(Tag,"manufacture state="+manufacture_state);
             }
         });
 
@@ -253,7 +269,7 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
 
         if (view.getId()==R.id.submit_new_prod){
             if(!(selected_category.equals(null)||edit_P_name.getText().toString().isEmpty()||selected_company.equals(null)
-                    ||edit_price.getText().toString().isEmpty()||selected_unit.equals(null))) {
+                    ||edit_price.getText().toString().isEmpty()||selected_unit1.equals(null))) {
 
                     new Add_New_product.UploadFileToServer().execute();
             }else{
@@ -278,7 +294,7 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
                 selected_company=company_name_list.get(i);
                 break;
             case R.id.spin_unit:
-                selected_unit=unit_name_list.get(i);
+                selected_unit1=unit_name_list.get(i);
                 break;
         }
     }
@@ -618,7 +634,7 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
                     }
 
                     for (int j = 0; j < min_range_edit.size(); j++) {
-                        //Log.d("ranges", "min_" + j + "=" + min_range_edit.get(j).getText());
+                        Log.d("ranges", "min_" + j + "=" + min_range_edit.get(j).getText());
                         if(!(min_range_edit.get(j).getText().equals("")||max_range_edit.get(j).getText().equals("")
                         ||price_range_edit.get(j).getText().equals(""))) {
                             entity.addPart("min[]", new StringBody("" + min_range_edit.get(j).getText()));
@@ -639,7 +655,7 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
                     entity.addPart("qty", new StringBody(edit_qty.getText().toString().trim()));
                     entity.addPart("sample", new StringBody(sample_state));
                     entity.addPart("sample_price", new StringBody(edit_sample_price.getText().toString().trim()));
-                    entity.addPart("unit", new StringBody(selected_unit));
+                    entity.addPart("unit", new StringBody(selected_unit1));
 
 
                     totalSize = entity.getContentLength();

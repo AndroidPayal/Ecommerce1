@@ -52,7 +52,7 @@ public class Recycler_item_adapter extends RecyclerView.Adapter<Recycler_item_ad
     @Override
     public ProductViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(mCtx);
-        View view = inflater.inflate(R.layout.recycler_item_design, null);
+        View view = inflater.inflate(R.layout.dashboard_items_, null);
         return new ProductViewHolder(view);
     }
 
@@ -65,15 +65,19 @@ public class Recycler_item_adapter extends RecyclerView.Adapter<Recycler_item_ad
         holder.Product_name.setText(a.getProduct_name());
 
         if(!a.getManufacturing().equals("0"))
-        holder.text_manufact.setText("Manufacturing");
-        if(!a.getSample().equals("0"))
-        holder.text_sample.setText("Sample Available");
+            holder.text_manufact.setText("Manufacturing");
+        else{
+            holder.text_manufact.setText("In Stock : dummy");
+        }
 
-        if(a.getCart_disable()==1){
+        if(!a.getSample().equals("0"))
+            holder.text_sample.setVisibility(View.VISIBLE);
+
+    /*    if(a.getCart_disable()==1){
             holder.add_to_cart.setText("Added to Cart");
             holder.add_to_cart.setClickable(false);
         }
-
+*/
         init(slider_image, holder);
         addBottomDots( holder,0);
 
@@ -123,7 +127,7 @@ public class Recycler_item_adapter extends RecyclerView.Adapter<Recycler_item_ad
         ViewPager vp_slider;
         LinearLayout ll_dots;
         TextView textprize,new_tag, text_manufact,text_sample;
-        TextView Product_name,view_detail,add_to_cart;
+        TextView Product_name,view_detail;
      //   ProgressBar progress;
 
         public ProductViewHolder(View itemView) {
@@ -134,23 +138,31 @@ public class Recycler_item_adapter extends RecyclerView.Adapter<Recycler_item_ad
             textprize=itemView.findViewById(R.id.text_prize);
             Product_name=itemView.findViewById(R.id.product_name);
             view_detail=itemView.findViewById(R.id.viewDetail);
-            add_to_cart=itemView.findViewById(R.id.add_to_cart);
+         //   add_to_cart=itemView.findViewById(R.id.add_to_cart);
             new_tag=itemView.findViewById(R.id.new_tag);
           //  progress=itemView.findViewById(R.id.progress);
             text_manufact=itemView.findViewById(R.id.manufacture);
             text_sample=itemView.findViewById(R.id.sample);
 
             view_detail.setOnClickListener(this);
+            text_sample.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (clickListener!=null){
+                        clickListener.sampleClicked(view,getPosition());
+                    }
+                }
+            });
             itemView.setOnLongClickListener(this);
 
-            add_to_cart.setOnClickListener(new View.OnClickListener() {
+        /*    add_to_cart.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (clickListener!=null){
                         clickListener.Add_to_cart(view,getPosition());
                     }
                 }
-            });
+            });*/
            }
 
         @Override
@@ -172,7 +184,8 @@ public class Recycler_item_adapter extends RecyclerView.Adapter<Recycler_item_ad
         public interface ClickListener{
              void itemClicked(View view, int position);
              void onLongClick(View view, int position);
-             void Add_to_cart(View view, int position);
+            void sampleClicked(View view, int position);
+            void Add_to_cart(View view, int position);
         }
 
     private void init(List<String> slider_image,final ProductViewHolder holder) {

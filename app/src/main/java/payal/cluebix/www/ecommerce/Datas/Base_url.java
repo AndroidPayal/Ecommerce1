@@ -10,7 +10,7 @@ public class Base_url {
     public static final String Login_url=base_url+"ApiController/checkCredential";
     public static final String Registration_url=base_url+"UserController/registerByCandidate";
 
-    public static final String Dashboard_url=base_url+"ApiController/shopUnit/";/*/user_id*/
+    public static final String Dashboard_url=base_url+"ApiController/shopUnit";/*/user_id*/
     public static final String Add_product_url=base_url+"ApiController/storeProduct/";/*/userid*/
 
     public static final String Product_Detail_url=base_url+"ApiController/productDetail/";/*/product_id*/
@@ -19,7 +19,7 @@ public class Base_url {
     public static final String Update_Cart_quantity=base_url+"ApiController/updateShoppingCart/";//cart_id/user_id/quantity
     public static final String Remove_cart_product=base_url+"ApiController/removeCartProduct/";/*cart_id / current user id*/
     public static final String All_Cart_element=base_url+"ApiController/cartProduct/";/*/user_id*/
-    public static final String Add_prod_to_Cart=base_url+"ApiController/shoppingCart/";/*productId/userid*/
+    public static final String Add_prod_to_Cart=base_url+"ApiController/shoppingCart/";/*productId/quantity/sample/userid*/
     public static final String My_cart_item_count=base_url+"ApiController/addedCartList/";/*/user_id*/
 
     public static final String Update_user_profile=base_url+"ApiController/preparingUserByAdmin/";/*/user_id*/
@@ -44,7 +44,7 @@ public class Base_url {
     public static final String List_all_category=base_url+"ApiController/getCategories";
     public static final String Add_new_category=base_url+"ApiController/storeCategory";
 
-    public static final String Product_price_range=base_url+"ApiController/getPriceRange/";/*range id*/
+    public static final String Product_price_range=base_url+"ApiController/getPriceRange/";/*product id*/
 
 
     public static  String id ="";

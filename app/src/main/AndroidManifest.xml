@@ -118,7 +118,10 @@
         <activity
             android:name=".Category_list"
             android:parentActivityName=".Add_New_product" />
+
         <activity android:name=".CenterActivity"
+            android:clearTaskOnLaunch="true"
+            android:launchMode="singleTask"
             android:theme="@style/AppThemes2" />
 
     </application>

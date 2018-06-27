@@ -320,6 +320,14 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
     }
 
     @Override
+    public void sampleClicked(View view, int position) {
+        Intent i=new Intent(getActivity(),ProductDetail.class);
+        i.putExtra("selected_prod_id",Product_id_array.get(position));
+        i.putExtra("ParentScreen","01");
+        startActivity(i);
+    }
+
+    @Override
     public void Add_to_cart(View view, int position) {
         add_item_to_cart(Product_id_array.get(position),position);
     }
