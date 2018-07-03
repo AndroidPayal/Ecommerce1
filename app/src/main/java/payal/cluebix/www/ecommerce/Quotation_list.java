@@ -36,7 +36,7 @@ import payal.cluebix.www.ecommerce.Datas.quotation1;
 import payal.cluebix.www.ecommerce.Handlers.RquestHandler;
 import payal.cluebix.www.ecommerce.Handlers.SessionManager;
 
-public class Quotation_list extends AppCompatActivity implements View.OnClickListener,Quote_list_adapter.ClickListener {
+public class Quotation_list extends AppCompatActivity implements Quote_list_adapter.ClickListener {
 
     Button createpdf;
     RecyclerView recycler_quote;
@@ -56,7 +56,7 @@ public class Quotation_list extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.drawer_quote);
 
-        createpdf=(Button)findViewById(R.id.createPdf);
+        //createpdf=(Button)findViewById(R.id.createPdf);
         recycler_quote=(RecyclerView)findViewById(R.id.recycler_quote);
         recycler_quote.setHasFixedSize(true);
         recycler_quote.setLayoutManager(new LinearLayoutManager(Quotation_list.this));
@@ -85,7 +85,6 @@ public class Quotation_list extends AppCompatActivity implements View.OnClickLis
         recycler_quote.setAdapter(adapter);
 
 
-        createpdf.setOnClickListener(this);
     }
 
     private void getOldElements() {
@@ -99,20 +98,21 @@ public class Quotation_list extends AppCompatActivity implements View.OnClickLis
                     JSONArray jsonArray=new JSONArray(response);
                     for(int i=0;i<jsonArray.length();i++) {
                         post_data = jsonArray.getJSONObject(i);
-/*{"id":"2","prefix":"Q-","quote_number":"2","user_id":"33","created_date":"2018-04-12","name":"payal","mobile":"8962607775"}*/
-
+/*[{"id":"110","prefix":"Q-","quote_number":"32","user_id":"39","created_date":"2018-06-27","expiry_date":
+"2018-07-04","name":"cluebix","mobile":"8149977891"}]*/
                         String id = post_data.getString("id");
                         String prefix = post_data.getString("prefix");
                         String quote_number = post_data.getString("quote_number");
                         String user_id = post_data.getString("user_id");
                         String created_date = post_data.getString("created_date");
+                        String expiry_date=post_data.getString("expiry_date");
                         String name = post_data.getString("name");
                         String mobile = post_data.getString("mobile");
 
                             product_id_array.add(id);
 
                             product_item.add(new quotation1(id, prefix,quote_number,user_id
-                                    ,created_date,name,mobile));
+                                    ,created_date,expiry_date,name,mobile));
 
                     }
 
@@ -131,12 +131,6 @@ public class Quotation_list extends AppCompatActivity implements View.OnClickLis
         });
         RquestHandler.getInstance(Quotation_list.this).addToRequestQueue(stringRequest);
 
-    }
-
-    @Override
-    public void onClick(View view) {
-        Toast.makeText(this, "creating pdf", Toast.LENGTH_SHORT).show();
-        //createandDisplayPdf();
     }
 
 
@@ -165,6 +159,7 @@ public class Quotation_list extends AppCompatActivity implements View.OnClickLis
                 switch (id) {
                     case R.id.home:
                         Intent i= new Intent(Quotation_list.this,CenterActivity.class);
+                        i.putExtra("cartTransition","dash");
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(i);
@@ -186,11 +181,20 @@ public class Quotation_list extends AppCompatActivity implements View.OnClickLis
                         break;
                     case R.id.cart:
 
-                        Intent intent = new Intent(Quotation_list.this,CenterActivity.class);
+                        Intent intent = new Intent(Quotation_list.this, CenterActivity.class);
+                       // intent.putExtra("cartscreen", true);
+                        intent.putExtra("cartTransition","cart");
+Log.d("center_screen",intent+" = intent value");
+                        startActivity(intent);
+                      /*  Intent intent = new Intent(Quotation_list.this,CenterActivity.class);
 
                         intent.putExtra("cartTransition",true);
-
                         startActivity(intent);
+*/
+                      /*  Bundle bundle = new Bundle();
+                        bundle.putInt("cartTransition", 1);
+
+                        intent.putExtras(bundle);*/
 //
 //                        Fragment newFragment = new CartFragment();
 //                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

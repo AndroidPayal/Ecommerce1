@@ -6,67 +6,71 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/colorPrimary"
-    tools:context="payal.cluebix.www.ecommerce.Cart">
+   >
 
-<!--<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="?attr/actionBarSize"
-    ></LinearLayout>-->
-<LinearLayout
-    android:id="@+id/linear_subtotal"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:layout_marginTop="?attr/actionBarSize"
-    android:background="@color/White"
 
-    >
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:paddingLeft="8dp"
-    android:paddingRight="8dp"
-    android:paddingBottom="8dp">
-    <TextView
-        android:id="@+id/cart_subtotal1"
-        android:layout_width="wrap_content"
-        android:textSize="19dp"
-        android:layout_height="wrap_content"
-        android:text="Cart Subtotal (n items): "
-        android:textColor="@color/Black"/>
-    <TextView
-        android:id="@+id/cart_subtotal2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#de1a1a"
-        android:layout_marginHorizontal="30dp"
-        android:textStyle="bold|italic"
-        android:textSize="19dp"
-        android:text="Rs.n.00"/>
-</LinearLayout>
-
-    <TextView
-        android:id="@+id/t_checkout"
+    <LinearLayout
+        android:id="@+id/linear_subtotal"
         android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:text="Generate Quotation"
-        android:gravity="center"
-        android:textColor="#fff"
-        android:textSize="18dp"
-        android:elevation="3dp"
-        android:textAllCaps="true"
-        android:layout_margin="5dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:background="@color/White"
+        android:orientation="vertical"
 
-        android:background="@drawable/gradient_background"/>
+        >
 
-</LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+           >
+
+
+            <TextView
+                android:layout_weight="1"
+                android:id="@+id/cart_subtotal1"
+                android:layout_width="0dp"
+                android:gravity="right"
+                android:layout_height="wrap_content"
+                android:text="Cart Subtotal (n items): "
+                android:textColor="#747171"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
+
+            <TextView
+                android:id="@+id/cart_subtotal2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:layout_weight="1"
+                android:text="Rs.n.00"
+                android:textColor="#de1a1a"
+                android:textSize="19dp"
+                android:textStyle="bold|italic" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/t_checkout"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="1dp"
+            android:background="@drawable/gradient_background"
+            android:elevation="3dp"
+            android:gravity="center"
+            android:text="Generate Quotation"
+            android:textAllCaps="true"
+            android:textColor="#fff"
+
+            android:textSize="18dp" />
+
+    </LinearLayout>
+
     <View
         android:layout_width="fill_parent"
         android:layout_height="2dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="2dp"
         android:background="#c0c0c0"/>
 
     <android.support.v7.widget.RecyclerView

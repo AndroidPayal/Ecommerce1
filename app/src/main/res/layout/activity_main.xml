@@ -12,17 +12,20 @@
     android:layout_width="match_parent"
     android:layout_height="0dp"
     android:layout_weight="1"
-    android:background="@drawable/splash7">
+   >
 
 
   <ImageView
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:src="@drawable/logo"
       android:scaleType="centerInside"
       android:layout_margin="7dp"
+      android:src="@drawable/logo2"
       />
-
+<!--
+     android:background="@drawable/splash7"
+  android:src="@drawable/logo2"
+-->
 </FrameLayout>
 
 

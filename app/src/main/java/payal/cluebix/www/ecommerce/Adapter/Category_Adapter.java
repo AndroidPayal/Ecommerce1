@@ -1,5 +1,6 @@
 package payal.cluebix.www.ecommerce.Adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -7,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,7 +37,7 @@ public class Category_Adapter extends RecyclerView.Adapter<Category_Adapter.Prod
     @Override
     public Category_Adapter.ProductViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(mCtx);
-        View view = inflater.inflate(R.layout.category_adapter, null);
+        View view = inflater.inflate(R.layout.list_layout_category, null);
         return new Category_Adapter.ProductViewHolder(view);
     }
 
@@ -49,16 +52,13 @@ public class Category_Adapter extends RecyclerView.Adapter<Category_Adapter.Prod
         holder.options.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PopupMenu popup = new PopupMenu(mCtx,holder.options);
-                //inflating menu from xml resource
+        /*        PopupMenu popup = new PopupMenu(mCtx,holder.options);
                 popup.inflate(R.menu.menu_unit);
-                //adding click listener
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.unit_options1_edit:
-                                //handle menu1 click
                                 Toast.makeText(mCtx, "edit at "+position, Toast.LENGTH_SHORT).show();
                                 return true;
                             default:
@@ -66,8 +66,14 @@ public class Category_Adapter extends RecyclerView.Adapter<Category_Adapter.Prod
                         }
                     }
                 });
+                popup.show();*/
 
-                popup.show();
+            /*    AlertDialog.Builder builder = new AlertDialog.Builder(mCtx);
+                LayoutInflater inflater = LayoutInflater.from(mCtx);
+                View dialogView = inflater.inflate( R.layout.popup_add_category_list,null);
+                builder.setView(dialogView);
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();*/
             }
         });
 
@@ -92,14 +98,15 @@ public class Category_Adapter extends RecyclerView.Adapter<Category_Adapter.Prod
 
     class ProductViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        TextView s_no,name,options,description;
+        TextView s_no,name,description;
+        ImageView options;
 
         public ProductViewHolder(View itemView) {
             super(itemView);
             s_no=(TextView)itemView.findViewById(R.id.category_Sno);
             name=(TextView)itemView.findViewById(R.id.category_name);
             description=(TextView)itemView.findViewById(R.id.category_desc);
-            options=(TextView)itemView.findViewById(R.id.category_options);
+            options=(ImageView) itemView.findViewById(R.id.category_options);
 
         }
 

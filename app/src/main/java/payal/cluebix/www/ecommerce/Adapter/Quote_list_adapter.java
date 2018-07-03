@@ -30,7 +30,7 @@ public class Quote_list_adapter extends RecyclerView.Adapter<Quote_list_adapter.
     @Override
     public Quote_list_adapter.ProductViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater inflater = LayoutInflater.from(mCtx);
-            View view = inflater.inflate(R.layout.activity_quote_list_adapter, null);
+            View view = inflater.inflate(R.layout.activity_quote_list_new, null);
             return new Quote_list_adapter.ProductViewHolder(view);
             }
 
@@ -38,9 +38,9 @@ public class Quote_list_adapter extends RecyclerView.Adapter<Quote_list_adapter.
     public void onBindViewHolder(Quote_list_adapter.ProductViewHolder holder, int position) {
             quotation1 a= productList.get(position);
 
-            holder.t_userid.setText("Your ID:"+a.getUser_id());
+            holder.t_userid.setText("Expire:"+a.getExpiry_date());
             holder.t_quoteid.setText("Quotation ID:"+a.getQuote_number());
-            holder.t_date.setText("Quotation Date:"+a.getCreated_date());
+            holder.t_date.setText(""+a.getCreated_date());
             }
 
     public void setClickListener(Quote_list_adapter.ClickListener clickListener){

@@ -11,13 +11,7 @@
         android2:icon="@drawable/ic_shopping_cart"
         android2:title="cart" />
 
-    <item
-        android2:id="@+id/action_search"
-        android2:orderInCategory="101"
-        app:actionViewClass="android.support.v7.widget.SearchView"
-        app:showAsAction="always"
-        android2:icon="@drawable/ic_left_arrow"
-        android2:title="" />
+
 
 
 </menu>

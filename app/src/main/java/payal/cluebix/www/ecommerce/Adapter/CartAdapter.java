@@ -48,11 +48,15 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ProductViewHol
        // holder.imagecart.setImageBitmap(a.getProduct_images().get(0));
         holder.name_text3.setText(a.getProduct_nam());
         holder.quantity.setText(a.getQty());
-        holder.quant.setText("Qty : "+a.getQty());
-        holder.price.setText("Price : "+a.getPrice());
+        holder.quant.setText("Qty:"+a.getQty());
+        holder.price.setText("Price:"+a.getPrice());
         holder.desc.setText(a.getDescription());
-        holder.Avl.setText("Avl : ");
-        holder.sample.setText("SampleN");
+        if (a.getManufacturing().equals("0"))
+            holder.Avl.setText("Avl:"+a.getQuantity());
+        else
+            holder.Avl.setText("Owner");
+
+        holder.sample.setText("Sample:"+a.getSamplePrice());
 
         Picasso.with(mCtx)
                 .load(Base_url.IMAGE_DIRECTORY_NAME+a.getProduct_images().get(0))

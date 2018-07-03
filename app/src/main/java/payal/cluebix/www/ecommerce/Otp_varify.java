@@ -43,6 +43,7 @@ public class Otp_varify extends AppCompatActivity {
                         public void run() {
                             session.createLoginSession(Base_url.id, Base_url.name,Base_url.username,Base_url.email,Base_url.mobile,Base_url.created_date,Base_url.updated_date);
                             Intent i = new Intent(Otp_varify.this, CenterActivity.class);
+                            i.putExtra("cartTransition","dash");
                             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_SINGLE_TOP);
                             startActivity(i);

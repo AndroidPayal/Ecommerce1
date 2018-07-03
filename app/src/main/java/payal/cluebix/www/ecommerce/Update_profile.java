@@ -138,6 +138,7 @@ public class Update_profile extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i=new Intent(Update_profile.this,CenterActivity.class);
+                i.putExtra("cartTransition","dash");
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(i);

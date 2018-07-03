@@ -20,10 +20,11 @@ public class quotation2 {
     String product_name;
     String price;
     String qty,description,brand,user_id;//,product_images
+    String sample,sample_price;
 
     public quotation2(String id, String quote_id, String shopping_cart_id
             , String user_id, String product_id, String product_name, String price,String qty,String description
-    ,String brand){
+    ,String brand, String sample,String sample_price){
         this.id=id;
         this.quote_id=quote_id;
         this.shopping_cart_id=shopping_cart_id;
@@ -34,7 +35,17 @@ public class quotation2 {
         this.qty=qty;
         this.description=description;
         this.brand=brand;
+        this.sample=sample;
+        this.sample_price=sample_price;
        // this.product_images=product_images;
+    }
+
+    public String getSample() {
+        return sample;
+    }
+
+    public String getSample_price() {
+        return sample_price;
     }
 
     public String getId() {

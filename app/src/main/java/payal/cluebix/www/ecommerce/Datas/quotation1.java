@@ -12,18 +12,23 @@ public class quotation1 {
     String prefix;
     String quote_number;
     String user_id;
-    String created_date;
+    String created_date,expiry_date;
     String name;
     String mobile;
 
-    public quotation1(String id, String prefix, String quote_number, String user_id, String created_date, String name, String mobile){
+    public quotation1(String id, String prefix, String quote_number, String user_id, String created_date, String expiry_date, String name, String mobile){
         this.id=id;
         this.prefix=prefix;
         this.quote_number=quote_number;
         this.user_id=user_id;
         this.created_date=created_date;
+        this.expiry_date=expiry_date;
         this.name=name;
         this.mobile=mobile;
+    }
+
+    public String getExpiry_date() {
+        return expiry_date;
     }
 
     public String getId() {

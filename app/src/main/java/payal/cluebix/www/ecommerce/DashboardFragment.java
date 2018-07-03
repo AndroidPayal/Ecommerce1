@@ -112,14 +112,14 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
 
 
         slider_image.clear();
-        slider_image.add(((BitmapDrawable) getResources().getDrawable(R.drawable.people_login1)).getBitmap());
+        slider_image.add(((BitmapDrawable) getResources().getDrawable(R.drawable.sl4)).getBitmap());
 
 /*
 
         slider_image.add(((BitmapDrawable) getResources().getDrawable(R.drawable.people_login1)).getBitmap());
-        slider_image.add(((BitmapDrawable) getResources().getDrawable(R.drawable.logo)).getBitmap());
+        slider_image.add(((BitmapDrawable) getResources().getDrawable(R.drawable.logo2)).getBitmap());
         slider_image.add(((BitmapDrawable) getResources().getDrawable(R.drawable.people_login)).getBitmap());
-        slider_image.add(((BitmapDrawable) getResources().getDrawable(R.drawable.logo)).getBitmap());
+        slider_image.add(((BitmapDrawable) getResources().getDrawable(R.drawable.logo2)).getBitmap());
 */
 
         setHasOptionsMenu(true);
@@ -153,13 +153,13 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setNestedScrollingEnabled(false);
 
-        get_old_Element();
+
         count=cart_item_count();
+        get_old_Element();
 
         adapter= new Recycler_item_adapter(getActivity(),product_item);
         adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
-
 
         return v;
     }
@@ -203,9 +203,9 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
     private void get_old_Element() {
         product_item = new ArrayList<>();
 
-        StringRequest stringRequest=new StringRequest(Request.Method.POST, url1, new Response.Listener<String>(){
+        StringRequest stringRequest=new StringRequest(Request.Method.POST, url1+Uid, new Response.Listener<String>(){
             @Override
-            public void onResponse(String response) {
+            public void onResponse(String response) {//url1+Uid
                 Log.d("dashboard_correct_res",response);
 
                 JSONObject post_data;
@@ -232,6 +232,7 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
                         String product_images = post_data.getString("product_images");
                         String sample=post_data.getString("sample");
                         String manufacturing=post_data.getString("manufacturing");
+                        String qty=post_data.getString("qty");
                         String amount=post_data.getString("amount");
                         String percent=post_data.getString("percent");
 
@@ -243,7 +244,7 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
                             cart_disable=1;
                         Log.d(Tag,"cart disable value="+cart_disable+" name="+product_name);
                         product_item.add(new data_dashboard(product_id, product_name
-                                , color, price, product_images, sample, manufacturing, amount,cart_disable));
+                                , color, price, product_images, sample, manufacturing,qty, amount,cart_disable));
                     }
 
                     adapter.notifyData(product_item);
@@ -268,7 +269,6 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
             @Override
             public void onResponse(String response) {
 
-                Log.d(Tag,"counting elements");
                 JSONObject post_data;
                 try {
                     JSONObject jsonObject=new JSONObject(response);
@@ -276,13 +276,14 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
                     JSONArray jsonArray=jsonObject.getJSONArray("addedCarts");
                     for(int i=0;i<jsonArray.length();i++) {
                         post_data = jsonArray.getJSONObject(i);
+                        String item_id=post_data.getString("product_id");
                         count++;//counting total element in cart
 
-                        try{
-                            //noinspection ConstantConditions
-                            getActivity().invalidateOptionsMenu();
+                        /*try{
+                               getActivity().invalidateOptionsMenu();
                         }catch (Exception e){e.printStackTrace();}
-                        P_id_array_of_cartItems.add(post_data.getString("product_id"));
+*/
+                        P_id_array_of_cartItems.add(item_id);
 /*
 * {"id":"100","product_id":"2","product_name":"Demo1","price":"200.00","qty":"1","user_id":"51","is_active":"1"}*/
 
@@ -329,14 +330,14 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
 
     @Override
     public void Add_to_cart(View view, int position) {
-        add_item_to_cart(Product_id_array.get(position),position);
+  //      add_item_to_cart(Product_id_array.get(position),position);
     }
 
-
-    private boolean add_item_to_cart(String Current_prod_id,int pos) {
 /*
+    private boolean add_item_to_cart(String Current_prod_id,int pos) {
+*//*
 *  product_item.add(new data_dashboard(product_id, product_name
-   , color, price, product_images, sample, manufacturing, amount,cart_disable));*/
+   , color, price, product_images, sample, manufacturing, amount,cart_disable));*//*
         data_dashboard a=product_item.get(pos);
         ArrayList<String> current_items=new ArrayList<>();
         current_items.add(a.getProductId());//0
@@ -372,9 +373,9 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
 
 
         return false;
-    }
+    }*/
 
-    @Override
+  /*  @Override
     public void onCreateOptionsMenu(Menu menu,MenuInflater inflater) {
         // TODO Auto-generated method stub
 
@@ -391,8 +392,8 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
     public boolean onOptionsItemSelected(MenuItem item) {
         int id=item.getItemId();
         if(id==R.id.action_cart) {
-          /*  Intent intent=new Intent(getActivity(),Cart.class);
-            startActivity(intent);*/
+          *//*  Intent intent=new Intent(getActivity(),Cart.class);
+            startActivity(intent);*//*
 
 
             Fragment newFragment = new CartFragment();
@@ -411,7 +412,7 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
         return super.onOptionsItemSelected(item);
     }
 
-    private Drawable buildCounterDrawable(int count, int backgroundImageId) {
+ */   private Drawable buildCounterDrawable(int count, int backgroundImageId) {
         LayoutInflater inflater = LayoutInflater.from(getActivity());
         View view = inflater.inflate(R.layout.counter_menuitem_layout, null);
         view.setBackgroundResource(backgroundImageId);

@@ -68,6 +68,7 @@ public class SessionManager {
 			Log.d("islogged",this.isLoggedIn()+"");
 			// user is not logged in redirect him to Login Activity
 			Intent i = new Intent(_context, CenterActivity.class);
+			i.putExtra("cartTransition","dash");
 			// Closing all the Activities
 			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

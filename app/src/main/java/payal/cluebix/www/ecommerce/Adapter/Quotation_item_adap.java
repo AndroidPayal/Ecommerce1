@@ -2,6 +2,7 @@ package payal.cluebix.www.ecommerce.Adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +30,7 @@ public class Quotation_item_adap extends RecyclerView.Adapter<Quotation_item_ada
     @Override
     public Quotation_item_adap.ProductViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(mCtx);
-        View view = inflater.inflate(R.layout.activity_quote_item_list_adap, null);
+        View view = inflater.inflate(R.layout.invoice_adapter_layout, null);
         return new Quotation_item_adap.ProductViewHolder(view);
     }
 
@@ -37,11 +38,25 @@ public class Quotation_item_adap extends RecyclerView.Adapter<Quotation_item_ada
     public void onBindViewHolder(Quotation_item_adap.ProductViewHolder holder, int position) {
         quotation2 a= productList.get(position);
 
+        holder.invoice_sr_number.setText(position+1+"");
+        Log.d("positioning",position+"");
+
         holder.q_name.setText(a.getProduct_name());
-        holder.q_brand.setText("Brand: "+a.getBrand());
+        //holder.q_brand.setText("Brand: "+a.getBrand());
         holder.q_desc.setText("Description: "+a.getDescription());
-        holder.q_prise.setText("Rs. "+a.getPrice());
-        holder.q_qty.setText("Quantity Ordered: "+a.getQty());
+        holder.q_qty.setText(a.getQty());
+        holder.invoice_price.setText("Product price:"+a.getPrice());
+        if (a.getSample().equals("1")) {
+            holder.invoice_sample.setText("Sample:" + a.getSample_price());
+            holder.q_prise.setText("Rs. "+(Float.parseFloat(a.getPrice())*Integer.parseInt(a.getQty())+
+                            Float.parseFloat(a.getSample_price())));
+        }
+        else {
+            holder.invoice_sample.setText("");
+            holder.q_prise.setText("Rs. "+(Float.parseFloat(a.getPrice())*Integer.parseInt(a.getQty())));
+
+        }
+
 
 /*
         Picasso.with(mCtx)
@@ -69,19 +84,20 @@ public class Quotation_item_adap extends RecyclerView.Adapter<Quotation_item_ada
 
     class ProductViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        TextView q_name,q_brand,q_desc,q_prise,q_qty;
-        ImageView q_image;
+        TextView q_name,q_desc,q_prise,q_qty,invoice_sample,invoice_sr_number,invoice_price;
 
         public ProductViewHolder(View itemView) {
             super(itemView);
+            invoice_sr_number=(TextView)itemView.findViewById(R.id.invoice_sr_number);
             q_name=(TextView)itemView.findViewById(R.id.q_name);
-            q_brand=(TextView)itemView.findViewById(R.id.q_brand);
+       //     q_brand=(TextView)itemView.findViewById(R.id.q_brand);
             q_desc=(TextView)itemView.findViewById(R.id.q_desc);
             q_prise=(TextView)itemView.findViewById(R.id.q_prise);
-            q_image=(ImageView)itemView.findViewById(R.id.q_image);
+            //q_image=(ImageView)itemView.findViewById(R.id.q_image);
             q_qty=(TextView)itemView.findViewById(R.id.q_qty);
-
-            q_image.setOnClickListener(this);
+            invoice_sample=(TextView)itemView.findViewById(R.id.invoice_sample);
+            invoice_price=(TextView)itemView.findViewById(R.id.invoice_price);
+           // q_image.setOnClickListener(this);
 
         }
 

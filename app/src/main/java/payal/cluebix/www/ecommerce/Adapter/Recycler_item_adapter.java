@@ -67,17 +67,16 @@ public class Recycler_item_adapter extends RecyclerView.Adapter<Recycler_item_ad
         if(!a.getManufacturing().equals("0"))
             holder.text_manufact.setText("Manufacturing");
         else{
-            holder.text_manufact.setText("In Stock : dummy");
+            holder.text_manufact.setText("In Stock : "+a.getQty());
         }
 
         if(!a.getSample().equals("0"))
             holder.text_sample.setVisibility(View.VISIBLE);
 
-    /*    if(a.getCart_disable()==1){
-            holder.add_to_cart.setText("Added to Cart");
-            holder.add_to_cart.setClickable(false);
+        if(a.getCart_disable()==1){
+            holder.view_detail.setText("Added to Cart");
+            //holder.add_to_cart.setClickable(false);
         }
-*/
         init(slider_image, holder);
         addBottomDots( holder,0);
 

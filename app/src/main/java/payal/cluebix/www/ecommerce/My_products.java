@@ -44,7 +44,7 @@ public class My_products extends AppCompatActivity {
     Toolbar toolbar;
     private DrawerLayout drawerLayout;
     FloatingActionButton fab;
-    ArrayList<sample_myProduct> product_item;
+    ArrayList<sample_myProduct> product_item=new ArrayList<>();
     ArrayList<String> Product_id_array=new ArrayList<>();
     String url1= Base_url.Get_approved_myproducts;
 
@@ -61,6 +61,8 @@ public class My_products extends AppCompatActivity {
         fab=(FloatingActionButton)findViewById(R.id.fab);
       //  notapproved=(Button)findViewById(R.id.notApproved);
         setSupportActionBar(toolbar);
+
+        product_item.clear();Product_id_array.clear();
 
         session=new SessionManager(getApplicationContext());
         HashMap<String, String> user = session.getUserDetails();
@@ -83,6 +85,8 @@ public class My_products extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        Log.d("clicked_","product array: "+product_item);
+
         grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -104,7 +108,6 @@ public class My_products extends AppCompatActivity {
 
 
     private void get_old_Element() {
-        product_item = new ArrayList<>();
 /*
 * {"id":"1","product_name":"new wallpaper","brand":"normal","description":"hello this is new description"
 * ,"product_code":"","color":"Blue,Pink","price":"254.00","first_min":"12","first_max":"25","first_price":"452.00"
@@ -136,7 +139,11 @@ public class My_products extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 Log.d("dashboard_correct_res",response);
-
+/*
+* {"id":"6","category_name":"single layer","product_name":"vhj","brand":"Butter Fly","description":"bvjhjnk",
+* "product_code":"723923","color":"Jungle green,sky-blue,cerulean,azure,green,lime,indigo,Orange-Red","price":"0.00",
+* "manufacturing":"0","qty":"5","sample":"0","sample_price":"0.00",
+* "unit":"PSC","product_images":"","created_date":"2018-05-17","is_active":"1","request":"0","created_by":"39"}*/
                 JSONObject post_data;
                 try {
                     JSONArray jsonArray=new JSONArray(response);
@@ -153,21 +160,14 @@ public class My_products extends AppCompatActivity {
                         String manufacturing = post_data.getString("manufacturing");
                         String qty = post_data.getString("qty");
                         String sample = post_data.getString("sample");
+                        String sample_price=post_data.getString("sample_price");
                         String unit = post_data.getString("unit");
                         String product_images = post_data.getString("product_images");
                         String created_date = post_data.getString("created_date");
                         String is_active=post_data.getString("is_active");
                         String request=post_data.getString("request");
                         String created_by= post_data.getString("created_by");
-                       /* String first_min = post_data.getString("first_min");
-                        String first_max = post_data.getString("first_max");
-                        String first_price = post_data.getString("first_price");
-                        String second_min = post_data.getString("second_min");
-                        String second_max = post_data.getString("second_max");
-                        String second_price = post_data.getString("second_price");
-                        String third_min = post_data.getString("third_min");
-                        String third_max = post_data.getString("third_max");
-                        String third_price = post_data.getString("third_price");*/
+
                         Product_id_array.add(product_id);
 
                         product_item.add(new sample_myProduct(product_id,category_name,product_name,brand,description,product_code
@@ -204,6 +204,7 @@ public class My_products extends AppCompatActivity {
                 switch (id) {
                     case R.id.home:
                         Intent i= new Intent(My_products.this,CenterActivity.class);
+                        i.putExtra("cartTransition","dash");
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(i);
@@ -226,8 +227,8 @@ public class My_products extends AppCompatActivity {
 
                         transaction.commit();*/
                         Intent intent = new Intent(My_products.this,CenterActivity.class);
-
-                        intent.putExtra("cartTransition",true);
+                        intent.putExtra("cartTransition","cart");
+                        //intent.putExtra("cartTransition",true);
 
                         startActivity(intent);
 

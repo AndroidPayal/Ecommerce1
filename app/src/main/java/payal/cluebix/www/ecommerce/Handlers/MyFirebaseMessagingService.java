@@ -59,6 +59,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 break;*/
             default:
                 intent= new Intent(this,CenterActivity.class);
+                intent.putExtra("cartTransition","dash");
         }
 
        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -67,7 +68,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.logo)
+                .setSmallIcon(R.drawable.logo2)
                .setContentTitle("MultiVendor Application")//remoteMessage1.getNotification().getTitle()
                 .setContentText(messageBody.substring(0,messageBody.length()))
                 .setAutoCancel(true)

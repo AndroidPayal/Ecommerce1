@@ -18,27 +18,46 @@ public class sample_Cart {
     String product_id;
     String product_name;
     String price;
+    String samplePrice;
     String qty;
     String user_id;
+    String manufacturing;
     String description;
     String brand;
     String images_string;
-
-    public sample_Cart(String cart_id,String product_id,String product_name,String price,String qty
-            ,String user_id,String description,String brand, String images_string){
+    String quantity;
+    /*
+                            *
+            "id": "276",
+            "product_id": "24",
+            "product_name": "this is test product",
+            "price": "345.00",//product real price
+            "sample_price": "0.00",//sample price zero if sample not ordered else it will show price of sample
+            "qty": "5",//qty is no of this item ordered
+            "user_id": "39",
+            "manufacturing": "0",
+            "description": "this is dummy description",
+            "brand": "my comp",
+            "product_images": "79e,79f",
+            "quantity": "4",//it shows maximum available items
+            "amount": "5.00",//comision amount
+            "percent": "%"
+        }*/
+    public sample_Cart(String cart_id,String product_id,String product_name,String price, String samplePrice,String qty
+            ,String user_id, String manufacturing,String description,String brand, String images_string,String quantity){
 
         this.cart_id=cart_id;
         this.product_id=product_id;
         this.product_name=product_name;
         this.price=price;
+        this.samplePrice=samplePrice;
         this.qty=qty;
         this.user_id=user_id;
+        this.manufacturing=manufacturing;
         this.description=description;
         this.brand=brand;
         this.images_string=images_string;
-/*{"id":"1","product_id":"5","product_name":"png-wallpaper","price":"256.00","qty":"1","user_id":
-"1","description":"fsdf asdf sdfs  sdfsdf","brand":"normal","product_images":"brick_PNG3329.png"},*/
-
+        this.quantity=quantity;
     }
 
     public String getCart_id() {
@@ -80,5 +99,17 @@ public class sample_Cart {
 
     public String getImages_string() {
         return images_string;
+    }
+
+    public String getManufacturing() {
+        return manufacturing;
+    }
+
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public String getSamplePrice() {
+        return samplePrice;
     }
 }

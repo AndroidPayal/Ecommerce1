@@ -43,6 +43,9 @@ public class CenterActivity extends AppCompatActivity {
     SessionManager session;
     String Uid;String Uname,Umail,Udate1,Udate2,Umob;
     BottomNavigationView bottomNavigation;
+    String extras = "";
+    FragmentTransaction transaction;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,44 +70,43 @@ public class CenterActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
-
         initNavigationDrawer();
 
         bottomNavigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
        // bottomNavigation.inflateMenu(R.menu.bottom_navigation);
         fragmentManager = getSupportFragmentManager();
 
-        fragment = new DashboardFragment();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.main_container, fragment).commit();
 
 
-        Bundle extras = null;
-        extras = getIntent().getExtras();
+        Toast.makeText(this, "dashboard act called", Toast.LENGTH_SHORT).show();
 
-        if(extras != null)
+
+        extras = getIntent().getStringExtra("cartTransition");
+Log.d("center_screen",extras);
+
+        if(extras.equalsIgnoreCase("cart"))
         {
-
-            Log.d("center_screen","inside extras");
+           /* Log.d("center_screen","inside extras");
             if(extras.getBoolean("cartTransition"))
-            {
-
+            {*/
                 Fragment newFragment = new CartFragment();
-                 transaction = getSupportFragmentManager().beginTransaction();
-
+                transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.main_container, newFragment);
                 transaction.addToBackStack(null);
-
                 search_tool2.setVisibility(View.GONE);
                 transaction.commit();
-
-
-
                 bottomNavigation.setSelectedItemId(R.id.bottom_nav_cart);
-
-            }
+            //}
         }
-
+        else{
+            Log.d("center_screen","extra null");
+            fragment = new DashboardFragment();
+            transaction = fragmentManager.beginTransaction();
+            transaction.replace(R.id.main_container, fragment).commit();
+        }
+        fragment = new DashboardFragment();
+        transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.main_container, fragment).commit();
 
 
 
@@ -192,14 +194,16 @@ public class CenterActivity extends AppCompatActivity {
                         transaction.addToBackStack(null);
 
                         transaction.commit();
+                        search_tool2.setVisibility(View.GONE);
                         drawerLayout.closeDrawers();
                         break;
                     case R.id.logOut:
                         Toast.makeText(getApplicationContext(), "Logged out", Toast.LENGTH_SHORT).show();
                         i= new Intent(CenterActivity.this,Login.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_SINGLE_TOP);
                         startActivity(i);
+                        finish();
                         session.logoutUser();
                         break;
                     case R.id.quote:
@@ -242,8 +246,43 @@ public class CenterActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         finish();
+        finishAffinity();
     }
 
+/*    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("center_screen","act resumed");
+        extras = getIntent().getStringExtra("cartTransition");
+        Log.d("center_screen",extras);
+
+        if(extras.equalsIgnoreCase("cart"))
+        {
+           *//* Log.d("center_screen","inside extras");
+            if(extras.getBoolean("cartTransition"))
+            {*//*
+
+            Fragment newFragment = new CartFragment();
+            transaction = getSupportFragmentManager().beginTransaction();
+
+            transaction.replace(R.id.main_container, newFragment);
+            transaction.addToBackStack(null);
+
+            search_tool2.setVisibility(View.GONE);
+            transaction.commit();
 
 
+
+            bottomNavigation.setSelectedItemId(R.id.bottom_nav_cart);
+
+            //}
+        }
+        else{
+            Log.d("center_screen","extra null");
+            fragment = new DashboardFragment();
+            transaction = fragmentManager.beginTransaction();
+            transaction.replace(R.id.main_container, fragment).commit();
+        }
+
+    }*/
 }

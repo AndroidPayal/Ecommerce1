@@ -79,12 +79,15 @@ public class ProductDetail extends AppCompatActivity {
 
     EditText prodruct_quantity;
     CheckBox orderSample;
+    private String available="0";
+    public static int manufacturing1=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_details);
 //        count=0;
+        manufacturing1=0;
 
         p_name=(TextView)findViewById(R.id.p_name);
         desc=(TextView)findViewById(R.id.description);
@@ -104,7 +107,7 @@ public class ProductDetail extends AppCompatActivity {
         p_code=(TextView)findViewById(R.id.p_code);
         add_cart=(TextView)findViewById(R.id.add_cart);
         category=(TextView)findViewById(R.id.category);
-        vp_slider = (ViewPager) findViewById(R.id.view_slider);
+        vp_slider = (ViewPager) findViewById(R.id.view_slider1);
         l2_dots = (LinearLayout) findViewById(R.id.l2_dots);
         p_available=(TextView)findViewById(R.id.product_available);
        // t_sample=(TextView)findViewById(R.id.sample);
@@ -131,8 +134,8 @@ public class ProductDetail extends AppCompatActivity {
 
 
         if (!ParentScreen.equals("0")){add_cart.setVisibility(View.GONE);}
-        if (!ParentScreen.equals("01")){
-            add_cart.setVisibility(View.GONE);
+        if (ParentScreen.equals("01")){
+            add_cart.setVisibility(View.VISIBLE);
             orderSample.setChecked(true);
         }
 
@@ -186,33 +189,46 @@ public class ProductDetail extends AppCompatActivity {
     }
 
     private boolean add_item_to_cart(String Current_prod_id) {
+        String quantity = prodruct_quantity.getText().toString().trim();
+        if (quantity.equals("")) quantity = "0";
 
-        add_cart.setText("Added To Cart");
-        add_cart.setClickable(false);
-        if (orderSample.isChecked()){
-            sample="on";
-        }
-        else sample="off";
-        String quantity=prodruct_quantity.getText().toString().trim();
+        Log.d("validat1","ask="+quantity+" awl="+available+" manuf="+manufacturing1);
 
-        Log.e("dashboardscreen", url2+Current_prod_id+"/"+quantity+"/"+sample+"/"+Uid);
-        StringRequest stringRequest=new StringRequest(Request.Method.POST, url2+Current_prod_id+"/"+quantity+"/"+sample+"/"+Uid, new Response.Listener<String>(){
-            @Override
-            public void onResponse(String response) {
-                Log.d("dashboard_cart:",response);
-//                count++;
-                invalidateOptionsMenu();
-                Toast.makeText(ProductDetail.this, "Cart response: "+response, Toast.LENGTH_SHORT).show();
+        if ((Integer.parseInt(quantity)>Integer.parseInt(available)) && manufacturing1==0 ) {
+                prodruct_quantity.requestFocus();
+                Toast.makeText(this, "That much quantity not Available Now!", Toast.LENGTH_SHORT).show();
+            } else
+            {
+
+                    if (orderSample.isChecked()) {
+                            sample = "1";
+                        } else sample = "0";
+
+                if(orderSample.isChecked()|| Integer.parseInt(quantity)>0) {
+                    Log.e("validat1 url=", url2 + Current_prod_id + "/" + quantity + "/" + sample + "/" + Uid);
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, url2 + Current_prod_id + "/" + quantity + "/" + sample + "/" + Uid, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Log.d("dashboard_cart:", response);
+                            //                count++;
+                            //invalidateOptionsMenu();.
+                            add_cart.setText("Added To Cart");
+                            add_cart.setClickable(false);
+                            Toast.makeText(ProductDetail.this, "Cart response: " + response, Toast.LENGTH_SHORT).show();
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.d("dashboard_cart_res", error + "");
+                            Toast.makeText(ProductDetail.this, "Some error occured!", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    RquestHandler.getInstance(ProductDetail.this).addToRequestQueue(stringRequest);
+                }
+                else{
+                    Toast.makeText(this, "Fill quantity to Order", Toast.LENGTH_SHORT).show();
+                }
             }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("dashboard_cart_res",error+"");
-                Toast.makeText(ProductDetail.this, "Some error occured!", Toast.LENGTH_SHORT).show();
-            }
-        });
-        RquestHandler.getInstance(ProductDetail.this).addToRequestQueue(stringRequest);
-
         return false;
     }
 
@@ -297,12 +313,21 @@ public class ProductDetail extends AppCompatActivity {
                          percent = post_data.getString("percent");
                     }
 
+                    available=qty;
                     if(manufacturing.equals("1")){
+                        manufacturing1=1;
                         p_available.setText("Manufacturing");
                     }
-                    else
-                    p_available.setText("Available : "+qty);
+                    else {
+                        manufacturing1 = 0;
+                        p_available.setText("Available : " + qty);
+                    }
 
+                    if (sample.equals("0")){
+                        LinearLayout linearLayout=(LinearLayout)findViewById(R.id.sample_layout1);
+                        linearLayout.setVisibility(View.GONE);
+                    }
+                    else
                     text_sample_price.setText("Sample price : "+sample_price);
 
                     range_id=rangId;
@@ -501,20 +526,40 @@ public class ProductDetail extends AppCompatActivity {
             dots[currentPage].setTextColor(Color.parseColor("#FFFFFF"));
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // TODO Auto-generated method stub
-      /*  MenuInflater inf=getMenuInflater();
+    @Override public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inf=getMenuInflater();
         inf.inflate(R.menu.menu_cart, menu);
-        return super.onCreateOptionsMenu(menu);*/
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        //cart icon clicked
+        Intent intent = new Intent(ProductDetail.this,CenterActivity.class);
+        intent.putExtra("cartTransition","cart");
+        startActivity(intent);
+   /*     CartFragment fragment = new CartFragment();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.main_container, fragment);
+        transaction.commit();*/
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    /*   @Override
+            public boolean onCreateOptionsMenu(Menu menu) {
+                // TODO Auto-generated method stub
+              *//*  MenuInflater inf=getMenuInflater();
+        inf.inflate(R.menu.menu_cart, menu);
+        return super.onCreateOptionsMenu(menu);*//*
         Log.d(Tag,"option menu called");
         getMenuInflater().inflate(R.menu.menu_cart, menu);
 
         MenuItem menuItem = menu.findItem(R.id.action_cart);
-/*
+*//*
         menuItem.setIcon(buildCounterDrawable(count, R.drawable.ic_shopping_cart));
 
-*/
+*//*
         return true;
     }
     @Override
@@ -531,7 +576,7 @@ public class ProductDetail extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
+*/
     private Drawable buildCounterDrawable(int count, int backgroundImageId) {
         LayoutInflater inflater = LayoutInflater.from(this);
         View view = inflater.inflate(R.layout.counter_menuitem_layout, null);

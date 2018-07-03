@@ -20,6 +20,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.itextpdf.awt.geom.CubicCurve2D;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
@@ -61,8 +62,8 @@ public class Quotation_items_list extends AppCompatActivity implements Quotation
 
     String url=Base_url.Get_an_quotation_detail;/*/quote_number/user_id*/
     String quote_no,user_id,screen;
-    TextView pdfcontent,t_Quantity,t_price;
-    int quant=0;Float total_price=0.0f;
+    TextView pdfcontent,t_Quantity,t_price,quotation_id,created_Date,expiry_date;
+    int quant=0,invoice_items=0;Float total_price=0.0f;
     ArrayList<String> qutation_table_item=new ArrayList<>();
 
 
@@ -70,27 +71,34 @@ public class Quotation_items_list extends AppCompatActivity implements Quotation
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_quote_item_list);
+        setContentView(R.layout.activity_invoice);
 
         product_item = new ArrayList<>();
 
+        screen=getIntent().getStringExtra("screen");
+        quote_no=getIntent().getStringExtra("quote_id");
+        user_id=getIntent().getStringExtra("userid");
 
-        screen="0";//getIntent().getStringExtra("screen");
-        quote_no="Q-5";//getIntent().getStringExtra("quote_id");
-        user_id="39";//getIntent().getStringExtra("userid");
-
-        recyclerView=(RecyclerView)findViewById(R.id.recycler2);
-        pdfcontent=(TextView)findViewById(R.id.pdf_content);
         t_Quantity=(TextView)findViewById(R.id.t_quantity);
         t_price=(TextView)findViewById(R.id.t_price);
+
+        pdfcontent=(TextView)findViewById(R.id.pdf_content);
+        recyclerView=(RecyclerView)findViewById(R.id.invoice_recycler);
+
+        quotation_id=(TextView)findViewById(R.id.quotation_id);
+        created_Date=(TextView)findViewById(R.id.quotation_createcd_date);
+        expiry_date=(TextView)findViewById(R.id.quotation_expiry_date);
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(Quotation_items_list.this));
 
         get_old_Element();
 
-        t_Quantity.setText("Total Items Ordered: "+quant);
+        t_Quantity.setText("Total Items Ordered: "+invoice_items);//quant
         t_price.setText("Grand Total: "+total_price);
+        created_Date.setText("created date");
+        expiry_date.setText("expiry date");
+        quotation_id.setText("Quotation Code:"+quote_no);
 
         adapter=new Quotation_item_adap(getApplicationContext(),product_item);
         adapter.setClickListener(this);
@@ -105,6 +113,29 @@ public class Quotation_items_list extends AppCompatActivity implements Quotation
             public void onResponse(final String response) {
                 Log.d("quotescreen1","quotaion detail="+response+"\n quote url="+url+quote_no+"/"+user_id);
 
+                /*
+                *  {
+        "id": "129",
+        "quote_id": "Q-5",
+        "shopping_cart_id": "196",
+        "product_id": "9",
+        "product_name": "For_Demo",
+        "price": "200.00",
+        "qty": "1",
+        "description": "this is very good layer wall paper to display this time, this is very good",
+        "brand": "Cluebix Software",
+
+        "stock_status": "0",
+        "user_id": "39",
+        "amount": null,
+        "percent": null,
+        "created_date": null,
+        "expiry_date": null,
+        "sample": "1",
+        "sample_price": "0.00",
+        "manufacturing": "0",
+        "quantity": "1"
+    }*/
                 JSONObject post_data;
                 try {
                     JSONArray jsonArray=new JSONArray(response);
@@ -123,12 +154,26 @@ public class Quotation_items_list extends AppCompatActivity implements Quotation
                         String brand = post_data.getString("brand");
                        // String product_images = post_data.getString("product_images");
                         String user_id = post_data.getString("user_id");
+                        String created_date1=post_data.getString("created_date");
+                        String expiry_date1=post_data.getString("expiry_date");
+                        String sample=post_data.getString("sample");
+                        String sample_price=post_data.getString("sample_price");
 
                         product_item.add(new quotation2(id, quote_id,shopping_cart_id,user_id,product_id
-                                ,product_name,price,qty,description,brand));//,product_images
+                                ,product_name,price,qty,description,brand
+                                ,sample,sample_price));//,product_images
 
                         quant=quant+Integer.parseInt(qty);
-                        total_price=total_price+(Float.parseFloat(price)*Integer.parseInt(qty));
+                        invoice_items++;
+                        if (sample.equals("1")) {
+                            total_price = total_price + (Float.parseFloat(price) * Integer.parseInt(qty))
+                                        +Float.parseFloat(sample_price);
+                        }else{
+                            total_price = total_price + (Float.parseFloat(price) * Integer.parseInt(qty));
+                        }
+
+                        created_Date.setText(created_date1);
+                        expiry_date.setText(expiry_date1);
 
                         pdfcontent.setText(pdfcontent.getText()+"Product "+i+"_ID : "+product_id+"\nName : "+product_name
                                 +"\nPrice : "+price
@@ -156,7 +201,7 @@ public class Quotation_items_list extends AppCompatActivity implements Quotation
         "percent": null
     }*/
                     }
-                    t_Quantity.setText("Total Items Ordered: "+quant);
+                    t_Quantity.setText("Total Items Ordered: "+invoice_items);//quant
                     t_price.setText("Grand Total: "+total_price);
 
                     adapter.notifyData(product_item);
@@ -208,13 +253,13 @@ public class Quotation_items_list extends AppCompatActivity implements Quotation
 
     private void create_save_pdf() {
 
-        if (pdfcontent.getWidth()==0) {
+     /*   if (pdfcontent.getWidth()==0) {
             Toast.makeText(getApplicationContext(),
-                    "Please enter text to generate Pdf", Toast.LENGTH_SHORT)
+                    "No data to generate Pdf", Toast.LENGTH_SHORT)
                     .show();
         } else {
             pdfcontent.setTextColor(getResources().getColor(R.color.Black));
-            File dir = new File(Base_url.pdf_saved_path);
+       */     File dir = new File(Base_url.pdf_saved_path);
             if(!dir.exists())
                 dir.mkdirs();
 
@@ -222,7 +267,7 @@ public class Quotation_items_list extends AppCompatActivity implements Quotation
             Log.e("excep_quote",pdfcontent.getWidth()+"=content width");
             Log.e("excep_quote",pdfcontent.getHeight()+"= content hight");
             pdfCreate();
-        }
+    //    }
 
     }
 
@@ -231,7 +276,8 @@ public class Quotation_items_list extends AppCompatActivity implements Quotation
          * Creating Document
          */
         qutation_table_item.clear();
-        qutation_table_item.add("Name");qutation_table_item.add("Product Id");qutation_table_item.add("Rate");
+        qutation_table_item.add("Name");qutation_table_item.add("Product Id");qutation_table_item.add("Sample");
+        qutation_table_item.add("Rate");
         qutation_table_item.add("Quantity");qutation_table_item.add("Total Price");
         Document document = new Document();
             // Location to save
@@ -252,12 +298,10 @@ public class Quotation_items_list extends AppCompatActivity implements Quotation
             }
 
 
-            PdfWriter.getInstance(document, new FileOutputStream(Base_url.pdf_saved_path+"/invoice.pdf"));//pdfName
+            PdfWriter.getInstance(document, new FileOutputStream(Base_url.pdf_saved_path+"/"+pdfName));//pdfName
 
         // Open to write
         document.open();
-
-            Log.d("Tag1212","opened");
 
             // Document Settings
         document.setPageSize(PageSize.A4);
@@ -314,25 +358,25 @@ public class Quotation_items_list extends AppCompatActivity implements Quotation
             //document.add(new Paragraph("hello this is first"));
             document.add(new Chunk(lineSeparator));
             document.add(new Paragraph("\n"));
-            Toast.makeText(this, "generated pdf", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "generated pdf at Phone/MultivendorApp/", Toast.LENGTH_SHORT).show();
 
             PdfPTable table = new PdfPTable(qutation_table_item.size());//setting table heading row
             PdfPCell cell;
 
         for(int aw =0; aw < qutation_table_item.size(); aw++){//*(product_item.size()
-
+///generating table row for hrandings
             cell = new PdfPCell(new Phrase(""+qutation_table_item.get(aw), new Font(urName2, mLowFontSize, Font.NORMAL, mColorAccent)));
             cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
             cell.setFixedHeight(28.0f);
             table.addCell(cell);
 
-
             //table.addCell();
             Log.d("awval",aw+"  "+product_item.size()* qutation_table_item.size());
         }
 
         for(int aw2 =0; aw2 <product_item.size();aw2++){//*(product_item.size()
+ //generating table rows for items
             cell = new PdfPCell(new Phrase(""+product_item.get(aw2).getProduct_name()));
             cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -343,17 +387,43 @@ public class Quotation_items_list extends AppCompatActivity implements Quotation
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
             table.addCell(cell);
 
+            if (product_item.get(aw2).getSample().equals("1")) {
+                cell = new PdfPCell(new Phrase("" + product_item.get(aw2).getSample_price()));
+                cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table.addCell(cell);
+
+            }else{
+                cell = new PdfPCell(new Phrase("0.00"));
+                cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table.addCell(cell);
+
+            }
+
             cell = new PdfPCell(new Phrase(""+product_item.get(aw2).getPrice()));
             cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
             table.addCell(cell);
 
+
             cell = new PdfPCell(new Phrase(""+product_item.get(aw2).getQty()));
             cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
             table.addCell(cell);
-
-            float t=Float.parseFloat(product_item.get(aw2).getPrice())*Integer.parseInt(product_item.get(aw2).getQty());
+/*
+                cell = new PdfPCell(new Phrase(""+product_item.get(aw2).getPrice()+ product_item.get(aw2).getSample_price()));
+                cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table.addCell(cell);*/
+            float t=0.0f;
+            if (product_item.get(aw2).getSample().equals("1")) {
+                 t = Float.parseFloat(product_item.get(aw2).getPrice()) * Integer.parseInt(product_item.get(aw2).getQty())
+                            +Float.parseFloat(product_item.get(aw2).getSample_price());
+            }
+            else{
+                t = Float.parseFloat(product_item.get(aw2).getPrice()) * Integer.parseInt(product_item.get(aw2).getQty());
+            }
             cell = new PdfPCell(new Phrase(""+t));
             cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -397,7 +467,9 @@ public class Quotation_items_list extends AppCompatActivity implements Quotation
 
 
     */
-/**
+
+
+    /**
      * Background task to generate pdf from users content
      * @author androidsrc.net
      *
@@ -463,15 +535,20 @@ public class Quotation_items_list extends AppCompatActivity implements Quotation
 */
 
 
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         Log.d("backPress",screen);
         if (screen.equals("1")){
             Intent i=new Intent(Quotation_items_list.this,CenterActivity.class);
+            i.putExtra("cartTransition","dash");
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i);
         }
     }
+
+
+
 }
 

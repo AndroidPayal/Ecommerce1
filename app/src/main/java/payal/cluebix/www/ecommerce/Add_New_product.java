@@ -127,11 +127,11 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
     Button submit;
     EditText edit_P_name,edit_price,edit_sample_price,edit_qty,edit_desc;
     SearchableSpinner spinner_category,spin_company,spin_unit;
-    public static String selected_category=null;
-    public static String selected_company=null;
-    public static String selected_unit1=null;
-    public static String selected_description=null;
-    public static String sample_state="0",manufacture_state="0";
+    public static String selected_category="";
+    public static String selected_company="";
+    public static String selected_unit1="";
+    public static String selected_description="";
+    public static String sample_state="false",manufacture_state="false";
 
     public static int editTextId=0;
     ArrayList<Integer> min_range=new ArrayList<>();
@@ -191,17 +191,20 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
                 }
             }
         });
+        final LinearLayout sample_layout = (LinearLayout) findViewById(R.id.linear_sample);
 
         sample_availability.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (sample_availability.isChecked()){
-                    sample_state="1";
-                    LinearLayout sample_layout=(LinearLayout)findViewById(R.id.linear_sample);
+                    sample_state="on";
                     sample_layout.setVisibility(View.VISIBLE);
                 }
-                else sample_state="0";
-                Log.d(Tag,"sample state="+sample_state);
+                else {
+                    sample_state = "false";
+                    sample_layout.setVisibility(View.GONE);
+                    Log.d(Tag, "sample state=" + sample_state);
+                }
 
             }
         });
@@ -209,10 +212,10 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(check_manufacture.isChecked()){
-                    manufacture_state="1";
+                    manufacture_state="on";
 
                 }
-                else manufacture_state="0";
+                else manufacture_state="false";
                 Log.d(Tag,"manufacture state="+manufacture_state);
             }
         });
@@ -267,18 +270,19 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
             startActivityForResult(intent, Constants.REQUEST_CODE);
         }
 
-        if (view.getId()==R.id.submit_new_prod){
-            if(!(selected_category.equals(null)||edit_P_name.getText().toString().isEmpty()||selected_company.equals(null)
-                    ||edit_price.getText().toString().isEmpty()||selected_unit1.equals(null))) {
+        if (view.getId()==R.id.submit_new_prod) {
+            //    if(!(selected_category.equals("")||edit_P_name.getText().toString().isEmpty()||selected_company.equals("")
+//                    ||edit_price.getText().toString().isEmpty()||selected_unit1.equals(""))) {
 
-                    new Add_New_product.UploadFileToServer().execute();
-            }else{
+            new Add_New_product.UploadFileToServer().execute();
+            //   }else{
             /*    LinearLayout linear=(LinearLayout)findViewById(R.id.linear_product);
                 Snackbar snackbar = Snackbar
                     .make(linear, "Fill all empty fields!!", Snackbar.LENGTH_LONG);
 
-                snackbar.show();*/
-            }
+                snackbar.show();}*/
+
+
         }
     }
 
@@ -656,10 +660,18 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
                     entity.addPart("sample", new StringBody(sample_state));
                     entity.addPart("sample_price", new StringBody(edit_sample_price.getText().toString().trim()));
                     entity.addPart("unit", new StringBody(selected_unit1));
+                    entity.addPart("manufacturing", new StringBody(manufacture_state));
 
 
                     totalSize = entity.getContentLength();
-                    Log.d("Tag___", "total data size=" + totalSize + "");
+                    Log.d("Tag___", "total data size=" + totalSize + ""
+                    +"category:"+selected_category
+                            +"product name:"+edit_P_name.getText().toString().trim()+"brand:"+selected_company
+                            +"desc:"+selected_description
+                            +"price:"+edit_price.getText().toString().trim()
+                            +"qty:"+edit_qty.getText().toString().trim()+"sample:"+sample_state+"Sprice:"
+                            +" manufact state:"+manufacture_state
+                    +edit_sample_price.getText().toString().trim()+"unit:"+selected_unit1);
                     httppost.setEntity(entity);
                     HttpResponse response = httpclient.execute(httppost);
                     HttpEntity r_entity = response.getEntity();

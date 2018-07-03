@@ -15,10 +15,10 @@
 
     <application
         android:allowBackup="true"
-
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:largeHeap="true"
+
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
@@ -58,9 +58,6 @@
             android:name=".My_products"
             android:theme="@style/AppThemes2" />
         <activity
-            android:name=".Cart"
-            android:theme="@style/AppThemes2" />
-        <activity
             android:name=".ProductDetail"
             android:parentActivityName=".CenterActivity" />
 
@@ -86,14 +83,14 @@
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/logo" />
+            android:resource="@drawable/logo2" />
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorAccent" />
 
         <activity
             android:name=".Quotation_items_list"
-            android:parentActivityName=".CenterActivity">
+           >
 
             <!--
                 <intent-filter>

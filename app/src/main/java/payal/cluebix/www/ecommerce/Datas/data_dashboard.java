@@ -17,14 +17,14 @@ public class data_dashboard {
     String price;
     String product_images;
     String sample;
-    String manufacturing;
+    String manufacturing,qty;
     String amount;
     int cart_disable;
 /*
 * (product_id, product_name, color, price, product_images, createdBy, Sample, manufacturing, amount)*/
 
     public data_dashboard(String ProductId,String product_name,String color,String price
-    ,String product_images,String sample, String manufacturing, String amount, int cart_disable)
+    ,String product_images,String sample, String manufacturing, String qty, String amount, int cart_disable)
     {
 
         this.ProductId= ProductId;
@@ -34,12 +34,17 @@ public class data_dashboard {
         this.product_images= product_images;
         this.sample= sample;
         this.manufacturing= manufacturing;
+        this.qty=qty;
         this.amount= amount;
         this.cart_disable=cart_disable;
     }
 
     public String getProductId() {
         return ProductId;
+    }
+
+    public String getQty() {
+        return qty;
     }
 
     public String getProduct_name() {
