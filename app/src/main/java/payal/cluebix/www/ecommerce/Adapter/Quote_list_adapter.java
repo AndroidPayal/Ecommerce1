@@ -29,8 +29,11 @@ public class Quote_list_adapter extends RecyclerView.Adapter<Quote_list_adapter.
 
     @Override
     public Quote_list_adapter.ProductViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            LayoutInflater inflater = LayoutInflater.from(mCtx);
-            View view = inflater.inflate(R.layout.activity_quote_list_new, null);
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        View view = inflater.inflate(R.layout.activity_quote_list_new, null,false);
+        ViewGroup.LayoutParams lp = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        view.setLayoutParams(lp);
             return new Quote_list_adapter.ProductViewHolder(view);
             }
 

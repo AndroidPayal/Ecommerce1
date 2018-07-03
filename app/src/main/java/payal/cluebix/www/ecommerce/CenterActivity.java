@@ -36,12 +36,13 @@ public class CenterActivity extends AppCompatActivity {
     private Fragment fragment;
     private FragmentManager fragmentManager;
     private DrawerLayout drawerLayout;
-    Toolbar toolbar,search_tool2;
+    Toolbar toolbar, search_tool2;
     FloatingActionButton floatb;
 
-    private ArrayList<ImageEntry> mSelectedImages=new ArrayList<>();
+    private ArrayList<ImageEntry> mSelectedImages = new ArrayList<>();
     SessionManager session;
-    String Uid;String Uname,Umail,Udate1,Udate2,Umob;
+    String Uid;
+    String Uname, Umail, Udate1, Udate2, Umob;
     BottomNavigationView bottomNavigation;
     String extras = "";
     FragmentTransaction transaction;
@@ -53,49 +54,50 @@ public class CenterActivity extends AppCompatActivity {
         setContentView(R.layout.drawer_main);
 
 
-        session=new SessionManager(getApplicationContext());
+        session = new SessionManager(getApplicationContext());
         HashMap<String, String> user = session.getUserDetails();
         Uname = user.get(SessionManager.KEY_NAME);
         Uid = user.get(SessionManager.KEY_ID);
-        Umail=user.get(SessionManager.KEY_email);
-        Udate1=user.get(SessionManager.KEY_createDate);
-        Udate2=user.get(SessionManager.KEY_LastModified);
-        Umob=user.get(SessionManager.KEY_mobile);
-        Log.d("sessionscreen","name_userId="+Uid+"\n_user_name="+Uname+"\nemail="+Umail
-                +"\ndate1="+Udate1+"\ndate2="+Udate2+"\nmobile="+Umob);
+        Umail = user.get(SessionManager.KEY_email);
+        Udate1 = user.get(SessionManager.KEY_createDate);
+        Udate2 = user.get(SessionManager.KEY_LastModified);
+        Umob = user.get(SessionManager.KEY_mobile);
+        Log.d("sessionscreen", "name_userId=" + Uid + "\n_user_name=" + Uname + "\nemail=" + Umail
+                + "\ndate1=" + Udate1 + "\ndate2=" + Udate2 + "\nmobile=" + Umob);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        floatb=(FloatingActionButton)findViewById(R.id.float_newProduct);
-        search_tool2=(Toolbar)findViewById(R.id.toolbar_search2);
+        floatb = (FloatingActionButton) findViewById(R.id.float_newProduct);
+        search_tool2 = (Toolbar) findViewById(R.id.toolbar_search2);
         setSupportActionBar(toolbar);
 
 
         initNavigationDrawer();
 
         bottomNavigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
-       // bottomNavigation.inflateMenu(R.menu.bottom_navigation);
+        // bottomNavigation.inflateMenu(R.menu.bottom_navigation);
         fragmentManager = getSupportFragmentManager();
 
 
-
         Toast.makeText(this, "dashboard act called", Toast.LENGTH_SHORT).show();
-
+/*
 
         extras = getIntent().getStringExtra("cartTransition");
 Log.d("center_screen",extras);
 
         if(extras.equalsIgnoreCase("cart"))
         {
-           /* Log.d("center_screen","inside extras");
+           *//* Log.d("center_screen","inside extras");
             if(extras.getBoolean("cartTransition"))
-            {*/
+            {*//*
+
                 Fragment newFragment = new CartFragment();
-                transaction = getSupportFragmentManager().beginTransaction();
+                 transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.main_container, newFragment);
                 transaction.addToBackStack(null);
                 search_tool2.setVisibility(View.GONE);
                 transaction.commit();
                 bottomNavigation.setSelectedItemId(R.id.bottom_nav_cart);
+
             //}
         }
         else{
@@ -104,16 +106,16 @@ Log.d("center_screen",extras);
             transaction = fragmentManager.beginTransaction();
             transaction.replace(R.id.main_container, fragment).commit();
         }
+ */
         fragment = new DashboardFragment();
         transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.main_container, fragment).commit();
 
 
-
         floatb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i=new Intent(CenterActivity.this,Add_New_product.class);
+                Intent i = new Intent(CenterActivity.this, Add_New_product.class);
                 startActivity(i);
               /*  new Picker.Builder(getApplicationContext(),
                         new Picker.PickListener() {
@@ -142,12 +144,12 @@ Log.d("center_screen",extras);
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
-                 switch (id){
+                switch (id) {
                     case R.id.bottom_nav_home:
                         search_tool2.setVisibility(View.VISIBLE);
                         fragment = new DashboardFragment();
 
-                                  break;
+                        break;
                     case R.id.bottom_nav_cart:
                         search_tool2.setVisibility(View.GONE);
                         fragment = new CartFragment();
@@ -164,7 +166,7 @@ Log.d("center_screen",extras);
 
     private void initNavigationDrawer() {
 
-        final NavigationView navigationView = (NavigationView)findViewById(R.id.navigation_view);
+        final NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
         navigationView.setItemIconTintList(null);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -177,12 +179,12 @@ Log.d("center_screen",extras);
                         drawerLayout.closeDrawers();
                         break;
                     case R.id.Profile:
-                        Intent i= new Intent(CenterActivity.this,Update_profile.class);
+                        Intent i = new Intent(CenterActivity.this, Update_profile.class);
                         startActivity(i);
                         drawerLayout.closeDrawers();
                         break;
                     case R.id.addNew:
-                        i= new Intent(CenterActivity.this,My_products.class);
+                        i = new Intent(CenterActivity.this, My_products.class);
                         startActivity(i);
                         drawerLayout.closeDrawers();
                         break;
@@ -199,15 +201,15 @@ Log.d("center_screen",extras);
                         break;
                     case R.id.logOut:
                         Toast.makeText(getApplicationContext(), "Logged out", Toast.LENGTH_SHORT).show();
-                        i= new Intent(CenterActivity.this,Login.class);
+                        i = new Intent(CenterActivity.this, Login.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                         startActivity(i);
                         finish();
                         session.logoutUser();
                         break;
                     case R.id.quote:
-                        i= new Intent(CenterActivity.this,Quotation_list.class);
+                        i = new Intent(CenterActivity.this, Quotation_list.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(i);
@@ -221,17 +223,18 @@ Log.d("center_screen",extras);
 
 
         View header = navigationView.getHeaderView(0);
-        TextView tv_email = (TextView)header.findViewById(R.id.navigation_email);
+        TextView tv_email = (TextView) header.findViewById(R.id.navigation_email);
         tv_email.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Lato-Semibold.ttf"));
-        tv_email.setText("WELCOME "+Uname);
+        tv_email.setText("WELCOME " + Uname);
 
-        drawerLayout = (DrawerLayout)findViewById(R.id.drawer);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
 
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.drawer_open,R.string.drawer_close){
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close) {
             @Override
-            public void onDrawerClosed(View v){
+            public void onDrawerClosed(View v) {
                 super.onDrawerClosed(v);
             }
+
             @Override
             public void onDrawerOpened(View v) {
                 super.onDrawerOpened(v);
@@ -249,40 +252,40 @@ Log.d("center_screen",extras);
         finishAffinity();
     }
 
-/*    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.d("center_screen","act resumed");
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        //extras="";
+        Log.d("center_screen", "act postresumed");
         extras = getIntent().getStringExtra("cartTransition");
-        Log.d("center_screen",extras);
+        Log.d("center_screen", extras);
 
-        if(extras.equalsIgnoreCase("cart"))
-        {
-           *//* Log.d("center_screen","inside extras");
-            if(extras.getBoolean("cartTransition"))
-            {*//*
+        if (extras.equals("cart")) {
+            Log.d("center_screen", "inflating cart");
+          //  if (extras.getBoolean("cartTransition")) {
 
-            Fragment newFragment = new CartFragment();
-            transaction = getSupportFragmentManager().beginTransaction();
+                Fragment newFragment = new CartFragment();
+                transaction = getSupportFragmentManager().beginTransaction();
 
-            transaction.replace(R.id.main_container, newFragment);
-            transaction.addToBackStack(null);
+                transaction.replace(R.id.main_container, newFragment);
+                transaction.addToBackStack(null);
 
-            search_tool2.setVisibility(View.GONE);
-            transaction.commit();
+                search_tool2.setVisibility(View.GONE);
+                transaction.commit();
 
 
+                bottomNavigation.setSelectedItemId(R.id.bottom_nav_cart);
 
-            bottomNavigation.setSelectedItemId(R.id.bottom_nav_cart);
+                //}
+            } else {
+                Log.d("center_screen", "inflating dash");
+                fragment = new DashboardFragment();
+                transaction = fragmentManager.beginTransaction();
+                transaction.replace(R.id.main_container, fragment).commit();
+            }
 
-            //}
         }
-        else{
-            Log.d("center_screen","extra null");
-            fragment = new DashboardFragment();
-            transaction = fragmentManager.beginTransaction();
-            transaction.replace(R.id.main_container, fragment).commit();
-        }
+    }
 
-    }*/
-}
+

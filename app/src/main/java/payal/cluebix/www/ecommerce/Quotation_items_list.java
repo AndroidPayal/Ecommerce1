@@ -90,7 +90,9 @@ public class Quotation_items_list extends AppCompatActivity implements Quotation
         expiry_date=(TextView)findViewById(R.id.quotation_expiry_date);
 
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(Quotation_items_list.this));
+        LinearLayoutManager linearLayoutManager= new LinearLayoutManager(getApplicationContext());
+        linearLayoutManager.setAutoMeasureEnabled(true);
+        recyclerView.setLayoutManager(linearLayoutManager);
 
         get_old_Element();
 
@@ -100,8 +102,10 @@ public class Quotation_items_list extends AppCompatActivity implements Quotation
         expiry_date.setText("expiry date");
         quotation_id.setText("Quotation Code:"+quote_no);
 
+
         adapter=new Quotation_item_adap(getApplicationContext(),product_item);
         adapter.setClickListener(this);
+        recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
 
     }

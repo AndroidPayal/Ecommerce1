@@ -33,8 +33,12 @@ public class Company_Adapter extends RecyclerView.Adapter<Company_Adapter.Produc
 
     @Override
     public Company_Adapter.ProductViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(mCtx);
-        View view = inflater.inflate(R.layout.unit_adapter, null);
+
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        View view = inflater.inflate(R.layout.unit_adapter, null,false);
+        ViewGroup.LayoutParams lp = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        view.setLayoutParams(lp);
         return new Company_Adapter.ProductViewHolder(view);
     }
 

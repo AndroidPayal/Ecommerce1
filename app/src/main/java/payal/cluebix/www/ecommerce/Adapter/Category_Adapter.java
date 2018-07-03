@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -36,44 +38,57 @@ public class Category_Adapter extends RecyclerView.Adapter<Category_Adapter.Prod
 
     @Override
     public Category_Adapter.ProductViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(mCtx);
-        View view = inflater.inflate(R.layout.list_layout_category, null);
+
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        View view = inflater.inflate(R.layout.list_layout_category, null,false);
+        ViewGroup.LayoutParams lp = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        view.setLayoutParams(lp);
         return new Category_Adapter.ProductViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final Category_Adapter.ProductViewHolder holder, final int position) {
-        category_data a= productList.get(position);
+        final category_data a= productList.get(position);
 
-        holder.s_no.setText(position+"");
+        holder.s_no.setText(position+1+"");
         holder.name.setText(a.getName());
         holder.description.setText(a.getDescription());
 
         holder.options.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-        /*        PopupMenu popup = new PopupMenu(mCtx,holder.options);
-                popup.inflate(R.menu.menu_unit);
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()) {
-                            case R.id.unit_options1_edit:
-                                Toast.makeText(mCtx, "edit at "+position, Toast.LENGTH_SHORT).show();
-                                return true;
-                            default:
-                                return false;
-                        }
-                    }
-                });
-                popup.show();*/
-
-            /*    AlertDialog.Builder builder = new AlertDialog.Builder(mCtx);
+                AlertDialog.Builder builder = new AlertDialog.Builder(mCtx);
                 LayoutInflater inflater = LayoutInflater.from(mCtx);
                 View dialogView = inflater.inflate( R.layout.popup_add_category_list,null);
                 builder.setView(dialogView);
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();*/
+                final AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+
+                final EditText edit_name=(EditText)dialogView.findViewById(R.id.edit_category_name);
+                final EditText edit_desc=(EditText)dialogView.findViewById(R.id.edit_category_desc);
+                Button submit=(Button)dialogView.findViewById(R.id.dialog_button_apply);
+                Button cancel=(Button)dialogView.findViewById(R.id.dialog_button_cancel);
+
+                edit_name.setText(a.getName());
+                edit_desc.setText(a.getDescription());
+
+                submit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String name=edit_name.getText().toString().trim();
+                        String desc=edit_desc.getText().toString().trim();
+
+                        Toast.makeText(mCtx, "name:"+name+"\n"+"desc:"+desc, Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alertDialog.cancel();
+                    }
+                });
             }
         });
 

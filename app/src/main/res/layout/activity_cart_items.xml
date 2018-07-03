@@ -91,9 +91,10 @@
                             android:layout_weight="1.1"
                             android:paddingVertical="2dp"
                             android:textSize="12sp"
-                            android:text="description"
+                            android:text="descriptionfield must voverjhfkjdnklfmdkf vjvnkfnv jfnvkf vgnfk vnfkv vknfkv knv"
                             android:textColor="#767272"
                             android:paddingLeft="5dp"
+                            android:maxLines="2"
                             />
 
 

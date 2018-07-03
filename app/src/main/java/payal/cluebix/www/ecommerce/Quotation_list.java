@@ -58,8 +58,12 @@ public class Quotation_list extends AppCompatActivity implements Quote_list_adap
 
         //createpdf=(Button)findViewById(R.id.createPdf);
         recycler_quote=(RecyclerView)findViewById(R.id.recycler_quote);
+
         recycler_quote.setHasFixedSize(true);
-        recycler_quote.setLayoutManager(new LinearLayoutManager(Quotation_list.this));
+        LinearLayoutManager linearLayoutManager= new LinearLayoutManager(getApplicationContext());
+        linearLayoutManager.setAutoMeasureEnabled(true);
+        recycler_quote.setLayoutManager(linearLayoutManager);
+
         product_item=new ArrayList<>();
 
         session=new SessionManager(getApplicationContext());

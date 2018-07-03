@@ -29,8 +29,12 @@ public class Quotation_item_adap extends RecyclerView.Adapter<Quotation_item_ada
 
     @Override
     public Quotation_item_adap.ProductViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(mCtx);
-        View view = inflater.inflate(R.layout.invoice_adapter_layout, null);
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        View view = inflater.inflate(R.layout.invoice_adapter_layout, null,false);
+        ViewGroup.LayoutParams lp = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        view.setLayoutParams(lp);
+
         return new Quotation_item_adap.ProductViewHolder(view);
     }
 
@@ -38,8 +42,8 @@ public class Quotation_item_adap extends RecyclerView.Adapter<Quotation_item_ada
     public void onBindViewHolder(Quotation_item_adap.ProductViewHolder holder, int position) {
         quotation2 a= productList.get(position);
 
-        holder.invoice_sr_number.setText(position+1+"");
-        Log.d("positioning",position+"");
+        holder.invoice_sr_number.setText((position+1)+"");
+
 
         holder.q_name.setText(a.getProduct_name());
         //holder.q_brand.setText("Brand: "+a.getBrand());
@@ -56,6 +60,7 @@ public class Quotation_item_adap extends RecyclerView.Adapter<Quotation_item_ada
             holder.q_prise.setText("Rs. "+(Float.parseFloat(a.getPrice())*Integer.parseInt(a.getQty())));
 
         }
+        Log.d("quotation_item_adap__","qty="+a.getQty()+"\nsrNo:"+(position+1));
 
 
 /*
