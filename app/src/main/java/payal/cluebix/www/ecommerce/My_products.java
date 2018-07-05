@@ -44,8 +44,9 @@ public class My_products extends AppCompatActivity {
     Toolbar toolbar;
     private DrawerLayout drawerLayout;
     FloatingActionButton fab;
-    ArrayList<sample_myProduct> product_item=new ArrayList<>();
-    ArrayList<String> Product_id_array=new ArrayList<>();
+    ArrayList<sample_myProduct> product_item;
+    ArrayList<String> Product_id_array;
+
     String url1= Base_url.Get_approved_myproducts;
 
     SessionManager session;
@@ -62,7 +63,7 @@ public class My_products extends AppCompatActivity {
       //  notapproved=(Button)findViewById(R.id.notApproved);
         setSupportActionBar(toolbar);
 
-        product_item.clear();Product_id_array.clear();
+
 
         session=new SessionManager(getApplicationContext());
         HashMap<String, String> user = session.getUserDetails();
@@ -78,6 +79,15 @@ public class My_products extends AppCompatActivity {
         adapter=new GridAdapter(getApplicationContext(),product_item);
         grid.setAdapter(adapter);
 
+        //Log.d("_correct_res","product array1: "+product_item);
+
+       /* Log.d("_correct_res","product array: "+product_item.get(3).getProduct_name()
+                +product_item.get(5).getProduct_name()
+                +product_item.get(7).getProduct_name()
+                +product_item.get(8).getProduct_name()
+                +product_item.get(1).getProduct_name());
+*/
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -85,7 +95,6 @@ public class My_products extends AppCompatActivity {
                 startActivity(i);
             }
         });
-        Log.d("clicked_","product array: "+product_item);
 
         grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -98,6 +107,8 @@ public class My_products extends AppCompatActivity {
 
                 Intent intent=new Intent(My_products.this,Product_My_Detail.class);
                 intent.putExtra("current_product_id",Product_id_array.get(i));
+                Log.d("_correct_res","send id:"+Product_id_array.get(i)+"\nitem array id="+product_item.get(i).getProductId()
+                +"\nname:"+product_item.get(i).getProduct_name());
                 startActivity(intent);
 
             }
@@ -108,15 +119,10 @@ public class My_products extends AppCompatActivity {
 
 
     private void get_old_Element() {
-/*
-* {"id":"1","product_name":"new wallpaper","brand":"normal","description":"hello this is new description"
-* ,"product_code":"","color":"Blue,Pink","price":"254.00","first_min":"12","first_max":"25","first_price":"452.00"
-* ,"second_min":"30","second_max":"50","second_price":"800.00","third_min":"50","third_max":"70","third_price":"1000.00"
-* ,"product_images":"ui-1.png","created_date":"2018-04-02","is_active":"1","request":"1","created_by":"1"}
-* */
-/*
-* {
-        "id": "1",
+        product_item=new ArrayList<>();
+        Product_id_array=new ArrayList<>();
+        product_item.clear();Product_id_array.clear();
+/* {    "id": "1",
         "category_name": "",
         "product_name": "Demo1",
         "brand": "normal",
@@ -139,11 +145,7 @@ public class My_products extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 Log.d("dashboard_correct_res",response);
-/*
-* {"id":"6","category_name":"single layer","product_name":"vhj","brand":"Butter Fly","description":"bvjhjnk",
-* "product_code":"723923","color":"Jungle green,sky-blue,cerulean,azure,green,lime,indigo,Orange-Red","price":"0.00",
-* "manufacturing":"0","qty":"5","sample":"0","sample_price":"0.00",
-* "unit":"PSC","product_images":"","created_date":"2018-05-17","is_active":"1","request":"0","created_by":"39"}*/
+
                 JSONObject post_data;
                 try {
                     JSONArray jsonArray=new JSONArray(response);
@@ -173,6 +175,7 @@ public class My_products extends AppCompatActivity {
                         product_item.add(new sample_myProduct(product_id,category_name,product_name,brand,description,product_code
                                 ,color,price,manufacturing,qty,unit,sample,product_images
                                 ,created_date,is_active,request,created_by));
+                        Log.d("_correct_res","fetching data ("+i+")"+"id="+product_id+" name="+product_name);
                     }
                     adapter.notifyData(product_item);
                 } catch (JSONException e) {

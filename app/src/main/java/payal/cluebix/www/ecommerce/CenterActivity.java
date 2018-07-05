@@ -44,7 +44,7 @@ public class CenterActivity extends AppCompatActivity {
     String Uid;
     String Uname, Umail, Udate1, Udate2, Umob;
     BottomNavigationView bottomNavigation;
-    String extras = "";
+    Bundle extras;
     FragmentTransaction transaction;
 
 
@@ -76,10 +76,38 @@ public class CenterActivity extends AppCompatActivity {
         bottomNavigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         // bottomNavigation.inflateMenu(R.menu.bottom_navigation);
         fragmentManager = getSupportFragmentManager();
+        Log.d("ononon","inside oncreate");
+
+    //    Toast.makeText(this, "dashboard act called", Toast.LENGTH_SHORT).show();
 
 
-        Toast.makeText(this, "dashboard act called", Toast.LENGTH_SHORT).show();
+
+
+
 /*
+        if (extras.getBoolean("cartTransition")) {
+            Log.d("center_screen", "inflating cart");
+            //  if (extras.getBoolean("cartTransition")) {
+
+            Fragment newFragment = new CartFragment();
+            transaction = getSupportFragmentManager().beginTransaction();
+
+            transaction.replace(R.id.main_container, newFragment);
+            transaction.addToBackStack(null);
+
+            search_tool2.setVisibility(View.GONE);
+            transaction.commit();
+
+
+            bottomNavigation.setSelectedItemId(R.id.bottom_nav_cart);
+
+        }*/
+
+
+
+
+
+        /*
 
         extras = getIntent().getStringExtra("cartTransition");
 Log.d("center_screen",extras);
@@ -252,16 +280,17 @@ Log.d("center_screen",extras);
         finishAffinity();
     }
 
+/*
 
     @Override
     protected void onPostResume() {
         super.onPostResume();
         //extras="";
         Log.d("center_screen", "act postresumed");
-        extras = getIntent().getStringExtra("cartTransition");
-        Log.d("center_screen", extras);
+        extras = getIntent().getExtras();
+        Log.d("center_screen", "extras");
 
-        if (extras.equals("cart")) {
+        if (extras.getBoolean("cartTransition")) {
             Log.d("center_screen", "inflating cart");
           //  if (extras.getBoolean("cartTransition")) {
 
@@ -286,6 +315,11 @@ Log.d("center_screen",extras);
             }
 
         }
+
+
+*/
+
+
     }
 
 

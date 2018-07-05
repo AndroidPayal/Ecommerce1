@@ -114,7 +114,8 @@
                     android:drawablePadding="8dp"
                     android:textIsSelectable="true"
                     android:drawableLeft="@drawable/ic_location_pin"
-                    android:text=" HIG C-65, NEAR NAVKAR HOSPITAL,SHAILENDRA NAGAR RAIPUR-492001"
+                    android:text="NEAR adhyapak layout building, block no.236 lig g 50, sonegaon"
+                    android:textAllCaps="true"
                     />
                 <TextView
                     android:layout_width="match_parent"
@@ -124,7 +125,7 @@
                     android:layout_marginTop="10dp"
                     android:drawablePadding="8dp"
                     android:drawableLeft="@drawable/ic_telephone"
-                    android:text="+91-74151-65000"
+                    android:text="www.definedesigner.com"
                     android:textIsSelectable="true"
                     />
                 <TextView
@@ -136,7 +137,7 @@
                     android:layout_marginBottom="10dp"
                     android:drawablePadding="8dp"
                     android:drawableLeft="@drawable/ic_email_filled_closed_envelope"
-                    android:text="connect@cluebixsoftware.com"
+                    android:text="www.definedesigner.com"
                     android:textIsSelectable="true"
                     />
 

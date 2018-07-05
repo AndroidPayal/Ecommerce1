@@ -193,6 +193,7 @@ public class ProductDetail extends AppCompatActivity {
         if (quantity.equals("")) quantity = "0";
 
         Log.d("validat1","ask="+quantity+" awl="+available+" manuf="+manufacturing1);
+        add_cart.setClickable(false);
 
         if ((Integer.parseInt(quantity)>Integer.parseInt(available)) && manufacturing1==0 ) {
                 prodruct_quantity.requestFocus();
@@ -213,7 +214,7 @@ public class ProductDetail extends AppCompatActivity {
                             //                count++;
                             //invalidateOptionsMenu();.
                             add_cart.setText("Added To Cart");
-                            add_cart.setClickable(false);
+                       //     add_cart.setClickable(false);
                             Toast.makeText(ProductDetail.this, "Cart response: " + response, Toast.LENGTH_SHORT).show();
                         }
                     }, new Response.ErrorListener() {
@@ -535,9 +536,11 @@ public class ProductDetail extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         //cart icon clicked
+
+      //  if(item.getItemId() == R.id.action_cart){
         Intent intent = new Intent(ProductDetail.this,CenterActivity.class);
-        intent.putExtra("cartTransition","cart");
-        startActivity(intent);
+        intent.putExtra("cartTransition",true);
+        startActivity(intent);//}
    /*     CartFragment fragment = new CartFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.main_container, fragment);

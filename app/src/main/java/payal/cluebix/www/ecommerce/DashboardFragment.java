@@ -87,7 +87,12 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
          v =inflater.inflate(R.layout.updated, container, false);
 
+/*
+* in color section , field name : color_name
 
+in company : field name : name,
+In Unit section : unit_name
+*/
 
         // Fragment transition of cart
 

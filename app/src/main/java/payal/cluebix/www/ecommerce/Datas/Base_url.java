@@ -48,8 +48,8 @@ public class Base_url {
 
     public static final String UpdateCompany=base_url+"ApiController/updateCompany/";/*company id*/
     public static final String UpdateColor=base_url+"ApiController/editColor/";/*color id*/
-    public static final String UpdateUnit=base_url+"ApiController/editUnit/";/*color id*/
-    public static final String UpdateCategory=base_url+"ApiController/editCategory/";/*color id*/
+    public static final String UpdateUnit=base_url+"ApiController/editUnit/";/*unit id*/
+    public static final String UpdateCategory=base_url+"ApiController/editCategory/";/*category id*/
 
     public static  String id ="";
     public static  String name="";

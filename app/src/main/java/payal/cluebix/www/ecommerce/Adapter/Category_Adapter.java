@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,10 +16,24 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import payal.cluebix.www.ecommerce.Category_list;
+import payal.cluebix.www.ecommerce.Datas.Base_url;
 import payal.cluebix.www.ecommerce.Datas.category_data;
 import payal.cluebix.www.ecommerce.Datas.company_data;
+import payal.cluebix.www.ecommerce.Handlers.RquestHandler;
 import payal.cluebix.www.ecommerce.R;
 
 /**
@@ -30,6 +45,8 @@ public class Category_Adapter extends RecyclerView.Adapter<Category_Adapter.Prod
     private Context mCtx;
     private ArrayList<category_data> productList;
     Category_Adapter.ClickListener clickListener;
+    String url2= Base_url.UpdateCategory;
+
 
     public Category_Adapter(Context mCtx, ArrayList<category_data> productList) {
         this.mCtx = mCtx;
@@ -76,10 +93,49 @@ public class Category_Adapter extends RecyclerView.Adapter<Category_Adapter.Prod
                 submit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String name=edit_name.getText().toString().trim();
-                        String desc=edit_desc.getText().toString().trim();
+                        final String name=edit_name.getText().toString().trim();
+                        final String desc=edit_desc.getText().toString().trim();
 
-                        Toast.makeText(mCtx, "name:"+name+"\n"+"desc:"+desc, Toast.LENGTH_SHORT).show();
+                        StringRequest stringRequest=new StringRequest(Request.Method.POST, url2+a.getId(), new Response.Listener<String>(){
+                            @Override
+                            public void onResponse(String response) {
+                                Log.d("___",response);
+
+                                JSONObject post_data;
+                                try {
+                                    holder.name.setText(name);
+                                    holder.description.setText(desc);
+                                    //scroll krne pr updated name nii dikhta until we restart the screen
+                                    //iske liye productlist ko update krna pdega
+                                    JSONObject jsonObject=new JSONObject(response);
+                                    String success=jsonObject.getString("success");
+                                    String message=jsonObject.getString("message");
+
+                                    Toast.makeText(mCtx, ""+message, Toast.LENGTH_SHORT).show();
+                                    alertDialog.cancel();
+
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.d("dashboard_error_res",error+"");
+                                Toast.makeText(mCtx, "Server Connection Failed!", Toast.LENGTH_SHORT).show();
+                            }
+                        }){
+                            @Override
+                            protected Map<String, String> getParams() throws AuthFailureError {
+                                Map<String , String> parameters= new HashMap<String, String>();
+                                parameters.put("name",name);
+                                parameters.put("description",desc);
+                                return parameters;
+                            }
+                        };
+                        RquestHandler.getInstance(mCtx).addToRequestQueue(stringRequest);
+
 
                     }
                 });

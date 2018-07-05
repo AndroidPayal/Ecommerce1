@@ -1,6 +1,7 @@
 package payal.cluebix.www.ecommerce.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +25,7 @@ import payal.cluebix.www.ecommerce.Datas.sample_myProduct;
 
 public class GridAdapter extends BaseAdapter {
     Context mctx;
-    ArrayList<sample_myProduct> product;
+    public ArrayList<sample_myProduct> product=new ArrayList<>();
 
     public GridAdapter(Context mctx, ArrayList<sample_myProduct> name){
         this.mctx=mctx;
@@ -43,7 +44,7 @@ public class GridAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int i) {
-        return 0;
+        return i;
     }
 
     @Override
@@ -58,6 +59,9 @@ public class GridAdapter extends BaseAdapter {
             grid = inflater.inflate(R.layout.grid_adapter, null);
             TextView textView = (TextView) grid.findViewById(R.id.text2);
             ImageView imageView = (ImageView)grid.findViewById(R.id.image2);
+
+            Log.d("_correct_res","adapter_val:"+i+" name= "+product.get(i).getProduct_name()+"\nid="+product.get(i).getProductId());
+
             textView.setText(product.get(i).getProduct_name());
             String image_names=product.get(i).getProduct_images_String();
             List<String> items = Arrays.asList(image_names.split(","));

@@ -68,7 +68,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.logo2)
+                .setSmallIcon(R.mipmap.logo2)
                .setContentTitle("MultiVendor Application")//remoteMessage1.getNotification().getTitle()
                 .setContentText(messageBody.substring(0,messageBody.length()))
                 .setAutoCancel(true)

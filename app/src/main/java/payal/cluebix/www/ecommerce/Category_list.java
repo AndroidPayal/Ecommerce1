@@ -89,6 +89,7 @@ public class Category_list extends AppCompatActivity implements Category_Adapter
       fab_category.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
+
               add_category_box();
           }
       });
@@ -153,12 +154,12 @@ public class Category_list extends AppCompatActivity implements Category_Adapter
     }
 
     private void add_category_box() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
-        LayoutInflater inflater = LayoutInflater.from(getApplicationContext());
-        View dialogView = inflater.inflate( R.layout.popup_add_category_list,null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(Category_list.this);
+        View dialogView = getLayoutInflater().inflate( R.layout.popup_add_category_list,null);
         builder.setView(dialogView);
         final AlertDialog alertDialog = builder.create();
         alertDialog.show();
+
 
         final EditText edit_name=(EditText)dialogView.findViewById(R.id.edit_category_name);
         final EditText edit_desc=(EditText)dialogView.findViewById(R.id.edit_category_desc);
