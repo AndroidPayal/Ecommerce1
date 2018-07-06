@@ -1,5 +1,29 @@
 [
     {
+        "outputFile": "C:\\Users\\UNMESH\\AndroidStudioProjects\\Ecommerce1\\imagepicker\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-h320dp-v13\\values-h320dp-v13.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 2,
+                    "startColumn": 4,
+                    "startOffset": 55,
+                    "endColumn": 57,
+                    "endOffset": 108
+                },
+                "from": {
+                    "file": "C:\\Users\\UNMESH\\.android\\build-cache\\9d2b32179c270317b259645121c42d54f9616319\\output\\res\\values-h320dp\\values-h320dp.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 4,
+                        "startOffset": 231,
+                        "endColumn": 57,
+                        "endOffset": 284
+                    }
+                }
+            }
+        ]
+    },
+    {
         "outputFile": "C:\\Users\\speed\\AndroidStudioProjects\\Ecommerce\\imagepicker\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-h320dp-v13\\values-h320dp-v13.xml",
         "map": [
             {

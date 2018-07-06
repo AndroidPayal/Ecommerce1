@@ -78,6 +78,8 @@ import payal.cluebix.www.ecommerce.Handlers.SessionManager;
 
 public class Add_New_product extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
+    //add commit
+
     private String Tag="Add_New_product_screen";
 
     MultiSpinnerSearch spin_color;
