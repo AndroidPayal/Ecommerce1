@@ -1,0 +1,22 @@
+[
+    {
+        "merged": "C:\\Users\\speed\\AndroidStudioProjects\\Ecommerce\\imagepicker\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\ic_action_done_white.png",
+        "source": "C:\\Users\\speed\\AndroidStudioProjects\\Ecommerce\\imagepicker\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\ic_action_done_white.png"
+    },
+    {
+        "merged": "C:\\Users\\speed\\AndroidStudioProjects\\Ecommerce\\imagepicker\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\ic_play_arrow.png",
+        "source": "C:\\Users\\speed\\AndroidStudioProjects\\Ecommerce\\imagepicker\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\ic_play_arrow.png"
+    },
+    {
+        "merged": "C:\\Users\\speed\\AndroidStudioProjects\\Ecommerce\\imagepicker\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\fab_shadow.png",
+        "source": "C:\\Users\\speed\\.android\\build-cache\\d4a0864d444457232cd5ea8f986d1b6769ffd1d2\\output\\res\\drawable-hdpi-v4\\fab_shadow.png"
+    },
+    {
+        "merged": "C:\\Users\\speed\\AndroidStudioProjects\\Ecommerce\\imagepicker\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\fab_shadow_mini.png",
+        "source": "C:\\Users\\speed\\.android\\build-cache\\d4a0864d444457232cd5ea8f986d1b6769ffd1d2\\output\\res\\drawable-hdpi-v4\\fab_shadow_mini.png"
+    },
+    {
+        "merged": "C:\\Users\\speed\\AndroidStudioProjects\\Ecommerce\\imagepicker\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\ic_action_camera_white.png",
+        "source": "C:\\Users\\speed\\AndroidStudioProjects\\Ecommerce\\imagepicker\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\ic_action_camera_white.png"
+    }
+]

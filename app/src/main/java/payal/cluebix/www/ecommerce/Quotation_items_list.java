@@ -1,10 +1,13 @@
 package payal.cluebix.www.ecommerce;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.pdf.PdfDocument;
 import android.nfc.Tag;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -255,24 +258,49 @@ public class Quotation_items_list extends AppCompatActivity implements Quotation
         return super.onOptionsItemSelected(item);
     }
 
-    private void create_save_pdf() {
+    private boolean create_save_pdf() {
 
-     /*   if (pdfcontent.getWidth()==0) {
-            Toast.makeText(getApplicationContext(),
-                    "No data to generate Pdf", Toast.LENGTH_SHORT)
-                    .show();
-        } else {
-            pdfcontent.setTextColor(getResources().getColor(R.color.Black));
-       */     File dir = new File(Base_url.pdf_saved_path);
+        /*File dir = new File(Base_url.pdf_saved_path);
             if(!dir.exists())
                 dir.mkdirs();
-
+                pdfCreate();*/
           //  new PdfGenerationTask().execute();
-            Log.e("excep_quote",pdfcontent.getWidth()+"=content width");
-            Log.e("excep_quote",pdfcontent.getHeight()+"= content hight");
-            pdfCreate();
-    //    }
 
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                Log.v("permission_log","Permission is granted");
+                File dir = new File(Base_url.pdf_saved_path);
+                if(!dir.exists())
+                    dir.mkdirs();
+                pdfCreate();
+                return true;
+            } else {
+                Log.v("permission_log","Permission is revoked");
+                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                return false;
+            }
+        }
+        else { //permission is automatically granted on sdk<23 upon installation
+            Log.v("permission_log","Permission automatically granted");
+            File dir = new File(Base_url.pdf_saved_path);
+            if(!dir.exists())
+                dir.mkdirs();
+            pdfCreate();
+            return true;
+        }
+
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(grantResults[0]== PackageManager.PERMISSION_GRANTED){
+            Log.v("permission_log","Permission: "+permissions[0]+ "was "+grantResults[0]);
+            File dir = new File(Base_url.pdf_saved_path);
+            if(!dir.exists())
+                dir.mkdirs();
+            pdfCreate();
+        }
     }
 
     public void pdfCreate(){
@@ -280,7 +308,7 @@ public class Quotation_items_list extends AppCompatActivity implements Quotation
          * Creating Document
          */
         qutation_table_item.clear();
-        qutation_table_item.add("Name");qutation_table_item.add("Product Id");qutation_table_item.add("Sample");
+        qutation_table_item.add("Name");qutation_table_item.add("ProductId");qutation_table_item.add("Sample");
         qutation_table_item.add("Rate");
         qutation_table_item.add("Quantity");qutation_table_item.add("Total Price");
         Document document = new Document();

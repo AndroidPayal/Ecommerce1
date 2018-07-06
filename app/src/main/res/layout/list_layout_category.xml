@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="2dp"
+    >
+    
+<android.support.v7.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="2dp"
+    android:elevation="2dp"
+    >
+
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:weightSum="3"
+    android:orientation="horizontal"
+    android:layout_marginTop="2dp"
+    >
+
+    <TextView
+        android:id="@+id/category_Sno"
+        android:layout_width="0dp"
+        android:padding="4dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_weight="0.4"
+        android:text="1."
+        android:textColor="#000"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/category_name"
+        android:layout_width="0dp"
+        android:padding="4dp"
+        android:layout_gravity="center"
+        android:layout_weight="2.2"
+        android:textColor="#000"
+        android:text="green color "
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:id="@+id/category_options"
+        android:layout_width="0dp"
+        android:padding="4dp"
+        android:layout_weight="0.4"
+        android:layout_gravity="center"
+        android:src="@android:drawable/ic_menu_edit"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="3"
+        android:orientation="horizontal"
+        android:layout_marginTop="2dp"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:padding="4dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_weight="0.4"
+            android:textColor="#000"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/category_desc"
+            android:layout_width="0dp"
+            android:padding="4dp"
+            android:layout_gravity="center"
+            android:layout_weight="2.6"
+            android:text="green color  or possibly an alteration of quaveren or possibly an alteration of quaveren or possibly an alteration of quaveren or possibly an alteration of quaveren or possibly an alteration of quaveren or possibly an alteration of quaveren or possibly an alteration of quaveren"
+            android:layout_height="wrap_content" />
+
+
+    </LinearLayout>
+
+</LinearLayout>
+
+</android.support.v7.widget.CardView>
+</LinearLayout>
+
+</LinearLayout>

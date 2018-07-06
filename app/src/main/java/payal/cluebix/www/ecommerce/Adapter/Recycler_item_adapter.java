@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -40,13 +41,13 @@ public class Recycler_item_adapter extends RecyclerView.Adapter<Recycler_item_ad
     ClickListener clickListener;
     Slider_adapter sliderPagerAdapter;
     List<String> slider_image;
-    ArrayList<String> searchArray=new ArrayList<>();
-
     private TextView[] dots;
+    List<data_dashboard> mStringFilterList=new ArrayList<>();
 
     public Recycler_item_adapter(Context mCtx, List<data_dashboard> productList) {
         this.mCtx = mCtx;
         this.productList = productList;
+        mStringFilterList=productList;
     }
 
     @Override
@@ -134,6 +135,9 @@ public class Recycler_item_adapter extends RecyclerView.Adapter<Recycler_item_ad
 
         public ProductViewHolder(View itemView) {
             super(itemView);
+         /*   for(int i=0;i<productList.size();i++ ){
+                mStringFilterList.add(productList.get(i).getProduct_name());
+            }*/
 
             vp_slider =itemView.findViewById(R.id.vp_slider);
             ll_dots = itemView.findViewById(R.id.ll_dots);
@@ -239,29 +243,36 @@ public class Recycler_item_adapter extends RecyclerView.Adapter<Recycler_item_ad
             }catch (Exception e){e.printStackTrace();}
     }
 
+    private class valueFilter extends Filter{
 
-    // Filter Class
-    public void filter(String charText) {
-        charText = charText.toLowerCase(Locale.getDefault());
-        searchArray.clear();
-        if (charText.length() == 0) {
-            for(int i=0;i<productList.size();i++)
-            searchArray.add(productList.get(i).getProduct_name());
-        } else {
-          /*  for (AnimalNames wp : arraylist) {
-                if (wp.getAnimalName().toLowerCase(Locale.getDefault()).contains(charText)) {
-                    animalNamesList.add(wp);
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            FilterResults results = new FilterResults();
+
+          /*  if (constraint != null && constraint.length() > 0) {
+                ArrayList<data_dashboard> filterList = new ArrayList<data_dashboard>();
+
+                for (int i = 0; i < mStringFilterList.size(); i++) {
+                    if ((mStringFilterList.get(i)..toUpperCase())
+                            .contains(constraint.toString().toUpperCase())) {
+                        data_dashboard babydata = new data_dashboard(mStringFilterList.get(i)
+                                , mStringFilterList.get(i)
+                                .getBabypicture());
+                        filterList.add(babydata);
+                    }
                 }
+                }else{
+                results.count = mStringFilterList.size();
+                results.values = mStringFilterList;
             }*/
-          for(data_dashboard dd : productList){
-              if(dd.getProduct_name().toLowerCase(Locale.getDefault()).contains(charText)){
-                  searchArray.add(dd.getProduct_name());
-              }
-          }
+
+                return null;
         }
-        notifyDataSetChanged();
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+
+        }
     }
-
-
 }
 

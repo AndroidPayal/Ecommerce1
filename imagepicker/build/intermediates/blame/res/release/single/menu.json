@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "C:\\Users\\speed\\AndroidStudioProjects\\Ecommerce\\imagepicker\\build\\intermediates\\res\\merged\\release\\menu\\menu_take_photo.xml",
+        "source": "C:\\Users\\speed\\AndroidStudioProjects\\Ecommerce\\imagepicker\\src\\main\\res\\menu\\menu_take_photo.xml"
+    },
+    {
+        "merged": "C:\\Users\\speed\\AndroidStudioProjects\\Ecommerce\\imagepicker\\build\\intermediates\\res\\merged\\release\\menu\\menu_select_all.xml",
+        "source": "C:\\Users\\speed\\AndroidStudioProjects\\Ecommerce\\imagepicker\\src\\main\\res\\menu\\menu_select_all.xml"
+    },
+    {
+        "merged": "C:\\Users\\speed\\AndroidStudioProjects\\Ecommerce\\imagepicker\\build\\intermediates\\res\\merged\\release\\menu\\cwac_cam2_confirm.xml",
+        "source": "C:\\Users\\speed\\.android\\build-cache\\444052266d377e3ea382e56e5121b0a3572bd8a7\\output\\res\\menu\\cwac_cam2_confirm.xml"
+    },
+    {
+        "merged": "C:\\Users\\speed\\AndroidStudioProjects\\Ecommerce\\imagepicker\\build\\intermediates\\res\\merged\\release\\menu\\menu_deselect_all.xml",
+        "source": "C:\\Users\\speed\\AndroidStudioProjects\\Ecommerce\\imagepicker\\src\\main\\res\\menu\\menu_deselect_all.xml"
+    }
+]

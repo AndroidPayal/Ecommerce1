@@ -20,7 +20,7 @@
       android:layout_height="match_parent"
       android:scaleType="centerInside"
       android:layout_margin="7dp"
-      android:src="@mipmap/logo2"
+      android:src="@drawable/logo2"
       />
 <!--
      android:background="@drawable/splash7"
