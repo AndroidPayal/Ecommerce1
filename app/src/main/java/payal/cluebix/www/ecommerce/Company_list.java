@@ -88,14 +88,13 @@ public class Company_list extends AppCompatActivity implements Company_Adapter.C
 
     private void create_dialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(Company_list.this);
-        final View dialogView = getLayoutInflater().inflate( R.layout.popup_add_color_list,null);
+        final View dialogView = getLayoutInflater().inflate( R.layout.popup_add_company_list,null);
         builder.setView(dialogView);
         final AlertDialog alertDialog = builder.create();
         alertDialog.show();
 
 
         final EditText edit_name=(EditText)dialogView.findViewById(R.id.edit_company_name);
-        final EditText edit_gst=(EditText)dialogView.findViewById(R.id.edit_gst);
         Button submit=(Button)dialogView.findViewById(R.id.dialog_button_apply);
         Button cancel=(Button)dialogView.findViewById(R.id.dialog_button_cancel);
 

@@ -29,6 +29,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ProductViewHol
     private Context mCtx;
     private ArrayList<sample_Cart> productList;
     CartAdapter.ClickListener clickListener;
+    /*git branch --set-upstream master origin/master*/
 
     public CartAdapter(Context mCtx, ArrayList<sample_Cart> productList) {
         this.mCtx = mCtx;
@@ -60,7 +61,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ProductViewHol
         else
             holder.Avl.setText("Owner");
 
-        holder.sample.setText("Sample:"+a.getSamplePrice());
+        if (a.getSample().equals("1"))
+            holder.sample.setText("Sample:"+a.getSamplePrice());
+        else
+            holder.sample.setText("");
 
         Picasso.with(mCtx)
                 .load(Base_url.IMAGE_DIRECTORY_NAME+a.getProduct_images().get(0))

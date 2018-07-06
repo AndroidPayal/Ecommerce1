@@ -18,6 +18,7 @@ public class sample_Cart {
     String product_id;
     String product_name;
     String price;
+    String sample;
     String samplePrice;
     String qty;
     String user_id;
@@ -43,13 +44,14 @@ public class sample_Cart {
             "amount": "5.00",//comision amount
             "percent": "%"
         }*/
-    public sample_Cart(String cart_id,String product_id,String product_name,String price, String samplePrice,String qty
+    public sample_Cart(String cart_id,String product_id,String product_name,String price,String sample, String samplePrice,String qty
             ,String user_id, String manufacturing,String description,String brand, String images_string,String quantity){
 
         this.cart_id=cart_id;
         this.product_id=product_id;
         this.product_name=product_name;
         this.price=price;
+        this.sample=sample;
         this.samplePrice=samplePrice;
         this.qty=qty;
         this.user_id=user_id;
@@ -58,6 +60,10 @@ public class sample_Cart {
         this.brand=brand;
         this.images_string=images_string;
         this.quantity=quantity;
+    }
+
+    public String getSample() {
+        return sample;
     }
 
     public String getCart_id() {

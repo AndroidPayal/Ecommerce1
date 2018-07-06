@@ -159,6 +159,7 @@ public class CartFragment extends Fragment implements CartAdapter.ClickListener 
                         // Toast.makeText(Cart.this, "Quantity Increased", Toast.LENGTH_SHORT).show();
                         product_item.set(position, new sample_Cart(array_cart_items.get(position).getCart_id(), array_cart_items.get(position).getProduct_id()
                                 , array_cart_items.get(position).getProduct_nam(), array_cart_items.get(position).getPrice()
+                                ,array_cart_items.get(position).getSample()
                                 , array_cart_items.get(position).getSamplePrice()
                                 , "" + quantity, array_cart_items.get(position).getUser_id()
                                 , array_cart_items.get(position).getManufacturing(), array_cart_items.get(position).getDescription()
@@ -211,6 +212,7 @@ public class CartFragment extends Fragment implements CartAdapter.ClickListener 
                     if (response.equalsIgnoreCase("success")) {
                         product_item.set(position, new sample_Cart(array_cart_items.get(position).getCart_id(), array_cart_items.get(position).getProduct_id()
                                 , array_cart_items.get(position).getProduct_nam(), array_cart_items.get(position).getPrice()
+                                ,array_cart_items.get(position).getSample()
                                 ,array_cart_items.get(position).getSamplePrice()
                                 , "" + quantity, array_cart_items.get(position).getUser_id(),
                                 array_cart_items.get(position).getManufacturing(),
@@ -321,6 +323,7 @@ public class CartFragment extends Fragment implements CartAdapter.ClickListener 
                         String product_id = post_data.getString("product_id");
                         String product_name = post_data.getString("product_name");
                         String price = post_data.getString("price");
+                        String sample=post_data.getString("sample");
                         String sample_price = post_data.getString("sample_price");
                         String qty = post_data.getString("qty");
                         String user_id = post_data.getString("user_id");
@@ -331,24 +334,10 @@ public class CartFragment extends Fragment implements CartAdapter.ClickListener 
                         String quantity = post_data.getString("quantity");
                         String amount = post_data.getString("amount");
                         String percent = post_data.getString("percent");
+/*[{"id":"439","product_id":"18","product_name":"R3","price":"1000.00","sample":"1","sample_price":"800.00","qty":
+"0","user_id":"39","manufacturing":"1","description":"If used in the archive.php template, place this function within the is_category()
+conditional statement.","brand":"Define One Special","product_images":"","quantity":"400","amount":"10.00","percent":"%"}]*/
 
-                        /*
-                        *
-        "id": "276",
-        "product_id": "24",
-        "product_name": "this is test product",
-        "price": "345.00",//product real price
-        "sample_price": "0.00",//sample price zero if sample not ordered else it will show price of sample
-        "qty": "5",//qty is no of this item ordered
-        "user_id": "39",
-        "manufacturing": "0",
-        "description": "this is dummy description",
-        "brand": "my comp",
-        "product_images": "79e,79f",
-        "quantity": "4",//it shows maximum available items
-        "amount": "5.00",//commision amount
-        "percent": "%"
-    }*/
                         availables.add(Integer.parseInt(quantity));
 
                         Log.e("cartscreen",cart_id);
@@ -367,7 +356,7 @@ public class CartFragment extends Fragment implements CartAdapter.ClickListener 
 /* sample_Cart(String cart_id,String product_id,String product_name,String price,String qty
             ,String user_id,String description,String brand, String product_images){
 */
-                        product_item.add(new sample_Cart(cart_id, product_id, product_name, price, sample_price
+                        product_item.add(new sample_Cart(cart_id, product_id, product_name, price,sample, sample_price
                                 , qty, user_id,manufacturing, description, brand, product_images, quantity));
 
                         Log.d("cartscreen",product_item+"=inside");

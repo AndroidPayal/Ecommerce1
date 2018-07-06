@@ -78,7 +78,7 @@ import payal.cluebix.www.ecommerce.Handlers.SessionManager;
 
 public class Add_New_product extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
-    //add commit //commit //commit //commit
+    //add commit //commit //commit //commit//this is payalCode
 
 
     /* added to test it */ //hhh

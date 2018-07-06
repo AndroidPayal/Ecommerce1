@@ -193,8 +193,7 @@ public class ProductDetail extends AppCompatActivity {
         if (quantity.equals("")) quantity = "0";
 
         Log.d("validat1","ask="+quantity+" awl="+available+" manuf="+manufacturing1);
-        add_cart.setClickable(false);
-        add_cart.setText("Adding to Cart...");
+
 
         if ((Integer.parseInt(quantity)>Integer.parseInt(available)) && manufacturing1==0 ) {
                 prodruct_quantity.requestFocus();
@@ -207,14 +206,30 @@ public class ProductDetail extends AppCompatActivity {
                         } else sample = "0";
 
                 if(orderSample.isChecked()|| Integer.parseInt(quantity)>0) {
+                    add_cart.setClickable(false);
+                    add_cart.setText("Adding...");
                     Log.e("validat1 url=", url2 + Current_prod_id + "/" + quantity + "/" + sample + "/" + Uid);
                     StringRequest stringRequest = new StringRequest(Request.Method.POST, url2 + Current_prod_id + "/" + quantity + "/" + sample + "/" + Uid, new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
                             Log.d("dashboard_cart:", response);
                             //                count++;
-                            //invalidateOptionsMenu();.
-                            add_cart.setText("Added To Cart");
+                            //invalidateOptionsMenu().
+
+      /*{"success":true,"cart":0}*/
+                            try {
+                                JSONObject obj=new JSONObject(response);
+
+                                String success=obj.getString("success");
+                                if (success.equalsIgnoreCase("true")){
+                                    add_cart.setText("Added To Cart");
+                                }else{
+                                    add_cart.setText("Oops!Network error");
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
                        //     add_cart.setClickable(false);
                             Toast.makeText(ProductDetail.this, "Cart response: " + response, Toast.LENGTH_SHORT).show();
                         }

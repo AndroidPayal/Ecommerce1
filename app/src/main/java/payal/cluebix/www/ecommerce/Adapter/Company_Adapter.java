@@ -76,7 +76,7 @@ public class Company_Adapter extends RecyclerView.Adapter<Company_Adapter.Produc
                 final AlertDialog alertDialog = builder.create();
                 alertDialog.show();
 
-                final EditText edit_name=(EditText)dialogView.findViewById(R.id.edit_unit_name);
+                final EditText edit_name=(EditText)dialogView.findViewById(R.id.edit_company_name);
                 Button submit=(Button)dialogView.findViewById(R.id.dialog_button_apply);
                 Button cancel=(Button)dialogView.findViewById(R.id.dialog_button_cancel);
 
