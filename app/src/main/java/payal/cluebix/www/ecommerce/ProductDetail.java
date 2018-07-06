@@ -194,6 +194,7 @@ public class ProductDetail extends AppCompatActivity {
 
         Log.d("validat1","ask="+quantity+" awl="+available+" manuf="+manufacturing1);
         add_cart.setClickable(false);
+        add_cart.setText("Adding to Cart...");
 
         if ((Integer.parseInt(quantity)>Integer.parseInt(available)) && manufacturing1==0 ) {
                 prodruct_quantity.requestFocus();
