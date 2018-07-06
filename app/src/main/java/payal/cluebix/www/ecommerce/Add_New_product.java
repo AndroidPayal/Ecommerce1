@@ -83,6 +83,12 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
 
     /* added to test it */ //hhh
 
+
+
+    /*     ADDING YET ANOTHER ONE    */
+
+
+
     private String Tag="Add_New_product_screen";
 
     MultiSpinnerSearch spin_color;
