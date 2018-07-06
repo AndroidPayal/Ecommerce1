@@ -81,7 +81,7 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
     //add commit //commit //commit //commit
 
 
-    /* added to test it */
+    /* added to test it */ //hhh
 
     private String Tag="Add_New_product_screen";
 
