@@ -87,6 +87,8 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
 
     /*     ADDING YET ANOTHER ONE    */
 
+    //changes by payal
+
 
 
     private String Tag="Add_New_product_screen";
