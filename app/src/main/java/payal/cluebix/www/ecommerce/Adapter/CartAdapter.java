@@ -27,17 +27,19 @@ import payal.cluebix.www.ecommerce.Datas.sample_Cart;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ProductViewHolder> {
     private Context mCtx;
-    private ArrayList<sample_Cart> productList;
+    private ArrayList<sample_Cart> productList=new ArrayList<>();
     CartAdapter.ClickListener clickListener;
-    /*git branch --set-upstream master origin/master*/
 
     public CartAdapter(Context mCtx, ArrayList<sample_Cart> productList) {
+        this.productList.clear();
         this.mCtx = mCtx;
         this.productList = productList;
+        Log.d("cart_data","construcltor:"+productList+"");
     }
 
     @Override
     public CartAdapter.ProductViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        Log.d("cart_data","oncreateViewHolder:"+productList+"");
 
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.activity_cart_items, null,false);
@@ -49,6 +51,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ProductViewHol
 
     @Override
     public void onBindViewHolder(CartAdapter.ProductViewHolder holder, int position) {
+        Log.d("cart_data","BindHolder:"+productList+"");
+
         sample_Cart a= productList.get(position);
        // holder.imagecart.setImageBitmap(a.getProduct_images().get(0));
         holder.name_text3.setText(a.getProduct_nam());
@@ -99,6 +103,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ProductViewHol
         ImageButton plus,minus;
         public ProductViewHolder(View itemView) {
             super(itemView);
+
+            Log.d("cart_data","holder class:"+productList+"");
+
             imagecart=(ImageView)itemView.findViewById(R.id.image_cart);
             name_text3=(TextView)itemView.findViewById(R.id.text3);
             quantity=(EditText)itemView.findViewById(R.id.quantity);

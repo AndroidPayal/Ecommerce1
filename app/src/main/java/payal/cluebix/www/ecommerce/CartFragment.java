@@ -96,6 +96,7 @@ public class CartFragment extends Fragment implements CartAdapter.ClickListener 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        product_item.clear();
         array_cart_items=get_old_Element();
 
         array_temp.addAll(array_cart_items);
@@ -323,6 +324,8 @@ public class CartFragment extends Fragment implements CartAdapter.ClickListener 
 
                 linear_cart_start.setVisibility(View.GONE);
                 linear_cart.setVisibility(View.VISIBLE);
+                product_item.clear();
+
                 JSONObject post_data;
                 try {
                     JSONArray jsonArray=new JSONArray(response);
