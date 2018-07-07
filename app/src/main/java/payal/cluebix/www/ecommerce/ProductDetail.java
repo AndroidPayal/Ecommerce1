@@ -576,10 +576,21 @@ public class ProductDetail extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i= new Intent(ProductDetail.this,CenterActivity.class);
+        i.putExtra("dashTransition",true);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(i);
+    }
+
     /*   @Override
-            public boolean onCreateOptionsMenu(Menu menu) {
-                // TODO Auto-generated method stub
-              *//*  MenuInflater inf=getMenuInflater();
+                public boolean onCreateOptionsMenu(Menu menu) {
+                    // TODO Auto-generated method stub
+                  *//*  MenuInflater inf=getMenuInflater();
         inf.inflate(R.menu.menu_cart, menu);
         return super.onCreateOptionsMenu(menu);*//*
         Log.d(Tag,"option menu called");
