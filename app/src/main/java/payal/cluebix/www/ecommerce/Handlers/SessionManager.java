@@ -18,7 +18,7 @@ public class SessionManager {
 	Editor editor;// Editor for Shared preferences
 	Context _context;
 	int PRIVATE_MODE = 0;	// Shared pref mode
-	/*Base_url.id, Base_url.name,Base_url.email,Base_url.mobile,Base_url.created_date,updated*/
+
 	private static final String PREF_NAME = "MyPreference";// Sharedpref file name
 	private static final String IS_LOGIN = "IsLoggedIn";	// All Shared Preferences Keys
 
@@ -29,6 +29,8 @@ public class SessionManager {
 	public static final String KEY_createDate = "created date";// Email address
 	public static final String KEY_LastModified = "modified date";// Email address
 	public static final String KEY_UserName = "uname";//
+	public static final String KEY_Gst = "gst number";//
+	public static final String KEY_City = "city";//
 
 
 	public SessionManager(Context context){
@@ -41,7 +43,8 @@ public class SessionManager {
 	 * Create login session
 	 * */
 
-	public void createLoginSession(String id, String name, String uname, String email, String mobile, String created, String modified){
+	public void createLoginSession(String id, String name, String uname, String email, String mobile, String created, String modified
+			,String gst, String city){
 
 		Log.d("sessionscreen",id+name+email+mobile+created+modified);
 		editor.putBoolean(IS_LOGIN, true);
@@ -52,6 +55,8 @@ public class SessionManager {
 		editor.putString(KEY_mobile, mobile);
 		editor.putString(KEY_createDate, created);
 		editor.putString(KEY_LastModified, modified);
+		editor.putString(KEY_Gst, gst);
+		editor.putString(KEY_City, city);
 
 
 		editor.commit();
@@ -98,6 +103,8 @@ public class SessionManager {
 		user.put(KEY_mobile, pref.getString(KEY_mobile, null));
 		user.put(KEY_createDate, pref.getString(KEY_createDate, null));
 		user.put(KEY_LastModified, pref.getString(KEY_LastModified, null));
+		user.put(KEY_Gst, pref.getString(KEY_Gst, null));
+		user.put(KEY_City, pref.getString(KEY_City, null));
 
 		// return user
 		return user;

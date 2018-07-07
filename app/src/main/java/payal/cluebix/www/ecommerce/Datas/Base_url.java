@@ -60,6 +60,8 @@ public class Base_url {
     public static  String otp="" ;
     public static  String created_date="";
     public static  String updated_date ="";
+    public static  String gst_number ="";
+    public static  String city ="";
 
     public static int new_lable_days=5;
 

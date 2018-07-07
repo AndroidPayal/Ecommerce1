@@ -46,14 +46,14 @@ import payal.cluebix.www.ecommerce.Handlers.SessionManager;
 
 public class Update_profile extends AppCompatActivity {
 
-    EditText e_name,e_mob,e_mail,e_uname;
+    EditText e_name,e_mob,e_mail,e_uname,e_gst,e_city;
     FloatingActionButton b_float;
     TextView name1,back_b,logOut,total_product,joining_date,button_update;
     ProgressDialog dialog;
 
     String url1= Base_url.Update_user_profile;
     SessionManager session;
-    String Uid,Uname,Uemail,Umobile,Ucreated,Umodified,U_username;
+    String Uid,Uname,Uemail,Umobile,Ucreated,Umodified,U_username, U_gst, U_city;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +75,8 @@ public class Update_profile extends AppCompatActivity {
         e_mail=(EditText) findViewById(R.id.email);
         e_mob=(EditText)findViewById(R.id.mob);
         e_uname=(EditText)findViewById(R.id.username11);
+        e_gst=(EditText)findViewById(R.id.gst);
+        e_city=(EditText)findViewById(R.id.city);
 
 
         session=new SessionManager(getApplicationContext());
@@ -86,8 +88,10 @@ public class Update_profile extends AppCompatActivity {
         Umodified=user.get(SessionManager.KEY_LastModified);
         Umobile=user.get(SessionManager.KEY_mobile);
         U_username=user.get(SessionManager.KEY_UserName);
+        U_gst=user.get(SessionManager.KEY_Gst);
+        U_city=user.get(SessionManager.KEY_City);
         Log.d("sessionscreen","name_userId="+Uid+"\nname="+Uname+"\nUsername="+U_username+"\nemail="+Uemail
-                +"\ndate1="+Ucreated+"\ndate2="+Umodified+"\nmobile="+Umobile);
+                +"\ndate1="+Ucreated+"\ndate2="+Umodified+"\nmobile="+Umobile+"\ngst="+U_gst+"\ncity="+U_city);
 
 
         name1.setText(Uname);
@@ -98,11 +102,15 @@ public class Update_profile extends AppCompatActivity {
         e_mail.setText(Uemail);
         e_mob.setText(Umobile);
         e_uname.setText(U_username);
+        e_gst.setText(U_gst);
+        e_city.setText(U_city);
 
         e_mail.setFocusable(false);
         e_mob.setFocusable(false);
         e_name.setFocusable(false);
         e_uname.setFocusable(false);
+        e_gst.setFocusable(false);
+        e_city.setFocusable(false);
 
         b_float.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,12 +123,12 @@ public class Update_profile extends AppCompatActivity {
                         dialog.dismiss();
                         e_name.setFocusable(true);
                         e_mob.setFocusable(true);
-                        e_mail.setFocusable(true);
+                        e_city.setFocusable(true);
                         e_uname.setFocusable(true);
 
                         e_name.setFocusableInTouchMode(true);
                         e_mob.setFocusableInTouchMode(true);
-                        e_mail.setFocusableInTouchMode(true);
+                        e_city.setFocusableInTouchMode(true);
                         e_uname.setFocusableInTouchMode(true);
 
                         button_update.setVisibility(View.VISIBLE);
@@ -164,14 +172,22 @@ public class Update_profile extends AppCompatActivity {
                  final String name=e_name.getText().toString().trim()
                          ,mob=e_mob.getText().toString().trim()
                          ,uname=e_uname.getText().toString().trim()
-                         ,mail=e_mail.getText().toString().trim();
+                         ,city=e_city.getText().toString().trim();
 
                 StringRequest stringRequest=new StringRequest(Request.Method.POST, url1+Uid, new Response.Listener<String>(){
                     @Override
-                    public void onResponse(String response) {
+                    public void onResponse(final String response) {
                         Log.d("updatescreen",response);
 
-                        Toast.makeText(Update_profile.this, ""+response, Toast.LENGTH_SHORT).show();
+                       new Handler().postDelayed(new Runnable() {
+                           @Override
+                           public void run() {
+                               Toast.makeText(Update_profile.this, ""+response, Toast.LENGTH_SHORT).show();
+                               Intent i=new Intent(Update_profile.this,Update_profile.class);
+                               startActivity(i);
+                           }
+                       },2000);
+
 
                     }
                 }, new Response.ErrorListener() {
@@ -185,7 +201,7 @@ public class Update_profile extends AppCompatActivity {
                     protected Map<String, String> getParams() throws AuthFailureError {
                         Map<String , String> parameters= new HashMap<String, String>();
                         parameters.put("name", name);
-                        parameters.put("email",mail);
+                        parameters.put("city",city);
                         parameters.put("username",uname);
                         parameters.put("mobile",mob);
                         return parameters;

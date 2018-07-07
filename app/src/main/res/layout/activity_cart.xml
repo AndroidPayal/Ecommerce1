@@ -7,7 +7,12 @@
     android:orientation="vertical"
     android:background="@color/colorPrimary"
    >
-
+<LinearLayout
+    android:id="@+id/linear_cart"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:visibility="gone">
 
     <LinearLayout
         android:id="@+id/linear_subtotal"
@@ -79,18 +84,25 @@
         android:layout_height="0dp"
         android:layout_marginBottom="60dp"
         android:layout_weight="1"/>
+</LinearLayout>
+<LinearLayout
+    android:id="@+id/linear_cart_start"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center">
 
-   <!-- <TextView
-        android:id="@+id/t_checkout"
+    <ProgressBar
         android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:text="Generate Quotation"
-        android:gravity="center"
-        android:textColor="@color/Black"
-        android:textSize="18dp"
-        android:elevation="5dp"
-        android:textAllCaps="true"
-        android:layout_marginBottom="60dp"
-        android:background="@drawable/gradient_background"/>-->
+        android:layout_height="wrap_content"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Loading..."
+        android:textColor="@color/colorAccent"
+        android:gravity="center"/>
+
+</LinearLayout>
 
 </LinearLayout>

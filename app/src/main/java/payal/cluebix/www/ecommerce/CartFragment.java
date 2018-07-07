@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,7 +46,7 @@ public class CartFragment extends Fragment implements CartAdapter.ClickListener 
     RecyclerView recyclerView;
     public static ArrayList<sample_Cart> array_cart_items = new ArrayList<>();
     public static ArrayList<sample_Cart> array_temp = new ArrayList<>();
-    public static ArrayList<sample_Cart> product_item;
+    public static ArrayList<sample_Cart> product_item=new ArrayList<>();
     ArrayList<String> element_quantity_array=new ArrayList<>();
     ArrayList<String> Cart_id_array=new ArrayList<>();
     ArrayList<String> Product_id_array=new ArrayList<>();
@@ -62,20 +63,28 @@ public class CartFragment extends Fragment implements CartAdapter.ClickListener 
     int total=0; float GrandTotal=0;
     private static int itemCount=0;
 
+    LinearLayout linear_cart,linear_cart_start;
 
     public CartFragment() {
+        product_item.clear();
+        array_cart_items.clear();array_temp.clear();element_quantity_array.clear();
+        Cart_id_array.clear();Product_id_array.clear();availables.clear();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v =inflater.inflate(R.layout.activity_cart, container, false);
-        product_item = new ArrayList<>();
+        product_item.clear();array_cart_items.clear();array_temp.clear();element_quantity_array.clear();
+        Cart_id_array.clear();Product_id_array.clear();availables.clear();
         itemCount=0;
 
         cartsub_total=(TextView)v.findViewById(R.id.cart_subtotal1);
         cartsub_total2=(TextView)v.findViewById(R.id.cart_subtotal2);
         t_checkout=(TextView)v.findViewById(R.id.t_checkout);
         recyclerView=(RecyclerView)v.findViewById(R.id.recycler_cart);
+        linear_cart=(LinearLayout)v.findViewById(R.id.linear_cart);
+        linear_cart_start=(LinearLayout)v.findViewById(R.id.linear_cart_start);
+
 
         session=new SessionManager(getContext());
         HashMap<String, String> user = session.getUserDetails();
@@ -97,7 +106,6 @@ public class CartFragment extends Fragment implements CartAdapter.ClickListener 
         adapter=new CartAdapter(getContext(),product_item);
         adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
- //       if (pro)
 
 
         t_checkout.setOnClickListener(new View.OnClickListener() {
@@ -313,6 +321,8 @@ public class CartFragment extends Fragment implements CartAdapter.ClickListener 
             @Override
             public void onResponse(String response) {
 
+                linear_cart_start.setVisibility(View.GONE);
+                linear_cart.setVisibility(View.VISIBLE);
                 JSONObject post_data;
                 try {
                     JSONArray jsonArray=new JSONArray(response);
