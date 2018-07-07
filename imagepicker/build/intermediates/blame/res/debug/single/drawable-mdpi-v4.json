@@ -8,12 +8,12 @@
         "source": "C:\\Users\\UNMESH\\.android\\build-cache\\9d2b32179c270317b259645121c42d54f9616319\\output\\res\\drawable-mdpi\\abc_btn_rating_star_on_mtrl_alpha.png"
     },
     {
-        "merged": "C:\\Users\\UNMESH\\AndroidStudioProjects\\Ecommerce1\\imagepicker\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4\\abc_list_focused_holo.9.png",
-        "source": "C:\\Users\\UNMESH\\.android\\build-cache\\9d2b32179c270317b259645121c42d54f9616319\\output\\res\\drawable-mdpi\\abc_list_focused_holo.9.png"
-    },
-    {
         "merged": "C:\\Users\\speed\\AndroidStudioProjects\\Ecommerce\\imagepicker\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4\\abc_spinner_mtrl_am_alpha.9.png",
         "source": "C:\\Users\\speed\\.android\\build-cache\\3754ee01808e7cd34e4042751d8df08dfd41dbc9\\output\\res\\drawable-mdpi\\abc_spinner_mtrl_am_alpha.9.png"
+    },
+    {
+        "merged": "C:\\Users\\UNMESH\\AndroidStudioProjects\\Ecommerce1\\imagepicker\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4\\abc_list_focused_holo.9.png",
+        "source": "C:\\Users\\UNMESH\\.android\\build-cache\\9d2b32179c270317b259645121c42d54f9616319\\output\\res\\drawable-mdpi\\abc_list_focused_holo.9.png"
     },
     {
         "merged": "C:\\Users\\speed\\AndroidStudioProjects\\Ecommerce\\imagepicker\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4\\cwac_cam2_ic_close.png",
@@ -76,12 +76,12 @@
         "source": "C:\\Users\\speed\\.android\\build-cache\\3754ee01808e7cd34e4042751d8df08dfd41dbc9\\output\\res\\drawable-mdpi\\abc_ab_share_pack_mtrl_alpha.9.png"
     },
     {
-        "merged": "C:\\Users\\UNMESH\\AndroidStudioProjects\\Ecommerce1\\imagepicker\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4\\cwac_cam2_ic_action_settings.png",
-        "source": "C:\\Users\\UNMESH\\.android\\build-cache\\8685112ff0c97855ca7bec5efe8f0787264decff\\output\\res\\drawable-mdpi\\cwac_cam2_ic_action_settings.png"
-    },
-    {
         "merged": "C:\\Users\\speed\\AndroidStudioProjects\\Ecommerce\\imagepicker\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4\\fab_shadow.png",
         "source": "C:\\Users\\speed\\.android\\build-cache\\d4a0864d444457232cd5ea8f986d1b6769ffd1d2\\output\\res\\drawable-mdpi-v4\\fab_shadow.png"
+    },
+    {
+        "merged": "C:\\Users\\UNMESH\\AndroidStudioProjects\\Ecommerce1\\imagepicker\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4\\cwac_cam2_ic_action_settings.png",
+        "source": "C:\\Users\\UNMESH\\.android\\build-cache\\8685112ff0c97855ca7bec5efe8f0787264decff\\output\\res\\drawable-mdpi\\cwac_cam2_ic_action_settings.png"
     },
     {
         "merged": "C:\\Users\\speed\\AndroidStudioProjects\\Ecommerce\\imagepicker\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4\\abc_tab_indicator_mtrl_alpha.9.png",

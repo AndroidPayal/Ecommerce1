@@ -224,27 +224,25 @@ Log.d("center_screen",extras);
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
 
+                item.setCheckable(false);
+
                 int id = item.getItemId();
 
                 switch (id) {
                     case R.id.home:
-                        item.setCheckable(false);
                         drawerLayout.closeDrawers();
                         break;
                     case R.id.Profile:
-                        item.setCheckable(false);
                         Intent i = new Intent(CenterActivity.this, Update_profile.class);
                         startActivity(i);
                         drawerLayout.closeDrawers();
                         break;
                     case R.id.addNew:
-                        item.setCheckable(false);
                         i = new Intent(CenterActivity.this, My_products.class);
                         startActivity(i);
                         drawerLayout.closeDrawers();
                         break;
                     case R.id.cart:
-                        item.setCheckable(false);
                         bottomNavigation.setSelectedItemId(R.id.bottom_nav_cart);
                         Fragment newFragment = new CartFragment();
                         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -257,7 +255,6 @@ Log.d("center_screen",extras);
                         drawerLayout.closeDrawers();
                         break;
                     case R.id.logOut:
-                        item.setCheckable(false);
                         Toast.makeText(getApplicationContext(), "Logged out", Toast.LENGTH_SHORT).show();
                         i = new Intent(CenterActivity.this, Login.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -267,7 +264,6 @@ Log.d("center_screen",extras);
                         session.logoutUser();
                         break;
                     case R.id.quote:
-                        item.setCheckable(false);
                         i = new Intent(CenterActivity.this, Quotation_list.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

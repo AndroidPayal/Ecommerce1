@@ -8,7 +8,7 @@
         android2:id="@+id/action_cart"
         android2:orderInCategory="100"
         android:showAsAction="always"
-        android2:icon="@drawable/cart_with_count"
+        android2:icon="@drawable/ic_shopping_cart"
         android2:title="cart" />
 
 

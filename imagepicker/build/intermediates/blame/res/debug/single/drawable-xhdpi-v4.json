@@ -60,12 +60,12 @@
         "source": "C:\\Users\\UNMESH\\.android\\build-cache\\9d2b32179c270317b259645121c42d54f9616319\\output\\res\\drawable-xhdpi\\abc_switch_track_mtrl_alpha.9.png"
     },
     {
-        "merged": "C:\\Users\\UNMESH\\AndroidStudioProjects\\Ecommerce1\\imagepicker\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\abc_textfield_search_default_mtrl_alpha.9.png",
-        "source": "C:\\Users\\UNMESH\\.android\\build-cache\\9d2b32179c270317b259645121c42d54f9616319\\output\\res\\drawable-xhdpi\\abc_textfield_search_default_mtrl_alpha.9.png"
-    },
-    {
         "merged": "C:\\Users\\speed\\AndroidStudioProjects\\Ecommerce\\imagepicker\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\abc_cab_background_top_mtrl_alpha.9.png",
         "source": "C:\\Users\\speed\\.android\\build-cache\\3754ee01808e7cd34e4042751d8df08dfd41dbc9\\output\\res\\drawable-xhdpi\\abc_cab_background_top_mtrl_alpha.9.png"
+    },
+    {
+        "merged": "C:\\Users\\UNMESH\\AndroidStudioProjects\\Ecommerce1\\imagepicker\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\abc_textfield_search_default_mtrl_alpha.9.png",
+        "source": "C:\\Users\\UNMESH\\.android\\build-cache\\9d2b32179c270317b259645121c42d54f9616319\\output\\res\\drawable-xhdpi\\abc_textfield_search_default_mtrl_alpha.9.png"
     },
     {
         "merged": "C:\\Users\\UNMESH\\AndroidStudioProjects\\Ecommerce1\\imagepicker\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\abc_ic_go_search_api_mtrl_alpha.png",
@@ -80,16 +80,16 @@
         "source": "C:\\Users\\speed\\.android\\build-cache\\3754ee01808e7cd34e4042751d8df08dfd41dbc9\\output\\res\\drawable-xhdpi\\abc_ic_menu_cut_mtrl_alpha.png"
     },
     {
-        "merged": "C:\\Users\\UNMESH\\AndroidStudioProjects\\Ecommerce1\\imagepicker\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\abc_textfield_search_activated_mtrl_alpha.9.png",
-        "source": "C:\\Users\\UNMESH\\.android\\build-cache\\9d2b32179c270317b259645121c42d54f9616319\\output\\res\\drawable-xhdpi\\abc_textfield_search_activated_mtrl_alpha.9.png"
+        "merged": "C:\\Users\\speed\\AndroidStudioProjects\\Ecommerce\\imagepicker\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\fab_shadow_mini.png",
+        "source": "C:\\Users\\speed\\.android\\build-cache\\d4a0864d444457232cd5ea8f986d1b6769ffd1d2\\output\\res\\drawable-xhdpi-v4\\fab_shadow_mini.png"
     },
     {
         "merged": "C:\\Users\\speed\\AndroidStudioProjects\\Ecommerce\\imagepicker\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\fab_add.png",
         "source": "C:\\Users\\speed\\.android\\build-cache\\c201bbeb367ba5f99b75a8225c5de350a16f0b05\\output\\res\\drawable-xhdpi\\fab_add.png"
     },
     {
-        "merged": "C:\\Users\\speed\\AndroidStudioProjects\\Ecommerce\\imagepicker\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\fab_shadow_mini.png",
-        "source": "C:\\Users\\speed\\.android\\build-cache\\d4a0864d444457232cd5ea8f986d1b6769ffd1d2\\output\\res\\drawable-xhdpi-v4\\fab_shadow_mini.png"
+        "merged": "C:\\Users\\UNMESH\\AndroidStudioProjects\\Ecommerce1\\imagepicker\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\abc_textfield_search_activated_mtrl_alpha.9.png",
+        "source": "C:\\Users\\UNMESH\\.android\\build-cache\\9d2b32179c270317b259645121c42d54f9616319\\output\\res\\drawable-xhdpi\\abc_textfield_search_activated_mtrl_alpha.9.png"
     },
     {
         "merged": "C:\\Users\\speed\\AndroidStudioProjects\\Ecommerce\\imagepicker\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\cwac_cam2_ic_check_white.png",
