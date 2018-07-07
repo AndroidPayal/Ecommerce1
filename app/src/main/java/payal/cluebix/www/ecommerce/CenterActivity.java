@@ -31,6 +31,8 @@ import java.util.HashMap;
 import payal.cluebix.www.ecommerce.Datas.Base_url;
 import payal.cluebix.www.ecommerce.Handlers.SessionManager;
 
+import static android.view.View.GONE;
+
 public class CenterActivity extends AppCompatActivity {
 
     private Fragment fragment;
@@ -44,7 +46,7 @@ public class CenterActivity extends AppCompatActivity {
     String Uid;
     String Uname, Umail, Udate1, Udate2, Umob;
     BottomNavigationView bottomNavigation;
-    Bundle extras;
+   private Bundle extras;
     FragmentTransaction transaction;
 
 
@@ -135,9 +137,31 @@ Log.d("center_screen",extras);
             transaction.replace(R.id.main_container, fragment).commit();
         }
  */
+
+
+        Log.d("onCreate called","onCreate called");
+
+
         fragment = new DashboardFragment();
         transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.main_container, fragment).commit();
+
+//        extras = getIntent().getExtras();
+//
+//        //this will change fragment to cart if  user comes from other screen
+//        if(extras.getBoolean("cartTransition",false))
+//        {
+//            Log.d("unmesh's log","getBooleanExtra called");
+//           fragment = new CartFragment();
+//
+//           transaction.replace(R.id.main_container,fragment).commit();
+//        }
+
+
+
+            fragment = new DashboardFragment();
+            transaction.replace(R.id.main_container, fragment).commit();
+
+
 
 
         floatb.setOnClickListener(new View.OnClickListener() {
@@ -179,7 +203,7 @@ Log.d("center_screen",extras);
 
                         break;
                     case R.id.bottom_nav_cart:
-                        search_tool2.setVisibility(View.GONE);
+                        search_tool2.setVisibility(GONE);
                         fragment = new CartFragment();
                         break;
                 }
@@ -204,19 +228,24 @@ Log.d("center_screen",extras);
 
                 switch (id) {
                     case R.id.home:
+                        item.setCheckable(false);
                         drawerLayout.closeDrawers();
                         break;
                     case R.id.Profile:
+                        item.setCheckable(false);
                         Intent i = new Intent(CenterActivity.this, Update_profile.class);
                         startActivity(i);
                         drawerLayout.closeDrawers();
                         break;
                     case R.id.addNew:
+                        item.setCheckable(false);
                         i = new Intent(CenterActivity.this, My_products.class);
                         startActivity(i);
                         drawerLayout.closeDrawers();
                         break;
                     case R.id.cart:
+                        item.setCheckable(false);
+                        bottomNavigation.setSelectedItemId(R.id.bottom_nav_cart);
                         Fragment newFragment = new CartFragment();
                         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
@@ -224,10 +253,11 @@ Log.d("center_screen",extras);
                         transaction.addToBackStack(null);
 
                         transaction.commit();
-                        search_tool2.setVisibility(View.GONE);
+                        search_tool2.setVisibility(GONE);
                         drawerLayout.closeDrawers();
                         break;
                     case R.id.logOut:
+                        item.setCheckable(false);
                         Toast.makeText(getApplicationContext(), "Logged out", Toast.LENGTH_SHORT).show();
                         i = new Intent(CenterActivity.this, Login.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -237,6 +267,7 @@ Log.d("center_screen",extras);
                         session.logoutUser();
                         break;
                     case R.id.quote:
+                        item.setCheckable(false);
                         i = new Intent(CenterActivity.this, Quotation_list.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -319,7 +350,52 @@ Log.d("center_screen",extras);
 
 */
 
+    //chekcs if cart is called on resuming activity
+    @Override
+    protected void onPostResume() {
+
+        Log.d("onresume","onresume called");
+
+        if(getIntent().getBooleanExtra("cartTransition",false))
+        {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.main_container, new CartFragment()).commit();
+
+            search_tool2.setVisibility(GONE);
+            bottomNavigation.setSelectedItemId(R.id.bottom_nav_cart);
+            getIntent().putExtra("cartTransition",false);
+        }
+
+
+
+        if(getIntent().getBooleanExtra("dashTransition",false))
+        {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.main_container, new DashboardFragment()).commit();
+            bottomNavigation.setSelectedItemId(R.id.bottom_nav_home);
+            getIntent().putExtra("dashTransition",false);
+        }
+
+
+
+        super.onPostResume();
+    }
+
+    //sets intent values to be of the currently passed intent
+    @Override
+    protected void onNewIntent(Intent intent) {
+
+        if(intent != null)
+        {
+            setIntent(intent);
+
+        }
+
+        super.onNewIntent(intent);
+
 
     }
+}
+
 
 

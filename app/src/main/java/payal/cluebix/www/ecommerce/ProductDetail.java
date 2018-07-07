@@ -553,10 +553,15 @@ public class ProductDetail extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         //cart icon clicked
 
-      //  if(item.getItemId() == R.id.action_cart){
-        Intent intent = new Intent(ProductDetail.this,CenterActivity.class);
-        intent.putExtra("cartTransition",true);
-        startActivity(intent);//}
+
+            if(R.id.action_cart ==  item.getItemId()){
+
+            Intent intent = new Intent(ProductDetail.this, CenterActivity.class);
+
+            intent.putExtra("cartTransition", true);
+            startActivity(intent);}
+
+        //}
    /*     CartFragment fragment = new CartFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.main_container, fragment);

@@ -207,7 +207,7 @@ public class My_products extends AppCompatActivity {
                 switch (id) {
                     case R.id.home:
                         Intent i= new Intent(My_products.this,CenterActivity.class);
-                        i.putExtra("cartTransition","dash");
+                        i.putExtra("dashTransition",true);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(i);
@@ -230,7 +230,7 @@ public class My_products extends AppCompatActivity {
 
                         transaction.commit();*/
                         Intent intent = new Intent(My_products.this,CenterActivity.class);
-                        intent.putExtra("cartTransition","cart");
+                        intent.putExtra("cartTransition",true);
                         //intent.putExtra("cartTransition",true);
 
                         startActivity(intent);

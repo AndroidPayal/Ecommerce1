@@ -4,7 +4,15 @@
         "source": "C:\\Users\\speed\\.android\\build-cache\\3754ee01808e7cd34e4042751d8df08dfd41dbc9\\output\\res\\drawable-v21\\abc_action_bar_item_background_material.xml"
     },
     {
+        "merged": "C:\\Users\\UNMESH\\AndroidStudioProjects\\Ecommerce1\\imagepicker\\build\\intermediates\\res\\merged\\release\\drawable-v21\\abc_btn_colored_material.xml",
+        "source": "C:\\Users\\UNMESH\\.android\\build-cache\\9d2b32179c270317b259645121c42d54f9616319\\output\\res\\drawable-v21\\abc_btn_colored_material.xml"
+    },
+    {
         "merged": "C:\\Users\\speed\\AndroidStudioProjects\\Ecommerce\\imagepicker\\build\\intermediates\\res\\merged\\release\\drawable-v21\\abc_btn_colored_material.xml",
         "source": "C:\\Users\\speed\\.android\\build-cache\\3754ee01808e7cd34e4042751d8df08dfd41dbc9\\output\\res\\drawable-v21\\abc_btn_colored_material.xml"
+    },
+    {
+        "merged": "C:\\Users\\UNMESH\\AndroidStudioProjects\\Ecommerce1\\imagepicker\\build\\intermediates\\res\\merged\\release\\drawable-v21\\abc_action_bar_item_background_material.xml",
+        "source": "C:\\Users\\UNMESH\\.android\\build-cache\\9d2b32179c270317b259645121c42d54f9616319\\output\\res\\drawable-v21\\abc_action_bar_item_background_material.xml"
     }
 ]

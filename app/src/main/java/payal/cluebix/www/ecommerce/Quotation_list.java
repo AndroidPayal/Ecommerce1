@@ -163,7 +163,7 @@ public class Quotation_list extends AppCompatActivity implements Quote_list_adap
                 switch (id) {
                     case R.id.home:
                         Intent i= new Intent(Quotation_list.this,CenterActivity.class);
-                        i.putExtra("cartTransition","dash");
+                        i.putExtra("dashTransition",true);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(i);
@@ -187,8 +187,7 @@ public class Quotation_list extends AppCompatActivity implements Quote_list_adap
 
                         Intent intent = new Intent(Quotation_list.this, CenterActivity.class);
                        // intent.putExtra("cartscreen", true);
-                        intent.putExtra("cartTransition","cart");
-Log.d("center_screen",intent+" = intent value");
+                        intent.putExtra("cartTransition",true);
                         startActivity(intent);
                       /*  Intent intent = new Intent(Quotation_list.this,CenterActivity.class);
 

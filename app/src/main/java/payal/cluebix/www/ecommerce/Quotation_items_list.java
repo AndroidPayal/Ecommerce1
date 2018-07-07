@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -109,6 +110,7 @@ public class Quotation_items_list extends AppCompatActivity implements Quotation
         adapter=new Quotation_item_adap(getApplicationContext(),product_item);
         adapter.setClickListener(this);
         recyclerView.setHasFixedSize(true);
+        recyclerView.addItemDecoration(new DividerItemDecoration(this,linearLayoutManager.getOrientation()));
         recyclerView.setAdapter(adapter);
 
     }
