@@ -6,14 +6,40 @@
     android:clipChildren="false"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+<LinearLayout
+    android:id="@+id/linear_detail_start"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center">
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Loading..."
+        android:textColor="@color/colorAccent"
+        android:gravity="center"/>
+</LinearLayout>
 
-
+    <LinearLayout
+        android:id="@+id/linear_detail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone"
+       >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
     <ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-        android:layout_marginBottom="55dp"
-        >
 
+        >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -277,7 +303,6 @@
                         android:layout_weight="0.3"
                         android:layout_marginTop="2dp"
                         android:layout_marginBottom="2dp"
-                        android:text="0"
                         android:background="@drawable/input_background"
                         android:textSize="13sp"
                         android:layout_gravity="top"
@@ -350,19 +375,21 @@
 
 </LinearLayout>
 </ScrollView>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/add_cart"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_alignParentBottom="true"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:text="Confirm"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:layout_marginBottom="3dp"
+            android:textColor="#fff"
+            android:background="@drawable/gradient_background"
+            />
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/add_cart"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:layout_alignParentBottom="true"
-        android:textSize="18sp"
-        android:gravity="center"
-        android:text="Confirm"
-        android:layout_marginLeft="3dp"
-        android:layout_marginRight="3dp"
-        android:layout_marginBottom="3dp"
-        android:textColor="#fff"
-        android:background="@drawable/gradient_background"
-        />
 </RelativeLayout>

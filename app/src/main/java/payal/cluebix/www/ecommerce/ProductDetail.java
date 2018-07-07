@@ -82,6 +82,8 @@ public class ProductDetail extends AppCompatActivity {
     private String available="0";
     public static int manufacturing1=0;
 
+    LinearLayout linear_detail,linear_detail_start;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,6 +118,8 @@ public class ProductDetail extends AppCompatActivity {
         text_sample_price=(TextView)findViewById(R.id.text_sample_price);
         prodruct_quantity=(EditText) findViewById(R.id.prodruct_quantity);
         orderSample=(CheckBox)findViewById(R.id.check_order_sample);
+        linear_detail=(LinearLayout)findViewById(R.id.linear_detail);
+        linear_detail_start=(LinearLayout)findViewById(R.id.linear_detail_start);
 
 
         prod_id=getIntent().getStringExtra("selected_prod_id");
@@ -192,7 +196,6 @@ public class ProductDetail extends AppCompatActivity {
         String quantity = prodruct_quantity.getText().toString().trim();
         if (quantity.equals("")) quantity = "0";
 
-        Log.d("validat1","ask="+quantity+" awl="+available+" manuf="+manufacturing1);
 
 
         if ((Integer.parseInt(quantity)>Integer.parseInt(available)) && manufacturing1==0 ) {
@@ -224,14 +227,15 @@ public class ProductDetail extends AppCompatActivity {
                                 if (success.equalsIgnoreCase("true")){
                                     add_cart.setText("Added To Cart");
                                 }else{
-                                    add_cart.setText("Oops!Network error");
+                                    add_cart.setText("Network error!Retry");
+                                    add_cart.setClickable(true);
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
 
                        //     add_cart.setClickable(false);
-                            Toast.makeText(ProductDetail.this, "Cart response: " + response, Toast.LENGTH_SHORT).show();
+                         //   Toast.makeText(ProductDetail.this, "Cart response: " + response, Toast.LENGTH_SHORT).show();
                         }
                     }, new Response.ErrorListener() {
                         @Override
@@ -300,6 +304,8 @@ public class ProductDetail extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 Log.d(Tag,"product detail on res="+response);
+                linear_detail_start.setVisibility(View.GONE);
+                linear_detail.setVisibility(View.VISIBLE);
                 String product_id= null,category_name= null,product_name= null,brand= null,product_code= null
                         ,price= null,manufacturing= null,qty= null,sample= null,unit= null,color
                         = null,description= null,product_images = null,user_id= null,rangId= null,amount= null,percent;

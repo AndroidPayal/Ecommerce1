@@ -91,7 +91,10 @@ public class Login extends AppCompatActivity {
             @Override
             public void onResponse(final String response) {
                 Log.d("Login_response1",response+"\n\nemail="+email+"pass="+pass);
-
+/*
+* [{"id":"39","name":"cluebix","email":"testuser@cluebix.com","username":"ClueBix","password":
+* "c4fd256b5281a00c2a934c0a2948e709","mobile":"8962607775","gst_number":"","city":"",
+* "user_type":"super","otp":"941394","is_pending":"0","is_active":"1","created_date":"2018-05-16","updated_date":"2018-07-02"}]*/
                 new Handler().postDelayed(new Runnable() {
 
                     @Override
@@ -107,11 +110,6 @@ public class Login extends AppCompatActivity {
                             try {
                                 array=new JSONArray(response);
                                 jsonObject =array.getJSONObject(0);
-
-/*[{"id":"2","name":"neha","email":"neha@gmail.com","username":"neha kumri"
-,"password":"3fede54cd3cf786471ca20e4d40d9b8c","mobile":"9874563258","user_type":"vender"
-,"otp":"","is_pending":"0","is_active":"1","created_date":"2018-02-22","updated_date":"2018-02-22"}]*/
-
                                 String id = jsonObject.getString("id");
                                 String name = jsonObject.getString("name");
                                 String email = jsonObject.getString("email");
@@ -123,10 +121,11 @@ public class Login extends AppCompatActivity {
                                 String is_active = jsonObject.getString("is_active");
                                 String created_date = jsonObject.getString("created_date");
                                 String updated_date = jsonObject.getString("updated_date");
+                                String gst=jsonObject.getString("gst_number");
+                                String city=jsonObject.getString("city");
 
                                 dialog.dismiss();
 
-                                Log.d("Login_","idzzactiv="+is_active);
                                 if(is_active.equalsIgnoreCase("1")) {//is_pending.equalsIgnoreCase("1") &&
 
                                     Base_url.id=id;
@@ -138,10 +137,12 @@ public class Login extends AppCompatActivity {
                                     Base_url.otp=otp;
                                     Base_url.created_date=created_date;
                                     Base_url.updated_date=updated_date;
+                                    Base_url.gst_number=gst;
+                                    Base_url.city=city;
                                     Log.e("myotp","login="+otp);
 
-                                    Log.d("loginscreen","uname="+username+"\nbaseuname="+Base_url.username);
-                                    Toast.makeText(Login.this, "Welcome " + name, Toast.LENGTH_SHORT).show();
+//                                    Log.d("loginscreen","uname="+username+"\nbaseuname="+Base_url.username);
+                                    //Toast.makeText(Login.this, "Welcome " + name, Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(Login.this, Otp_varify.class);
                                     startActivity(intent);
                                     overridePendingTransition(R.anim.right_in, R.anim.left_out);

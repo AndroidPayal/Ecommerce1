@@ -101,8 +101,8 @@ public class Quotation_items_list extends AppCompatActivity implements Quotation
 
         t_Quantity.setText("Total Items Ordered: "+invoice_items);//quant
         t_price.setText("Grand Total: "+total_price);
-        created_Date.setText("created date");
-        expiry_date.setText("expiry date");
+     /*   created_Date.setText("created date");
+        expiry_date.setText("expiry date");*/
         quotation_id.setText("Quotation Code:"+quote_no);
 
 
@@ -179,8 +179,8 @@ public class Quotation_items_list extends AppCompatActivity implements Quotation
                             total_price = total_price + (Float.parseFloat(price) * Integer.parseInt(qty));
                         }
 
-                        created_Date.setText(created_date1);
-                        expiry_date.setText(expiry_date1);
+                        created_Date.setText("Gen:"+created_date1);
+                        expiry_date.setText("Exp:"+expiry_date1);
 
                         pdfcontent.setText(pdfcontent.getText()+"Product "+i+"_ID : "+product_id+"\nName : "+product_name
                                 +"\nPrice : "+price
