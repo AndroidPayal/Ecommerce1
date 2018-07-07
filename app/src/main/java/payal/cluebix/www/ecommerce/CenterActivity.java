@@ -230,6 +230,10 @@ Log.d("center_screen",extras);
 
                 switch (id) {
                     case R.id.home:
+                        bottomNavigation.setSelectedItemId(R.id.bottom_nav_home);
+                        getSupportFragmentManager().beginTransaction().addToBackStack(null).
+                                replace(R.id.main_container, new DashboardFragment()).commit();
+
                         drawerLayout.closeDrawers();
                         break;
                     case R.id.Profile:
