@@ -74,11 +74,11 @@
         android:layout_marginBottom="5dp"
         android:orientation="horizontal">
         <TextView
-            android:id="@+id/t_total_product"
+            android:id="@+id/t_joining_date"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="0\nProduct Added"
+            android:text="0\njoining"
             android:textColor="@color/White"
             android:gravity="center"
             />
@@ -87,11 +87,11 @@
             android:layout_height="match_parent"
             android:layout_weight="0.9"/>
         <TextView
-            android:id="@+id/t_joining_date"
+            android:id="@+id/t_modified"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="1/12/18\nJoining Date"
+            android:text="1/12/18\nmodified"
             android:textColor="@color/White"
             android:gravity="center"
             />
@@ -251,4 +251,5 @@
         android:layout_margin="13dp"
         android:src="@android:drawable/ic_menu_edit"/>
     </FrameLayout>
+
 </LinearLayout>

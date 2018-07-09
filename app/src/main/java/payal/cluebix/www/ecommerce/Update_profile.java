@@ -34,6 +34,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -69,8 +70,8 @@ public class Update_profile extends AppCompatActivity {
         button_update=(TextView)findViewById(R.id.button_update);
         back_b=(TextView)findViewById(R.id.my_back);
         logOut=(TextView)findViewById(R.id.my_logout);
-        total_product=(TextView)findViewById(R.id.t_total_product);
-        joining_date=(TextView)findViewById(R.id.t_joining_date);
+        total_product=(TextView)findViewById(R.id.t_joining_date);
+        joining_date=(TextView)findViewById(R.id.t_modified);
         name1=(TextView)findViewById(R.id.user_name);
         e_mail=(EditText) findViewById(R.id.email);
         e_mob=(EditText)findViewById(R.id.mob);
@@ -178,15 +179,33 @@ public class Update_profile extends AppCompatActivity {
                     @Override
                     public void onResponse(final String response) {
                         Log.d("updatescreen",response);
+                        String date=""+Calendar.getInstance().get(Calendar.YEAR)+"-"
+                                +Calendar.getInstance().get(Calendar.MONTH)+"-"+Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+                        session.createLoginSession(Uid, name,uname,Uemail,mob,Ucreated
+                                , date,U_gst,city);
 
-                       new Handler().postDelayed(new Runnable() {
+                        e_name.setText(name);e_city.setText(city);e_mob.setText(mob);
+                        e_uname.setText(uname);joining_date.setText(date);
+                        Log.d("todaydate",""+date);
+
+                        dialog = ProgressDialog.show(Update_profile.this, "","wait...", true);
+
+                        new Handler().postDelayed(new Runnable() {
                            @Override
                            public void run() {
+                               dialog.dismiss();
                                Toast.makeText(Update_profile.this, ""+response, Toast.LENGTH_SHORT).show();
-                               Intent i=new Intent(Update_profile.this,Update_profile.class);
-                               startActivity(i);
+                              /* Intent i=new Intent(Update_profile.this,Update_profile.class);
+                               startActivity(i);*/
+                               e_mob.setFocusable(false);
+                               e_name.setFocusable(false);
+                               e_uname.setFocusable(false);
+                               e_city.setFocusable(false);
+                               button_update.setVisibility(View.GONE);
+                               b_float.setVisibility(View.VISIBLE);
                            }
                        },2000);
+
 
 
                     }

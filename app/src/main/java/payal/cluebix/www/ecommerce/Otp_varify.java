@@ -37,13 +37,14 @@ public class Otp_varify extends AppCompatActivity {
 
             //    Log.e("myotp","1="+Base_url.otp+"\n2="+otp2);
                 if(otp2.equals(Base_url.otp)) {
+                    session.createLoginSession(Base_url.id, Base_url.name,Base_url.username,Base_url.email,Base_url.mobile,Base_url.created_date
+                            ,Base_url.updated_date, Base_url.gst_number,Base_url.city);
+
                     new Handler().postDelayed(new Runnable() {
 
                         @Override
                         public void run() {
-                            session.createLoginSession(Base_url.id, Base_url.name,Base_url.username,Base_url.email,Base_url.mobile,Base_url.created_date
-                                    ,Base_url.updated_date, Base_url.gst_number,Base_url.city);
-                            Intent i = new Intent(Otp_varify.this, CenterActivity.class);
+                             Intent i = new Intent(Otp_varify.this, CenterActivity.class);
                             i.putExtra("cartTransition","dash");
                             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_SINGLE_TOP);
