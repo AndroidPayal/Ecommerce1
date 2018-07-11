@@ -188,7 +188,15 @@ public class CartFragment extends Fragment implements CartAdapter.ClickListener 
                         Toast.makeText(getActivity(), "Error:" + response, Toast.LENGTH_SHORT).show();
                     }
 
-                    adapter.notifyData(product_item);
+                    adapter.notifyitem(new sample_Cart(array_cart_items.get(position).getCart_id(), array_cart_items.get(position).getProduct_id()
+                            , array_cart_items.get(position).getProduct_nam(), array_cart_items.get(position).getPrice()
+                            ,array_cart_items.get(position).getSample()
+                            , array_cart_items.get(position).getSamplePrice()
+                            , "" + quantity, array_cart_items.get(position).getUser_id()
+                            , array_cart_items.get(position).getManufacturing(), array_cart_items.get(position).getDescription()
+                            , array_cart_items.get(position).getBrand(), array_cart_items.get(position).getImages_string()
+                            , array_cart_items.get(position).getQuantity())
+                                ,position);
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -239,7 +247,16 @@ public class CartFragment extends Fragment implements CartAdapter.ClickListener 
                     } else {
                         Toast.makeText(getActivity(), "Error:" + response, Toast.LENGTH_SHORT).show();
                     }
-                    adapter.notifyData(product_item);
+                    adapter.notifyitem(new sample_Cart(array_cart_items.get(position).getCart_id(), array_cart_items.get(position).getProduct_id()
+                            , array_cart_items.get(position).getProduct_nam(), array_cart_items.get(position).getPrice()
+                            ,array_cart_items.get(position).getSample()
+                            ,array_cart_items.get(position).getSamplePrice()
+                            , "" + quantity, array_cart_items.get(position).getUser_id(),
+                            array_cart_items.get(position).getManufacturing(),
+                            array_cart_items.get(position).getDescription()
+                            , array_cart_items.get(position).getBrand(), array_cart_items.get(position).getImages_string()
+                            ,array_cart_items.get(position).getQuantity())
+                    ,position);
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -303,7 +320,7 @@ public class CartFragment extends Fragment implements CartAdapter.ClickListener 
                 else {
                     Toast.makeText(getActivity(), "Error! Retry after some time", Toast.LENGTH_SHORT).show();
                 }
-                adapter.notifyData(product_item);
+                adapter.notifyItemRemoved(position);
             }
         }, new Response.ErrorListener() {
             @Override

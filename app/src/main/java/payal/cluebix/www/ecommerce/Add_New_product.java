@@ -486,7 +486,7 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
         final View rowView = inflater.inflate(R.layout.field, null);
 
         // Add the new row before the add field button.
-        final EditText e1=rowView.findViewById(R.id.from_edit_text);
+        EditText e1=rowView.findViewById(R.id.from_edit_text);
         EditText e2=rowView.findViewById(R.id.to_edit_text);
         EditText e3=rowView.findViewById(R.id.prize_edit_text);
         final int i=rowView.generateViewId();
@@ -521,6 +521,7 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
         //and submit click pr id array k use se edittext value fetch krenge
     }
     public void onDelete(View v){
+
         linearLayout.removeView((View) v.getParent());
 
         //Log.d("ranges","remove linear id="+linearLayout.getId());

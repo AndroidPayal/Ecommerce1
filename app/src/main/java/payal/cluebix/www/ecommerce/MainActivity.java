@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.google.firebase.iid.FirebaseInstanceId;
 
 import payal.cluebix.www.ecommerce.Handlers.SessionManager;
 

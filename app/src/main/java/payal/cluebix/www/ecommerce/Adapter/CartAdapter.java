@@ -90,6 +90,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ProductViewHol
         this.productList.set(pos,myList);
         notifyItemChanged(pos);
     }
+    public void notifyRemoved(int pos) {
+        //this.productList.get(pos) = myList;
+        this.productList.remove(pos);
+        notifyItemRemoved(pos);
+    }
+
     @Override
     public int getItemCount() {
         return productList.size();

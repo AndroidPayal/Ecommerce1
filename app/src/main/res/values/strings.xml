@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="MissingTranslation">
 
-    <string name="app_name">Ecommerce</string>
+    <string name="app_name">MultiVendor</string>
 
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>

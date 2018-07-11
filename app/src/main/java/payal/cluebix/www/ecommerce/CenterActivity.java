@@ -1,8 +1,12 @@
 package payal.cluebix.www.ecommerce;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
+import android.support.design.internal.BottomNavigationItemView;
+import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -13,22 +17,33 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
-import net.yazeed44.imagepicker.model.ImageEntry;
-import net.yazeed44.imagepicker.util.Picker;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import payal.cluebix.www.ecommerce.Datas.Base_url;
+import payal.cluebix.www.ecommerce.Handlers.RquestHandler;
 import payal.cluebix.www.ecommerce.Handlers.SessionManager;
 
 import static android.view.View.GONE;
@@ -41,14 +56,49 @@ public class CenterActivity extends AppCompatActivity {
     Toolbar toolbar, search_tool2;
     FloatingActionButton floatb;
 
-    private ArrayList<ImageEntry> mSelectedImages = new ArrayList<>();
+//    private ArrayList<ImageEntry> mSelectedImages = new ArrayList<>();
     SessionManager session;
     String Uid;
     String Uname, Umail, Udate1, Udate2, Umob;
     BottomNavigationView bottomNavigation;
-   private Bundle extras;
-    FragmentTransaction transaction;
 
+    String url=""+Base_url.My_cart_item_count;
+    FragmentTransaction transaction;
+    int count=0;
+
+
+
+    int[][] state = new int[][] {
+            new int[] {android.R.attr.state_enabled}, // enabled
+            new int[] { android.R.attr.state_pressed}  // pressed
+/*      new int[] {-android.R.attr.state_enabled}, // disabled
+        new int[] {android.R.attr.state_enabled}, // enabled
+        new int[] {-android.R.attr.state_checked}, // unchecked
+        new int[] { android.R.attr.state_pressed}  // pressed*/
+    };
+
+/*
+    int[] color = new int[] {
+            Color.BLUE,
+            Color.WHITE
+    };
+
+    ColorStateList ColorStateList1 = new ColorStateList(state, color);
+
+
+    int[][] state2 = new int[][] {
+            new int[] {android.R.attr.state_enabled}, // enabled
+            new int[] { android.R.attr.state_pressed}  // pressed
+
+    };
+
+    int[] color2 = new int[] {
+            Color.YELLOW,
+            Color.GRAY
+    };
+
+    ColorStateList ColorStateList2 = new ColorStateList(state2, color2);
+*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,94 +122,51 @@ public class CenterActivity extends AppCompatActivity {
         search_tool2 = (Toolbar) findViewById(R.id.toolbar_search2);
         setSupportActionBar(toolbar);
 
+        bottomNavigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+//         bottomNavigation.inflateMenu(R.menu.bottom_navigation);
+
+        fragmentManager = getSupportFragmentManager();
+        fragment = new DashboardFragment();
+        transaction = fragmentManager.beginTransaction();
+        // fragment = new DashboardFragment();
+        transaction.replace(R.id.main_container, fragment).commit();
 
         initNavigationDrawer();
 
-        bottomNavigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
-        // bottomNavigation.inflateMenu(R.menu.bottom_navigation);
-        fragmentManager = getSupportFragmentManager();
-        Log.d("ononon","inside oncreate");
-
-    //    Toast.makeText(this, "dashboard act called", Toast.LENGTH_SHORT).show();
-
-
-
-
-
+  /*      bottomNavigation.setItemTextColor(ColorStateList1);
+        bottomNavigation.setItemIconTintList(ColorStateList2);
+*/
 /*
-        if (extras.getBoolean("cartTransition")) {
-            Log.d("center_screen", "inflating cart");
-            //  if (extras.getBoolean("cartTransition")) {
 
-            Fragment newFragment = new CartFragment();
-            transaction = getSupportFragmentManager().beginTransaction();
-
-            transaction.replace(R.id.main_container, newFragment);
-            transaction.addToBackStack(null);
-
-            search_tool2.setVisibility(View.GONE);
-            transaction.commit();
+ bottomNavigation.setItemTextColor(ColorStateList1);
+navigationView.setItemIconTintList(ColorStateList2);
+*/
 
 
-            bottomNavigation.setSelectedItemId(R.id.bottom_nav_cart);
-
-        }*/
-
-
-
+        BottomNavigationMenuView bottomNavigationMenuView = (BottomNavigationMenuView) bottomNavigation.getChildAt(0);;
+        View vBotNavView = bottomNavigationMenuView.getChildAt(1); //replace 3 with the index of the menu item that you want to add the badge to.
+        BottomNavigationItemView itemView = (BottomNavigationItemView)vBotNavView;
+        View vBadge = LayoutInflater.from(this).inflate(R.layout.cart_item_count, bottomNavigationMenuView, false);
 
 
-        /*
+        ViewGroup.LayoutParams lp = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT);
+        itemView.addView(vBadge,lp);
+        TextView mtxtnotificationsbadge = findViewById(R.id.text_count);
+        String count=call_cart_count(mtxtnotificationsbadge);
 
-        extras = getIntent().getStringExtra("cartTransition");
-Log.d("center_screen",extras);
-
-        if(extras.equalsIgnoreCase("cart"))
-        {
-           *//* Log.d("center_screen","inside extras");
-            if(extras.getBoolean("cartTransition"))
-            {*//*
-
-                Fragment newFragment = new CartFragment();
-                 transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.main_container, newFragment);
-                transaction.addToBackStack(null);
-                search_tool2.setVisibility(View.GONE);
-                transaction.commit();
-                bottomNavigation.setSelectedItemId(R.id.bottom_nav_cart);
-
-            //}
-        }
-        else{
-            Log.d("center_screen","extra null");
-            fragment = new DashboardFragment();
-            transaction = fragmentManager.beginTransaction();
-            transaction.replace(R.id.main_container, fragment).commit();
-        }
- */
-
-
-        Log.d("onCreate called","onCreate called");
-
-
-        fragment = new DashboardFragment();
-        transaction = fragmentManager.beginTransaction();
-
-//        extras = getIntent().getExtras();
-//
-//        //this will change fragment to cart if  user comes from other screen
-//        if(extras.getBoolean("cartTransition",false))
-//        {
-//            Log.d("unmesh's log","getBooleanExtra called");
-//           fragment = new CartFragment();
-//
-//           transaction.replace(R.id.main_container,fragment).commit();
-//        }
+        vBadge.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                search_tool2.setVisibility(GONE);
+                fragment = new CartFragment();
+                final FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction.replace(R.id.main_container, fragment).commit();
+            }
+        });
 
 
 
-            fragment = new DashboardFragment();
-            transaction.replace(R.id.main_container, fragment).commit();
 
 
 
@@ -169,26 +176,7 @@ Log.d("center_screen",extras);
             public void onClick(View view) {
                 Intent i = new Intent(CenterActivity.this, Add_New_product.class);
                 startActivity(i);
-              /*  new Picker.Builder(getApplicationContext(),
-                        new Picker.PickListener() {
-                            @Override
-                            public void onPickedSuccessfully(ArrayList<ImageEntry> images) {
-                                mSelectedImages = images;
-                               // setupImageSamples();
-                                Log.d("CenterActivity_screen", "Picked images  " + images.toString());
-                            }
 
-                            @Override
-                            public void onCancel() {
-                                Log.i("CenterActivity_screen", "User canceled picker activity");
-                                Toast.makeText(getApplicationContext(), "User canceld picker activtiy", Toast.LENGTH_SHORT).show();
-
-                            }
-                        }, R.style.MIP_theme)
-                        .setPickMode(Picker.PickMode.MULTIPLE_IMAGES)
-                        .setLimit(Base_url.numberOfImagesToSelect)
-                        .build()
-                        .startActivity();*/
             }
         });
 
@@ -200,7 +188,6 @@ Log.d("center_screen",extras);
                     case R.id.bottom_nav_home:
                         search_tool2.setVisibility(View.VISIBLE);
                         fragment = new DashboardFragment();
-
                         break;
                     case R.id.bottom_nav_cart:
                         search_tool2.setVisibility(GONE);
@@ -213,6 +200,36 @@ Log.d("center_screen",extras);
             }
         });
 
+    }
+
+    private String call_cart_count(final TextView mtxtnotificationsbadge) {
+        count=0;
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url + Uid, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject=new JSONObject(response);
+                    String success=jsonObject.getString("success");
+                    JSONArray array=jsonObject.getJSONArray("addedCarts");
+                    for(int i=0;i<array.length();i++){
+                        count++;
+                    }
+                    mtxtnotificationsbadge.setText(count+"");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Cartscreen", error + "");
+                Toast.makeText(CenterActivity.this, "Server Connection Failed!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        RquestHandler.getInstance(CenterActivity.this).addToRequestQueue(stringRequest);
+
+        return ""+count;
     }
 
 
@@ -310,45 +327,6 @@ Log.d("center_screen",extras);
         finish();
         finishAffinity();
     }
-
-/*
-
-    @Override
-    protected void onPostResume() {
-        super.onPostResume();
-        //extras="";
-        Log.d("center_screen", "act postresumed");
-        extras = getIntent().getExtras();
-        Log.d("center_screen", "extras");
-
-        if (extras.getBoolean("cartTransition")) {
-            Log.d("center_screen", "inflating cart");
-          //  if (extras.getBoolean("cartTransition")) {
-
-                Fragment newFragment = new CartFragment();
-                transaction = getSupportFragmentManager().beginTransaction();
-
-                transaction.replace(R.id.main_container, newFragment);
-                transaction.addToBackStack(null);
-
-                search_tool2.setVisibility(View.GONE);
-                transaction.commit();
-
-
-                bottomNavigation.setSelectedItemId(R.id.bottom_nav_cart);
-
-                //}
-            } else {
-                Log.d("center_screen", "inflating dash");
-                fragment = new DashboardFragment();
-                transaction = fragmentManager.beginTransaction();
-                transaction.replace(R.id.main_container, fragment).commit();
-            }
-
-        }
-
-
-*/
 
     //chekcs if cart is called on resuming activity
     @Override

@@ -87,35 +87,6 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
          v =inflater.inflate(R.layout.updated, container, false);
 
-/*
-* in color section , field name : color_name
-
-in company : field name : name,
-In Unit section : unit_name
-*/
-
-        // Fragment transition of cart
-
-
-  /*      Bundle extras = getActivity().getIntent().getExtras();
-
-        if(extras != null)
-        {
-            Log.d(Tag,"opening cart");
-            if(extras.getBoolean("cartTransition"))
-            {
-                Fragment newFragment = new CartFragment();
-                fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-
-                fragmentTransaction.replace(R.id.main_container, newFragment);
-                fragmentTransaction.addToBackStack(null);
-
-                fragmentTransaction.commit();
-            }
-        }
-*/
-
-
         slider_image.clear();
         slider_image.add(((BitmapDrawable) getResources().getDrawable(R.drawable.sl4)).getBitmap());
 

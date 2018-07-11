@@ -77,6 +77,7 @@ public class Recycler_item_adapter extends RecyclerView.Adapter<Recycler_item_ad
         if(!a.getSample().equals("0"))
             holder.text_sample.setVisibility(View.VISIBLE);
 
+        Log.d("cartval",a.getCart_disable()+" name="+a.getProduct_name());
         if(a.getCart_disable()==1){
             holder.view_detail.setText("Added to Cart");
             //holder.add_to_cart.setClickable(false);
@@ -87,7 +88,7 @@ public class Recycler_item_adapter extends RecyclerView.Adapter<Recycler_item_ad
         long elapsedDays = 0;
 
         String date="2018-05-29";//productList.get(position).getCreated_date();
-        SimpleDateFormat format1=new SimpleDateFormat("yyyy-mm-dd");//2018-04-02
+        SimpleDateFormat format1=new SimpleDateFormat("yyyy-MM-dd");//2018-04-02
         try {
             Date dt1=format1.parse(date);
             String dt = format1.format(Calendar.getInstance().getTime());
@@ -97,6 +98,12 @@ public class Recycler_item_adapter extends RecyclerView.Adapter<Recycler_item_ad
             long daysInMilli =  24* 60* 60*1000;
              elapsedDays = different / daysInMilli;
 
+            Log.d("dates1","dt1="+dt1
+                    +"\ndt2="+dt2+"\n elapsed="+elapsedDays
+            );
+            /*
+            * dt1=Mon Jan 29 00:05:00 GMT+05:30 2018
+              dt2=Tue Jan 09 00:20:00 GMT+05:30 2018*/
 
         } catch (ParseException e) {
             e.printStackTrace();

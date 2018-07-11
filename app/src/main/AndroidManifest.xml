@@ -15,10 +15,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/logo_cut"
         android:label="@string/app_name"
         android:largeHeap="true"
-
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
@@ -56,10 +55,12 @@
             android:theme="@style/AppThemeNoActionBar" />
         <activity
             android:name=".My_products"
-            android:theme="@style/AppThemes2" />
+            android:theme="@style/AppThemes2"
+            android:label="My Products"/>
         <activity
             android:name=".ProductDetail"
-            android:parentActivityName=".CenterActivity" />
+            android:parentActivityName=".CenterActivity"
+            android:label="Detail"/>
 
 
         <activity
@@ -68,9 +69,10 @@
             android:parentActivityName=".My_products" />
         <activity
             android:name=".Quotation_list"
-            android:theme="@style/AppThemes2" />
+            android:theme="@style/AppThemes2"
+            android:label="All Quotations"/>
 
-        <service android:name=".Handlers.MyFirebaseMessagingService">
+    <!--    <service android:name=".Handlers.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
@@ -80,6 +82,7 @@
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
+-->
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
@@ -90,6 +93,7 @@
 
         <activity
             android:name=".Quotation_items_list"
+            android:label="Invoice"
            >
 
             <!--
@@ -102,24 +106,30 @@
         </activity>
         <activity
             android:name=".Add_New_product"
-            android:parentActivityName=".My_products" />
+            android:parentActivityName=".My_products"
+            android:label="New Product"/>
         <activity
             android:name=".Unit_list"
-            android:parentActivityName=".Add_New_product" />
+            android:parentActivityName=".Add_New_product"
+            android:label="Unit list"/>
         <activity
             android:name=".Company_list"
-            android:parentActivityName=".Add_New_product" />
+            android:parentActivityName=".Add_New_product"
+            android:label="Company list"/>
         <activity
             android:name=".Colors_list"
-            android:parentActivityName=".Add_New_product" />
+            android:parentActivityName=".Add_New_product"
+            android:label="Color list"/>
         <activity
             android:name=".Category_list"
-            android:parentActivityName=".Add_New_product" />
+            android:parentActivityName=".Add_New_product"
+            android:label="Category list"/>
 
         <activity android:name=".CenterActivity"
             android:clearTaskOnLaunch="true"
             android:launchMode="singleTask"
-            android:theme="@style/AppThemes2" />
+            android:theme="@style/AppThemes2"
+            android:label="MultiVendor"/>
 
     </application>
 
