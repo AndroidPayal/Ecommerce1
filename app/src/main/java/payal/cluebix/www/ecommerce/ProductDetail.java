@@ -42,6 +42,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import payal.cluebix.www.ecommerce.Adapter.Recycler_item_adapter;
 import payal.cluebix.www.ecommerce.Adapter.Slider_adapter;
 import payal.cluebix.www.ecommerce.Datas.Base_url;
 import payal.cluebix.www.ecommerce.Datas.data_dashboard;
@@ -84,6 +85,13 @@ public class ProductDetail extends AppCompatActivity {
 
     LinearLayout linear_detail,linear_detail_start;
 
+    public static ClickListener clickListener;
+
+    public ProductDetail(){}
+    public ProductDetail(ClickListener clicklistener){
+        Log.d("listenerval","listerner called");
+        clickListener=clicklistener;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -151,7 +159,7 @@ public class ProductDetail extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                add_item_to_cart(prod_id) ;
+                add_item_to_cart(prod_id,view) ;
             }
         });
 
@@ -192,7 +200,7 @@ public class ProductDetail extends AppCompatActivity {
 
     }
 
-    private boolean add_item_to_cart(String Current_prod_id) {
+    private boolean add_item_to_cart(String Current_prod_id, View view) {
         String quantity = prodruct_quantity.getText().toString().trim();
         if (quantity.equals("")) quantity = "0";
 
@@ -211,6 +219,16 @@ public class ProductDetail extends AppCompatActivity {
                 if(orderSample.isChecked()|| Integer.parseInt(quantity)>0) {
                     add_cart.setClickable(false);
                     add_cart.setText("Adding...");
+
+                    if (clickListener!=null){
+                        clickListener.cart_count_bell(view);
+                        Log.d("listenerval","1="+clickListener+"");
+
+                    }else {
+                        Log.d("listenerval",clickListener+"=2");
+                    }
+
+
                     Log.e("validat1 url=", url2 + Current_prod_id + "/" + quantity + "/" + sample + "/" + Uid);
                     StringRequest stringRequest = new StringRequest(Request.Method.POST, url2 + Current_prod_id + "/" + quantity + "/" + sample + "/" + Uid, new Response.Listener<String>() {
                         @Override
@@ -253,50 +271,6 @@ public class ProductDetail extends AppCompatActivity {
         return false;
     }
 
-/*
-
-    public int cart_item_count(){
-      */
-/*
-        * get cart item count*//*
-
-        StringRequest stringRequest2=new StringRequest(Request.Method.POST, url3+Uid, new Response.Listener<String>(){
-            @Override
-            public void onResponse(String response) {
-
-                JSONObject post_data;
-                try {
-                    JSONObject jsonObject=new JSONObject(response);
-                    String success=jsonObject.getString("success");
-                    JSONArray jsonArray=jsonObject.getJSONArray("addedCarts");
-                    for(int i=0;i<jsonArray.length();i++) {
-                        post_data = jsonArray.getJSONObject(i);
-                        count++;//counting total element in cart
-                        Log.d(Tag,"count value="+count);
-                        invalidateOptionsMenu();
-*/
-/*
-* {"id":"100","product_id":"2","product_name":"Demo1","price":"200.00","qty":"1","user_id":"51","is_active":"1"}*//*
-
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("dashboard_error_res",error+"");
-                Toast.makeText(ProductDetail.this, "Server Connection Failed!", Toast.LENGTH_SHORT).show();
-            }
-        });
-        RquestHandler.getInstance(ProductDetail.this).addToRequestQueue(stringRequest2);
-
-
-        return count;
-    }
-*/
 
     private void get_current_product_Detail() {
 
@@ -388,7 +362,7 @@ public class ProductDetail extends AppCompatActivity {
     }
 
     private void apply_ranges(String pro_id) {
-        final String rangeid="24";//range_id;
+        final String rangeid=range_id;//24//range_id;
 
 
         StringRequest stringRequest=new StringRequest(Request.Method.POST, url4+pro_id, new Response.Listener<String>(){
@@ -576,7 +550,6 @@ public class ProductDetail extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -587,7 +560,10 @@ public class ProductDetail extends AppCompatActivity {
         startActivity(i);
     }
 
-    /*   @Override
+    public interface ClickListener {
+        void cart_count_bell(View view);
+    }
+        /*   @Override
                 public boolean onCreateOptionsMenu(Menu menu) {
                     // TODO Auto-generated method stub
                   *//*  MenuInflater inf=getMenuInflater();

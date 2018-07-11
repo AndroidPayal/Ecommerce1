@@ -65,11 +65,17 @@ public class CartFragment extends Fragment implements CartAdapter.ClickListener 
 
     LinearLayout linear_cart,linear_cart_start;
 
+    public static CartFragment.RemoveCountLinstener clickListener;
+
     public CartFragment() {
         product_item.clear();
         array_cart_items.clear();array_temp.clear();element_quantity_array.clear();
         Cart_id_array.clear();Product_id_array.clear();availables.clear();
     }
+
+ /*   public CartFragment(RemoveCountLinstener clickListener){
+        this.clickListener=clickListener;
+    }*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -299,6 +305,14 @@ public class CartFragment extends Fragment implements CartAdapter.ClickListener 
         cartsub_total.setText("Cart Subtotal ("+itemCount+" items): ");
         cartsub_total2.setText("Rs."+GrandTotal);*/
 
+/*        if (clickListener!=null){
+            clickListener.removeClick(view);
+            Log.d("listenerval","1="+clickListener+"");
+
+        }else {
+            Log.d("listenerval",clickListener+"=2");
+        }*/
+
         StringRequest stringRequest=new StringRequest(Request.Method.POST
                 , url2+Cart_id_array.get(position)+"/"+Uid, new Response.Listener<String>(){
             @Override
@@ -316,6 +330,13 @@ public class CartFragment extends Fragment implements CartAdapter.ClickListener 
                     cartsub_total.setText("Cart Subtotal ("+itemCount+" items): ");
                     cartsub_total2.setText("Rs."+GrandTotal);
                     product_item.remove(position);
+
+                    TextView tv = getActivity().findViewById(R.id.text_count);
+                    int t= Integer.parseInt(tv.getText().toString());
+                    t=t-1;
+                    tv.setText(""+t);
+                    Log.d("listenerval","t2="+t);
+
                 }
                 else {
                     Toast.makeText(getActivity(), "Error! Retry after some time", Toast.LENGTH_SHORT).show();
@@ -414,4 +435,7 @@ conditional statement.","brand":"Define One Special","product_images":"","quanti
     }
 
 
+    public interface RemoveCountLinstener{
+        void removeClick(View view);
+    }
 }

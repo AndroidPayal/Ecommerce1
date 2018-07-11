@@ -48,7 +48,7 @@ import payal.cluebix.www.ecommerce.Handlers.SessionManager;
 
 import static android.view.View.GONE;
 
-public class CenterActivity extends AppCompatActivity {
+public class CenterActivity extends AppCompatActivity implements ProductDetail.ClickListener{
 
     private Fragment fragment;
     private FragmentManager fragmentManager;
@@ -65,8 +65,11 @@ public class CenterActivity extends AppCompatActivity {
     String url=""+Base_url.My_cart_item_count;
     FragmentTransaction transaction;
     int count=0;
+    TextView mtxtnotificationsbadge;
 
 
+
+/*
 
     int[][] state = new int[][] {
             new int[] {android.R.attr.state_enabled}, // enabled
@@ -74,10 +77,8 @@ public class CenterActivity extends AppCompatActivity {
 /*      new int[] {-android.R.attr.state_enabled}, // disabled
         new int[] {android.R.attr.state_enabled}, // enabled
         new int[] {-android.R.attr.state_checked}, // unchecked
-        new int[] { android.R.attr.state_pressed}  // pressed*/
-    };
-
-/*
+        new int[] { android.R.attr.state_pressed}  // pressed*//*
+};
     int[] color = new int[] {
             Color.BLUE,
             Color.WHITE
@@ -85,19 +86,6 @@ public class CenterActivity extends AppCompatActivity {
 
     ColorStateList ColorStateList1 = new ColorStateList(state, color);
 
-
-    int[][] state2 = new int[][] {
-            new int[] {android.R.attr.state_enabled}, // enabled
-            new int[] { android.R.attr.state_pressed}  // pressed
-
-    };
-
-    int[] color2 = new int[] {
-            Color.YELLOW,
-            Color.GRAY
-    };
-
-    ColorStateList ColorStateList2 = new ColorStateList(state2, color2);
 */
 
     @Override
@@ -105,6 +93,7 @@ public class CenterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.drawer_main);
 
+        ProductDetail detail=new ProductDetail(this);
 
         session = new SessionManager(getApplicationContext());
         HashMap<String, String> user = session.getUserDetails();
@@ -152,7 +141,7 @@ navigationView.setItemIconTintList(ColorStateList2);
         ViewGroup.LayoutParams lp = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT);
         itemView.addView(vBadge,lp);
-        TextView mtxtnotificationsbadge = findViewById(R.id.text_count);
+         mtxtnotificationsbadge = findViewById(R.id.text_count);
         String count=call_cart_count(mtxtnotificationsbadge);
 
         vBadge.setOnClickListener(new View.OnClickListener() {
@@ -372,6 +361,14 @@ navigationView.setItemIconTintList(ColorStateList2);
         super.onNewIntent(intent);
 
 
+    }
+
+    @Override
+    public void cart_count_bell(View view) {
+        int t= Integer.parseInt(mtxtnotificationsbadge.getText().toString());
+        t=t+1;
+        mtxtnotificationsbadge.setText(""+t);
+        Log.d("listenerval","t="+t);
     }
 }
 
