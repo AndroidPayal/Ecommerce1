@@ -56,7 +56,6 @@ import payal.cluebix.www.ecommerce.R;
 
 public class DashboardFragment extends Fragment implements Recycler_item_adapter.ClickListener {
 
-    FragmentTransaction fragmentTransaction;
     private String Tag="Dashboard_screen";
     RecyclerView recyclerView;
     Recycler_item_adapter adapter;
@@ -79,7 +78,8 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
     LinearLayout l2_dots;
     List<Bitmap> slider_image=new ArrayList<>();
     Slider_adap_add_product sliderPagerAdapter;
-
+    LinearLayout loader_linear;
+    View v2;
 
     public DashboardFragment() {
     }
@@ -118,6 +118,8 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
         recyclerView=(RecyclerView)v.findViewById(R.id.recycler1);
         viewPager=(ViewPager)v.findViewById(R.id.front_viewPager);
         l2_dots=(LinearLayout)v.findViewById(R.id.l2_dots);
+        loader_linear=(LinearLayout)v.findViewById(R.id.loader);
+        v2=(View)v.findViewById(R.id.view_for_margin);
 
 
         init();
@@ -224,6 +226,8 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
                     }
 
                     adapter.notifyData(product_item);
+                    loader_linear.setVisibility(View.GONE);
+                    v2.setVisibility(View.VISIBLE);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -308,107 +312,6 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
     public void Add_to_cart(View view, int position) {
   //      add_item_to_cart(Product_id_array.get(position),position);
     }
-
-/*
-    private boolean add_item_to_cart(String Current_prod_id,int pos) {
-*//*
-*  product_item.add(new data_dashboard(product_id, product_name
-   , color, price, product_images, sample, manufacturing, amount,cart_disable));*//*
-        data_dashboard a=product_item.get(pos);
-        ArrayList<String> current_items=new ArrayList<>();
-        current_items.add(a.getProductId());//0
-        current_items.add(a.getProduct_name());//1
-        current_items.add(a.getColor());//2
-        current_items.add(a.getPrice());//3
-        current_items.add(a.getProduct_images_String());//4
-        current_items.add(a.getSample());//5
-        current_items.add(a.getManufacturing());//6
-        current_items.add(a.getAmount());//7
-
-        product_item.remove(pos);
-        product_item.add(pos,new data_dashboard(current_items.get(0),current_items.get(1),current_items.get(2),current_items.get(3)
-                ,current_items.get(4),current_items.get(5),current_items.get(6),current_items.get(7),1));
-
-        StringRequest stringRequest=new StringRequest(Request.Method.POST, url2+Current_prod_id+"/"+Uid, new Response.Listener<String>(){
-            @Override
-            public void onResponse(String response) {
-                Log.d("dashboard_cart:",response);
-                count++;
-                getActivity().invalidateOptionsMenu();
-                Toast.makeText(getActivity(), "Cart response: "+response, Toast.LENGTH_SHORT).show();
-                adapter.notifyData(product_item);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("dashboard_cart_res",error+"");
-                Toast.makeText(getActivity(), "Some error occured!", Toast.LENGTH_SHORT).show();
-            }
-        });
-        RquestHandler.getInstance(getActivity()).addToRequestQueue(stringRequest);
-
-
-        return false;
-    }*/
-
-  /*  @Override
-    public void onCreateOptionsMenu(Menu menu,MenuInflater inflater) {
-        // TODO Auto-generated method stub
-
-        getActivity().getMenuInflater().inflate(R.menu.menu_cart, menu);
-
-        MenuItem menuItem = menu.findItem(R.id.action_cart);
-        menuItem.setIcon(buildCounterDrawable(count, R.drawable.ic_shopping_cart));
-        MenuItem menuItem2 = menu.findItem(R.id.action_search);
-        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem2);
-        //searchView.setOnQueryTextListener(this);
-
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id=item.getItemId();
-        if(id==R.id.action_cart) {
-          *//*  Intent intent=new Intent(getActivity(),Cart.class);
-            startActivity(intent);*//*
-
-
-            Fragment newFragment = new CartFragment();
-            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            transaction.replace(R.id.main_container, newFragment);
-            transaction.addToBackStack(null);
-
-            transaction.commit();
-
-
-
-        }
-        if(id==R.id.action_search ){
-
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
- */   private Drawable buildCounterDrawable(int count, int backgroundImageId) {
-        LayoutInflater inflater = LayoutInflater.from(getActivity());
-        View view = inflater.inflate(R.layout.counter_menuitem_layout, null);
-        view.setBackgroundResource(backgroundImageId);
-
-        TextView textView = (TextView) view.findViewById(R.id.count);
-        textView.setText("" + count);
-
-        view.measure(
-                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
-                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
-        view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
-
-        view.setDrawingCacheEnabled(true);
-        view.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
-        Bitmap bitmap = Bitmap.createBitmap(view.getDrawingCache());
-        view.setDrawingCacheEnabled(false);
-
-        return new BitmapDrawable(getResources(), bitmap);
-    }
-
 
 
     private class SliderTimer extends TimerTask {

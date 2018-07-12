@@ -4,9 +4,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:clipChildren="false"
-    android:layout_marginTop="?attr/actionBarSize"
-    android:background="@color/colorPrimary"
+
+
     >
+<!--android:background="@color/colorPrimary"
+android:layout_marginTop="?attr/actionBarSize"-->
 
 <android.support.v4.widget.NestedScrollView
     android:id="@+id/nestedScrollView"
@@ -375,12 +377,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clipChildren="false"
-
             >
 
         </android.support.v7.widget.RecyclerView>
 
+            <View
+                android:id="@+id/view_for_margin"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:visibility="gone"/>
 
+            <LinearLayout
+                android:id="@+id/loader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
             <ProgressBar
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -391,6 +402,7 @@
                 android:text="Loading..."
                 android:textColor="@color/colorAccent"
                 android:gravity="center"/>
+            </LinearLayout>
         </LinearLayout>
 </android.support.v4.widget.NestedScrollView>
 

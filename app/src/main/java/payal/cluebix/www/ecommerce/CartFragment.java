@@ -79,7 +79,17 @@ public class CartFragment extends Fragment implements CartAdapter.ClickListener 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        /*
+        *   LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        View view = inflater.inflate(R.layout.dashboard_items_, null,false);
+        ViewGroup.LayoutParams lp = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        view.setLayoutParams(lp);*/
         View v =inflater.inflate(R.layout.activity_cart, container, false);
+
+        Toolbar toolbar= getActivity().findViewById(R.id.toolbar);
+        toolbar.setVisibility(View.VISIBLE);
+
         product_item.clear();array_cart_items.clear();array_temp.clear();element_quantity_array.clear();
         Cart_id_array.clear();Product_id_array.clear();availables.clear();
         itemCount=0;
@@ -296,22 +306,6 @@ public class CartFragment extends Fragment implements CartAdapter.ClickListener 
 
     @Override
     public void itemClicked(View view,final int position) {
-      /*  int qt=Integer.parseInt(product_item.get(position).getQty());
-        total=total-qt;
-        itemCount--;
-        GrandTotal=GrandTotal-(Float.parseFloat(product_item.get(position).getPrice())*qt)
-                        -Float.parseFloat(product_item.get(position).getSamplePrice());
-        //     cartsub_total.setText("Cart Subtotal ("+total+" items): ");
-        cartsub_total.setText("Cart Subtotal ("+itemCount+" items): ");
-        cartsub_total2.setText("Rs."+GrandTotal);*/
-
-/*        if (clickListener!=null){
-            clickListener.removeClick(view);
-            Log.d("listenerval","1="+clickListener+"");
-
-        }else {
-            Log.d("listenerval",clickListener+"=2");
-        }*/
 
         StringRequest stringRequest=new StringRequest(Request.Method.POST
                 , url2+Cart_id_array.get(position)+"/"+Uid, new Response.Listener<String>(){
@@ -331,7 +325,7 @@ public class CartFragment extends Fragment implements CartAdapter.ClickListener 
                     cartsub_total2.setText("Rs."+GrandTotal);
                     product_item.remove(position);
 
-                    TextView tv = getActivity().findViewById(R.id.text_count);
+                    TextView tv = getActivity().findViewById(R.id.text_count);///this is text view of main screen which contail cart item count
                     int t= Integer.parseInt(tv.getText().toString());
                     t=t-1;
                     tv.setText(""+t);

@@ -111,7 +111,7 @@ public class CenterActivity extends AppCompatActivity implements ProductDetail.C
         search_tool2 = (Toolbar) findViewById(R.id.toolbar_search2);
         setSupportActionBar(toolbar);
 
-        bottomNavigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        bottomNavigation = (BottomNavigationView) findViewById(R.id.bottom_navigation1);
 //         bottomNavigation.inflateMenu(R.menu.bottom_navigation);
 
         fragmentManager = getSupportFragmentManager();
