@@ -150,9 +150,9 @@
 
                     <ImageView
                         android:layout_width="24dp"
-                        android:layout_height="24dp"
+                        android:layout_height="match_parent"
                         android:src="@drawable/ic_indian_rupee"
-                        android:layout_margin="5dp"
+                        android:layout_margin="2dp"
                         />
                     <TextView
                         android:id="@+id/text_prize"

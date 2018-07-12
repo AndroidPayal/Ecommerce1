@@ -10,7 +10,8 @@
         android:layout_height="match_parent"
         android:layout_weight="5"
         android:hint="From"
-        android:inputType="phone"/>
+        android:inputType="phone"
+        />
     <EditText
         android:id="@+id/to_edit_text"
         android:layout_width="0dp"

@@ -95,6 +95,9 @@ public class CenterActivity extends AppCompatActivity implements ProductDetail.C
 
         ProductDetail detail=new ProductDetail(this);
 
+
+
+
         session = new SessionManager(getApplicationContext());
         HashMap<String, String> user = session.getUserDetails();
         Uname = user.get(SessionManager.KEY_NAME);

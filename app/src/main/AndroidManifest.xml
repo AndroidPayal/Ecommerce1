@@ -107,6 +107,7 @@
         <activity
             android:name=".Add_New_product"
             android:parentActivityName=".My_products"
+            android:configChanges="orientation|screenSize"
             android:label="New Product"/>
         <activity
             android:name=".Unit_list"
