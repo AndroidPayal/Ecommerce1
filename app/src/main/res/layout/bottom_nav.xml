@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:clipChildren="false"
+    android:layout_height="match_parent"
+    android:gravity="bottom"
+    >
+
+  <!--  <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/colorPrimaryDark"
+        android:clipChildren="false">-->
+
+        <android.support.design.widget.BottomNavigationView
+            android:id="@+id/bottom_navigation1"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            app:menu="@menu/bottom_navigation"
+            app:itemIconTint="@color/bnv_tab_item_foreground"
+            app:itemTextColor="@color/bnv_tab_item_foreground"
+            app:itemBackground="@color/colorPrimaryDark"
+            android:layout_alignParentBottom="true">
+            <!--   app:menu="@menu/bottom_navigation"
+             -->
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/float_newProduct"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:src="@drawable/ic_upload_white_24dp"
+                app:fabSize="normal"
+                android:layout_marginBottom="25dp"
+                android:layout_gravity="center"
+                />
+
+        </android.support.design.widget.BottomNavigationView>
+
+    <!--
+    </LinearLayout>-->
+
+</LinearLayout>
