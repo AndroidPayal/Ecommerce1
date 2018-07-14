@@ -646,7 +646,7 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
     {
         boolean validate = validateRange();
 
-        boolean rangeIsSet = false;
+        boolean rangeIsSet = validate;
 
         //allows or blocks user on the basis of validation
 

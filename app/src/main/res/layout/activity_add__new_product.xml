@@ -134,25 +134,27 @@
             android:orientation="horizontal"
             android:padding="4dp"
             android:weightSum="2"
-            android:layout_margin="3dp">
+            android:layout_margin="3dp"
+
+            >
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="0.3"
-                android:text="Price : "
+                android:text="Whole Sale : "
                 android:textColor="@color/black"
-                android:gravity="center"
+                android:gravity="center_vertical"
 
                 />
             <EditText
                 android:id="@+id/edit_price"
-                android:padding="2dp"
+                android:padding="4dp"
                 android:layout_gravity="center"
+                android:layout_marginLeft="1dp"
                 android:layout_width="0dp"
-                android:layout_weight="0.6"
+                android:layout_weight="0.925"
                 android:layout_height="wrap_content"
-                android:hint=""
+                android:hint="enter price"
                 android:textSize="15sp"
                 android:background="@drawable/input_background"
                 android:gravity="center"
@@ -165,21 +167,23 @@
 
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:padding="2dp"
                 android:layout_height="match_parent"
-                android:layout_weight="0.4"
-                android:text=" Available : "
+                android:text="Retail Price : "
                 android:textColor="@color/black"
                 android:gravity="center"
                 />
 
             <EditText
-                android:id="@+id/edit_quantity"
                 android:layout_width="0dp"
-                android:layout_weight="0.6"
+                android:layout_weight="0.925"
                 android:layout_height="match_parent"
-                android:padding="2dp"
-                android:hint=""
+                android:padding="4dp"
+                android:layout_marginLeft="1dp"
+                android:hint="enter price"
+                android:text=""
                 android:background="@drawable/input_background"
                 android:gravity="center"
                 android:textColor="@color/Black"
@@ -191,6 +195,42 @@
 
         </LinearLayout>
 
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+           <!--android:weightSum="1"-->
+            <!--android:layout_margin="3dp"-->
+            <!--android:orientation="horizontal"-->
+            <!--&gt;-->
+
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:padding="2dp"-->
+                <!--android:layout_gravity="center_vertical"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:text="Available : "-->
+                <!--android:textColor="@color/black"-->
+                <!--android:gravity="center"-->
+                <!--/>-->
+
+            <!--<EditText-->
+                <!--android:id="@+id/edit_quantity"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_weight="0.4"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:padding="4dp"-->
+                <!--android:layout_marginLeft="1dp"-->
+                <!--android:hint="1234567"-->
+                <!--android:text=""-->
+                <!--android:background="@drawable/input_background"-->
+                <!--android:gravity="center"-->
+                <!--android:textColor="@color/Black"-->
+                <!--android:textSize="15sp"-->
+                <!--android:inputType="number"-->
+                <!--/>-->
+
+        <!--</LinearLayout>-->
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -200,10 +240,10 @@
             android:layout_margin="4dp">
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
+                android:padding="4dp"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:layout_weight="0.2"
+                android:layout_gravity="center_vertical"
                 android:textColor="@color/black"
                 android:text="Unit : "
 
@@ -211,19 +251,48 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:background="@drawable/input_background"
                 android:padding="1dp"
                 >
             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
             android:id="@+id/spin_unit"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:textColor="@color/Black"
                 android:gravity="center"
             app:hintText="Select Unit"
             android:inputType="textMultiLine"/>
                 </LinearLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:padding="2dp"
+                android:layout_gravity="center_vertical"
+                android:layout_height="match_parent"
+                android:text="Available : "
+                android:textColor="@color/black"
+                android:gravity="center"
+                />
+
+            <EditText
+                android:id="@+id/edit_quantity"
+                android:layout_width="0dp"
+                android:layout_weight="0.8"
+                android:layout_height="match_parent"
+                android:padding="4dp"
+                android:layout_marginLeft="1dp"
+                android:hint=""
+                android:text=""
+                android:background="@drawable/input_background"
+                android:gravity="center"
+                android:textColor="@color/Black"
+                android:textSize="15sp"
+                android:inputType="number"
+                />
+
 
         </LinearLayout>
 
@@ -244,7 +313,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Company Name : "
-        android:gravity="center_vertical"
+        android:layout_gravity="center_vertical"
         android:textColor="@color/Black"/>
 
             <LinearLayout
