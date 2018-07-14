@@ -71,8 +71,9 @@
             android:layout_margin="2dp"
             android:layout_height="wrap_content"
             android:textSize="12sp"
-            android:textColor="#c2bcbc"
-            android:text="1234456789123445678912344567891234456789123445678912344567891234456789"
+            android:textColor="#000"
+            android:textStyle="bold"
+            android:text="Product Code : "
             />
 
     </LinearLayout>
