@@ -26,9 +26,6 @@ public class GuestActivity extends AppCompatActivity {
     private TextView textViewName,textViewProductCode,textViewPrize;
 
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

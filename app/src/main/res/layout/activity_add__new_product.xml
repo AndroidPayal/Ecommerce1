@@ -342,7 +342,15 @@
             android:weightSum="2"
             >
 
-        <CheckBox
+            <CheckBox
+                android:id="@+id/check_sample"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Sample Available"
+                android:textColor="@color/Black" />
+
+            <CheckBox
         android:id="@+id/check_manufacture"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -351,14 +359,6 @@
         android:text="I'm Manufacturer"
         />
 
-        <CheckBox
-            android:id="@+id/check_sample"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textColor="@color/Black"
-            android:text="Sample Available"
-            />
         </LinearLayout>
 
         <LinearLayout

@@ -12,9 +12,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -34,11 +36,11 @@ import payal.cluebix.www.ecommerce.R;
  * Created by speed on 10-March-18.
  */
 
-public class Recycler_item_adapter extends RecyclerView.Adapter<Recycler_item_adapter.ProductViewHolder> {
+public class Recycler_item_adapter extends RecyclerView.Adapter<Recycler_item_adapter.ProductViewHolder> implements Filterable{
 
     private Context mCtx;
     private List<data_dashboard> productList;
-    private static List<data_dashboard> productList_Copy;
+    private List<data_dashboard> productList_Copy;
     private List<String> productList_names=new ArrayList<>();
 
     ClickListener clickListener;
@@ -46,12 +48,12 @@ public class Recycler_item_adapter extends RecyclerView.Adapter<Recycler_item_ad
     List<String> slider_image;
     private TextView[] dots;
 
-    public Recycler_item_adapter(Context mCtx, List<data_dashboard> productList,List<String> name_list,List<data_dashboard> listcopy) {
+    public Recycler_item_adapter(Context mCtx, List<data_dashboard> productList,List<String> name_list) {
         this.mCtx = mCtx;
         this.productList = productList;
-        this.productList_Copy=listcopy;
+        this.productList_Copy=productList;
         productList_names=name_list;
-
+        //productList_Copy.addAll(productList);
     }
 
     @Override
@@ -128,7 +130,6 @@ public class Recycler_item_adapter extends RecyclerView.Adapter<Recycler_item_ad
 
     public void notifyData(List<data_dashboard> myList) {
         this.productList = myList;
-        this.productList_Copy=myList;
         notifyDataSetChanged();
     }
 
@@ -136,6 +137,7 @@ public class Recycler_item_adapter extends RecyclerView.Adapter<Recycler_item_ad
     public int getItemCount() {
         return productList.size();
     }
+
 
 
     class ProductViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,View.OnLongClickListener{
@@ -249,13 +251,13 @@ public class Recycler_item_adapter extends RecyclerView.Adapter<Recycler_item_ad
             }catch (Exception e){e.printStackTrace();}
     }
 
-    private class valueFilter extends Filter{
+   /* private class valueFilter extends Filter{
 
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             FilterResults results = new FilterResults();
 
-          /*  if (constraint != null && constraint.length() > 0) {
+          *//*  if (constraint != null && constraint.length() > 0) {
                 ArrayList<data_dashboard> filterList = new ArrayList<data_dashboard>();
 
                 for (int i = 0; i < mStringFilterList.size(); i++) {
@@ -270,50 +272,85 @@ public class Recycler_item_adapter extends RecyclerView.Adapter<Recycler_item_ad
                 }else{
                 results.count = mStringFilterList.size();
                 results.values = mStringFilterList;
-            }*/
+            }*//*
 
                 return null;
         }
-
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-
         }
+    }*/
+
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String charString = constraint.toString().trim();
+                if (charString.isEmpty()) {
+                    productList = productList_Copy;
+                }else{
+                    List<data_dashboard> filteredList = new ArrayList<>();
+                        for(data_dashboard row:productList_Copy){
+                            if (row.getProduct_name().toLowerCase().contains(charString.toLowerCase()) ) {
+                                //||row.pr().contains(charSequence)
+                                filteredList.add(row);
+                            }
+                        }
+                        productList=filteredList;
+                }
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = productList;
+                return null;
+            }
+
+            @SuppressWarnings("unchecked")
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                try {
+                    Log.d("resultVal",results.values+"");
+                    productList = (ArrayList<data_dashboard>) results.values;
+                    if (results.count > 0) {
+                        notifyDataSetChanged();
+                    } else {
+                        Toast.makeText(mCtx, "no data", Toast.LENGTH_SHORT).show();
+                    }
+                }catch (NullPointerException e){
+                    Log.e("nullPointerExce",e+"");
+                }
+
+            }
+        };
     }
 
     public void filter(String charText) {
         charText = charText.toLowerCase(Locale.getDefault());
-        //noinspection MismatchedQueryAndUpdateOfCollection
         ArrayList<data_dashboard> listcpy=new ArrayList<>();
-
         listcpy.addAll(productList);
-        //productList_Copy.addAll(productList);
-        Log.d("filter12","cpoylist="+productList_Copy+" 1newlist="+productList_Copy);
+
+        Log.d("filter123","start size=productList:"
+                +productList.size()
+            +"\nproductcpy:"+productList_Copy.size()
+                +"\nnamelist"+productList_names.size()
+                +"\ncopylist:"+listcpy.size());
+
         productList.clear();
 
         if (charText.length() == 0) {
-            Log.d("filter12","inside if text="+charText+" len="+charText.length());
-
             productList.addAll(productList_Copy);
         }
         else{
-           // Log.d("filter12","\ncpoylist ="+productList_Copy.size()+" 2newlist="+productList_Copy);
-
-
-            for (int i=0;i<productList_names.size();i++ ) {
-                /*Log.d("filter12","list val="+productList_names.get(i).toLowerCase(Locale.getDefault())
-                +"char="+charText);*/
-                Log.d("filter12","\nnamelist ="+productList_names.size()
-                    +"\nlistcpy ="+listcpy.size()
-                        +"\nmain ="+productList.size());
+            for (int i=0;i<listcpy.size();i++ ) {
                 if (productList_names.get(i).toLowerCase(Locale.getDefault()).contains(charText)) {
                     productList.add(listcpy.get(i));
                 }
             }
         }
-        Log.d("filter12","final list="+productList);
+        Log.d("filter123","end size=productList:"+productList.size()
+                +"\nproductcpy:"+productList_Copy.size()+"\nnamelist"+productList_names.size()
+                +"\ncopylist:"+listcpy.size());
         notifyDataSetChanged();
-
     }
 }
 

@@ -144,7 +144,7 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
         count=cart_item_count();
         get_old_Element();
 
-        adapter= new Recycler_item_adapter(getActivity(),product_item,name_list,product_item);
+        adapter= new Recycler_item_adapter(getActivity(),product_item,name_list);
         adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
 
@@ -320,20 +320,19 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
 
     @Override
     public boolean onQueryTextSubmit(String query) {
+        adapter.getFilter().filter(query);
         return false;
     }
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        //String text = newText;
+       /* //String text = newText;
         //adapter.filter(text);
 
-        if (TextUtils.isEmpty(newText)) {
-            //adapter.Clearfilter();
-        } else {
-            adapter.filter(newText);
-        }
-        return true;
+            adapter.filter(newText);*/
+        adapter.getFilter().filter(newText);
+
+        return false;
     }
 
 

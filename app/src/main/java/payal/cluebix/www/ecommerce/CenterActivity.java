@@ -295,27 +295,19 @@ navigationView.setItemIconTintList(ColorStateList2);
 
         Log.d("onresume","onresume called");
 
-        if(getIntent().getBooleanExtra("cartTransition",false))
-        {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.main_container, new CartFragment()).commit();
-
+        if(getIntent().getBooleanExtra("cartTransition",false)){
+            getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new CartFragment()).commit();
             search_tool2.setVisibility(GONE);
+            toolbar.setVisibility(View.VISIBLE);
             bottomNavigation.setSelectedItemId(R.id.bottom_nav_cart);
             getIntent().putExtra("cartTransition",false);
         }
 
-
-
-        if(getIntent().getBooleanExtra("dashTransition",false))
-        {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.main_container, new DashboardFragment()).commit();
+        if(getIntent().getBooleanExtra("dashTransition",false)){
+            getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new DashboardFragment()).commit();
             bottomNavigation.setSelectedItemId(R.id.bottom_nav_home);
             getIntent().putExtra("dashTransition",false);
         }
-
-
 
         super.onPostResume();
     }
