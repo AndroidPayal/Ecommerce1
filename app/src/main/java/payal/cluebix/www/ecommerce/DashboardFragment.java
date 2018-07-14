@@ -3,7 +3,8 @@ package payal.cluebix.www.ecommerce;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.widget.SearchView;
+import android.text.TextUtils;
+import android.widget.SearchView;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -15,6 +16,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -54,7 +56,7 @@ import payal.cluebix.www.ecommerce.R;
  * Created by speed on 11-Jun-18.
  */
 
-public class DashboardFragment extends Fragment implements Recycler_item_adapter.ClickListener {
+public class DashboardFragment extends Fragment implements Recycler_item_adapter.ClickListener, SearchView.OnQueryTextListener {
 
     private String Tag="Dashboard_screen";
     RecyclerView recyclerView;
@@ -66,6 +68,8 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
 
     ArrayList<String> Product_id_array=new ArrayList<>();
     ArrayList<String> P_id_array_of_cartItems=new ArrayList<>();
+    ArrayList<String> name_list=new ArrayList<>();
+
     ArrayList<data_dashboard> product_item;
 
     SessionManager session;
@@ -80,6 +84,7 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
     Slider_adap_add_product sliderPagerAdapter;
     LinearLayout loader_linear;
     View v2;
+    SearchView tool_search;
 
     public DashboardFragment() {
     }
@@ -91,7 +96,6 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
         slider_image.add(((BitmapDrawable) getResources().getDrawable(R.drawable.sl4)).getBitmap());
 
 /*
-
         slider_image.add(((BitmapDrawable) getResources().getDrawable(R.drawable.people_login1)).getBitmap());
         slider_image.add(((BitmapDrawable) getResources().getDrawable(R.drawable.logo2)).getBitmap());
         slider_image.add(((BitmapDrawable) getResources().getDrawable(R.drawable.people_login)).getBitmap());
@@ -120,7 +124,12 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
         l2_dots=(LinearLayout)v.findViewById(R.id.l2_dots);
         loader_linear=(LinearLayout)v.findViewById(R.id.loader);
         v2=(View)v.findViewById(R.id.view_for_margin);
+        tool_search=(SearchView)getActivity().findViewById(R.id.search_edit);
 
+        tool_search.setIconifiedByDefault(false);
+        tool_search.setSubmitButtonEnabled(true);
+        tool_search.setQueryHint("Search Here");
+        tool_search.setOnQueryTextListener(this);
 
         init();
         Timer timer = new Timer();
@@ -135,7 +144,7 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
         count=cart_item_count();
         get_old_Element();
 
-        adapter= new Recycler_item_adapter(getActivity(),product_item);
+        adapter= new Recycler_item_adapter(getActivity(),product_item,name_list,product_item);
         adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
 
@@ -217,6 +226,7 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
 
                         Product_id_array.add(product_id);
                         int cart_disable = 0;
+                        name_list.add(product_name);
 
                         if(P_id_array_of_cartItems.contains(product_id))
                             cart_disable=1;
@@ -259,10 +269,7 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
                         String item_id=post_data.getString("product_id");
                         count++;//counting total element in cart
 
-                        /*try{
-                               getActivity().invalidateOptionsMenu();
-                        }catch (Exception e){e.printStackTrace();}
-*/
+
                         P_id_array_of_cartItems.add(item_id);
 /*
 * {"id":"100","product_id":"2","product_name":"Demo1","price":"200.00","qty":"1","user_id":"51","is_active":"1"}*/
@@ -285,8 +292,6 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
 
         return count;
     }
-
-
     @Override
     public void itemClicked(View view, int position) {
         Intent i=new Intent(getActivity(),ProductDetail.class);
@@ -311,6 +316,24 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
     @Override
     public void Add_to_cart(View view, int position) {
   //      add_item_to_cart(Product_id_array.get(position),position);
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        //String text = newText;
+        //adapter.filter(text);
+
+        if (TextUtils.isEmpty(newText)) {
+            //adapter.Clearfilter();
+        } else {
+            adapter.filter(newText);
+        }
+        return true;
     }
 
 

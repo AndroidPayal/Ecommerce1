@@ -67,36 +67,10 @@ public class CenterActivity extends AppCompatActivity implements ProductDetail.C
     int count=0;
     TextView mtxtnotificationsbadge;
 
-
-
-/*
-
-    int[][] state = new int[][] {
-            new int[] {android.R.attr.state_enabled}, // enabled
-            new int[] { android.R.attr.state_pressed}  // pressed
-/*      new int[] {-android.R.attr.state_enabled}, // disabled
-        new int[] {android.R.attr.state_enabled}, // enabled
-        new int[] {-android.R.attr.state_checked}, // unchecked
-        new int[] { android.R.attr.state_pressed}  // pressed*//*
-};
-    int[] color = new int[] {
-            Color.BLUE,
-            Color.WHITE
-    };
-
-    ColorStateList ColorStateList1 = new ColorStateList(state, color);
-
-*/
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.drawer_main);
-
-        ProductDetail detail=new ProductDetail(this);
-
-
-
 
         session = new SessionManager(getApplicationContext());
         HashMap<String, String> user = session.getUserDetails();
@@ -156,11 +130,6 @@ navigationView.setItemIconTintList(ColorStateList2);
                 transaction.replace(R.id.main_container, fragment).commit();
             }
         });
-
-
-
-
-
 
 
         floatb.setOnClickListener(new View.OnClickListener() {
