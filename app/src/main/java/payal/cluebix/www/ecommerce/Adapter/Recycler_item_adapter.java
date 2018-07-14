@@ -38,16 +38,20 @@ public class Recycler_item_adapter extends RecyclerView.Adapter<Recycler_item_ad
 
     private Context mCtx;
     private List<data_dashboard> productList;
+    private static List<data_dashboard> productList_Copy;
+    private List<String> productList_names=new ArrayList<>();
+
     ClickListener clickListener;
     Slider_adapter sliderPagerAdapter;
     List<String> slider_image;
     private TextView[] dots;
-    List<data_dashboard> mStringFilterList=new ArrayList<>();
 
-    public Recycler_item_adapter(Context mCtx, List<data_dashboard> productList) {
+    public Recycler_item_adapter(Context mCtx, List<data_dashboard> productList,List<String> name_list,List<data_dashboard> listcopy) {
         this.mCtx = mCtx;
         this.productList = productList;
-        mStringFilterList=productList;
+        this.productList_Copy=listcopy;
+        productList_names=name_list;
+
     }
 
     @Override
@@ -63,6 +67,7 @@ public class Recycler_item_adapter extends RecyclerView.Adapter<Recycler_item_ad
     @Override
     public void onBindViewHolder(ProductViewHolder holder, int position) {
         data_dashboard a=productList.get(position);
+
         slider_image=a.getProduct_images_Array();
 
         holder.textprize.setText(a.getPrice());
@@ -123,6 +128,7 @@ public class Recycler_item_adapter extends RecyclerView.Adapter<Recycler_item_ad
 
     public void notifyData(List<data_dashboard> myList) {
         this.productList = myList;
+        this.productList_Copy=myList;
         notifyDataSetChanged();
     }
 
@@ -168,14 +174,7 @@ public class Recycler_item_adapter extends RecyclerView.Adapter<Recycler_item_ad
             });
             itemView.setOnLongClickListener(this);
 
-        /*    add_to_cart.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (clickListener!=null){
-                        clickListener.Add_to_cart(view,getPosition());
-                    }
-                }
-            });*/
+
            }
 
         @Override
@@ -280,6 +279,41 @@ public class Recycler_item_adapter extends RecyclerView.Adapter<Recycler_item_ad
         protected void publishResults(CharSequence constraint, FilterResults results) {
 
         }
+    }
+
+    public void filter(String charText) {
+        charText = charText.toLowerCase(Locale.getDefault());
+        //noinspection MismatchedQueryAndUpdateOfCollection
+        ArrayList<data_dashboard> listcpy=new ArrayList<>();
+
+        listcpy.addAll(productList);
+        //productList_Copy.addAll(productList);
+        Log.d("filter12","cpoylist="+productList_Copy+" 1newlist="+productList_Copy);
+        productList.clear();
+
+        if (charText.length() == 0) {
+            Log.d("filter12","inside if text="+charText+" len="+charText.length());
+
+            productList.addAll(productList_Copy);
+        }
+        else{
+           // Log.d("filter12","\ncpoylist ="+productList_Copy.size()+" 2newlist="+productList_Copy);
+
+
+            for (int i=0;i<productList_names.size();i++ ) {
+                /*Log.d("filter12","list val="+productList_names.get(i).toLowerCase(Locale.getDefault())
+                +"char="+charText);*/
+                Log.d("filter12","\nnamelist ="+productList_names.size()
+                    +"\nlistcpy ="+listcpy.size()
+                        +"\nmain ="+productList.size());
+                if (productList_names.get(i).toLowerCase(Locale.getDefault()).contains(charText)) {
+                    productList.add(listcpy.get(i));
+                }
+            }
+        }
+        Log.d("filter12","final list="+productList);
+        notifyDataSetChanged();
+
     }
 }
 

@@ -12,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -143,15 +144,17 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
     ArrayList<EditText> editTextArrayList;
 
     ArrayList<ArrayList> ranges = new ArrayList<>();
+/*
     ArrayList<Integer> range_int = new ArrayList<>();
+*/
 
     ArrayList<Integer> min_range=new ArrayList<>();
     ArrayList<Integer> max_range=new ArrayList<>();
     ArrayList<Integer> price_range=new ArrayList<>();
-
+/*
     ArrayList<EditText> min_range_edit=new ArrayList<>();
     ArrayList<EditText> max_range_edit=new ArrayList<>();
-    ArrayList<EditText> price_range_edit=new ArrayList<>();
+    ArrayList<EditText> price_range_edit=new ArrayList<>();*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -269,7 +272,10 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
             public void onClick(View view) {
                 dialog.dismiss();
                 Intent i=new Intent(Add_New_product.this,My_products.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(i);
+                finish();
             }
         });
 
@@ -285,18 +291,22 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
         }
 
         if (view.getId()==R.id.submit_new_prod) {
-            //    if(!(selected_category.equals("")||edit_P_name.getText().toString().isEmpty()||selected_company.equals("")
-//                    ||edit_price.getText().toString().isEmpty()||selected_unit1.equals(""))) {
+            if (setRanges()&& !(TextUtils.isEmpty(selected_category) &&
+                    edit_P_name.getText().toString().trim().equals("") &&
+                        TextUtils.isEmpty(selected_company) &&
+                            edit_price.getText().toString().trim().equals(""))) {
+                new Add_New_product.UploadFileToServer().execute();
+                Log.d("submitTest","inside if");
+            }else{
+                Log.d("submitTest","inside else only range="+setRanges());
 
-            new Add_New_product.UploadFileToServer().execute();
-            //   }else{
-            /*    LinearLayout linear=(LinearLayout)findViewById(R.id.linear_product);
-                Snackbar snackbar = Snackbar
-                    .make(linear, "Fill all empty fields!!", Snackbar.LENGTH_LONG);
+                if(setRanges()){
+                    Log.d("submitTest","inside else if");
 
-                snackbar.show();}*/
-
-
+                    edit_P_name.setError("Can't be empty");
+                    edit_price.setError("Can't be empty");
+                }//else toast of invalid range will come
+            }
         }
     }
 
@@ -525,9 +535,6 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
     }
 
 
-
-
-
     //checks for range validation
     public boolean validateRange()
     {
@@ -632,15 +639,18 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
         {
             validate = false;
 
-            Toast.makeText(getApplicationContext(),"fields cant be empty",Toast.LENGTH_SHORT).show();
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getApplicationContext(),"fields cant be empty",Toast.LENGTH_SHORT).show();
+
+                }
+            });
         }
 
         return validate;
 
     }
-
-
-
 
     boolean setRanges()
     {
@@ -676,7 +686,12 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
 
             catch(NumberFormatException nfe)
             {
-                Toast.makeText(getApplicationContext(),"please provide valid input",Toast.LENGTH_SHORT).show();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(),"please provide valid input",Toast.LENGTH_SHORT).show();
+                    }
+                });
 
                 min_range.clear(); max_range.clear();price_range.clear();
 
@@ -701,7 +716,12 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
         }
 
         else{
-            Toast.makeText(getApplicationContext(),"invalid range",Toast.LENGTH_SHORT).show();
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getApplicationContext(),"invalid range",Toast.LENGTH_SHORT).show();
+                }
+            });
 
             rangeIsSet = false;
         }
@@ -710,22 +730,11 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
 
     }
 
-
-
-
-
     public void changeImageClicked(View view)
     {
 
 
     }
-
-
-
-
-
-
-
 
     public void onDelete(View v){
 
@@ -829,8 +838,14 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
     class UploadFileToServer extends AsyncTask<Void, Integer, String> {
         @Override
         protected void onPreExecute() {
+         /*   if (setRanges()&& TextUtils.isEmpty(selected_category) &&
+                    edit_P_name.getText().toString().trim().equals("") &&
+                    TextUtils.isEmpty(selected_company) &&
+                    edit_price.getText().toString().trim().equals("")){
+*/
+                dialog.show();
+           // }
             prog.setProgress(0);
-            dialog.show();
             super.onPreExecute();
         }
         @Override
@@ -850,76 +865,94 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
             try {
                 AndroidMultiPartEntity entity = new AndroidMultiPartEntity(
                         new AndroidMultiPartEntity.ProgressListener() {
-
                             @Override
                             public void transferred(long num) {
                                 publishProgress((int) ((num / (float) totalSize) * 100));
                             }
                         });
-                if (imagePath.size() > Base_url.numberOfImagesToSelect) {
-                    for (int i = 0; i < Base_url.numberOfImagesToSelect; i++) {
-                        File sourceFile1 = new File(imagePath.get(i));
-                        entity.addPart("product_images[]", new FileBody(sourceFile1));
 
+             /*   if(setRanges() && TextUtils.isEmpty(selected_category) &&
+                        edit_P_name.getText().toString().trim().equals("") &&
+                        TextUtils.isEmpty(selected_company) &&
+                        edit_price.getText().toString().trim().equals("")
+                        ) {*/
+
+
+
+                    for (int j = 0; j < min_range.size(); j++) {
+                        entity.addPart("min[]", new StringBody(min_range.get(j) + ""));
+                        entity.addPart("max[]", new StringBody(max_range.get(j) + ""));
+                        entity.addPart("price_range[]", new StringBody(price_range.get(j) + ""));
                     }
-                } else {
-                    for (int i = 0; i < imagePath.size(); i++) {
-                        File sourceFile1 = new File(imagePath.get(i));
-                        entity.addPart("product_images[]", new FileBody(sourceFile1));
+
+                    if (imagePath.size() > Base_url.numberOfImagesToSelect) {//condition to check nd remove if more then 3 images are preent in array
+                        for (int i = 0; i < Base_url.numberOfImagesToSelect; i++) {
+                            File sourceFile1 = new File(imagePath.get(i));
+                            entity.addPart("product_images[]", new FileBody(sourceFile1));
+                        }
+                    } else {
+                        for (int i = 0; i < imagePath.size(); i++) {
+                            File sourceFile1 = new File(imagePath.get(i));
+                            entity.addPart("product_images[]", new FileBody(sourceFile1));
+                        }
                     }
-                }
 
-                for (int i = 0; i < selected_color_list.size(); i++) {
-                    entity.addPart("color[]", new StringBody(selected_color_list.get(i)));
-                }
-
-                for (int j = 0; j < min_range_edit.size(); j++) {
-                    Log.d("ranges", "min_" + j + "=" + min_range_edit.get(j).getText());
-                    if(!(min_range_edit.get(j).getText().equals("")||max_range_edit.get(j).getText().equals("")
-                            ||price_range_edit.get(j).getText().equals(""))) {
-                        entity.addPart("min[]", new StringBody("" + min_range_edit.get(j).getText()));
-                        entity.addPart("max[]", new StringBody("" + max_range_edit.get(j).getText()));
-                        entity.addPart("price_range[]", new StringBody("" + price_range_edit.get(j).getText()));
+                    for (int i = 0; i < selected_color_list.size(); i++) {
+                        entity.addPart("color[]", new StringBody(selected_color_list.get(i)));
                     }
-                }
 
 
-                entity.addPart("category_name", new StringBody(selected_category));
-                entity.addPart("product_name", new StringBody(edit_P_name.getText().toString().trim()));
+                    entity.addPart("category_name", new StringBody(selected_category));
+                    entity.addPart("product_name", new StringBody(edit_P_name.getText().toString().trim()));
 
-                entity.addPart("brand", new StringBody(selected_company));
-                entity.addPart("description", new StringBody(selected_description));
-                //entity.addPart("color[]", new StringBody("dummy"));
+                    entity.addPart("brand", new StringBody(selected_company));
+                    entity.addPart("description", new StringBody(selected_description));
 
-                entity.addPart("price", new StringBody(edit_price.getText().toString().trim()));
-                entity.addPart("qty", new StringBody(edit_qty.getText().toString().trim()));
-                entity.addPart("sample", new StringBody(sample_state));
-                entity.addPart("sample_price", new StringBody(edit_sample_price.getText().toString().trim()));
-                entity.addPart("unit", new StringBody(selected_unit1));
-                entity.addPart("manufacturing", new StringBody(manufacture_state));
+                    entity.addPart("price", new StringBody(edit_price.getText().toString().trim()));
+                    entity.addPart("qty", new StringBody(edit_qty.getText().toString().trim()));
+                    entity.addPart("sample", new StringBody(sample_state));
+                    entity.addPart("sample_price", new StringBody(edit_sample_price.getText().toString().trim()));
+                    entity.addPart("unit", new StringBody(selected_unit1));
+                    entity.addPart("manufacturing", new StringBody(manufacture_state));
 
 
-                totalSize = entity.getContentLength();
-                Log.d("Tag___", "total data size=" + totalSize + ""
-                        +"category:"+selected_category
-                        +"product name:"+edit_P_name.getText().toString().trim()+"brand:"+selected_company
-                        +"desc:"+selected_description
-                        +"price:"+edit_price.getText().toString().trim()
-                        +"qty:"+edit_qty.getText().toString().trim()+"sample:"+sample_state+"Sprice:"
-                        +" manufact state:"+manufacture_state
-                        +edit_sample_price.getText().toString().trim()+"unit:"+selected_unit1);
-                httppost.setEntity(entity);
-                HttpResponse response = httpclient.execute(httppost);
-                HttpEntity r_entity = response.getEntity();
+                    totalSize = entity.getContentLength();
+                    /*Log.d("Tag___", "total data size=" + totalSize + ""
+                            + "category:" + selected_category
+                            + "product name:" + edit_P_name.getText().toString().trim() + "brand:" + selected_company
+                            + "desc:" + selected_description
+                            + "price:" + edit_price.getText().toString().trim()
+                            + "qty:" + edit_qty.getText().toString().trim() + "sample:" + sample_state + "Sprice:"
+                            + " manufact state:" + manufacture_state
+                            + edit_sample_price.getText().toString().trim() + "unit:" + selected_unit1);*/
+                    httppost.setEntity(entity);
+                    HttpResponse response = httpclient.execute(httppost);
+                    HttpEntity r_entity = response.getEntity();
 
-                int statusCode = response.getStatusLine().getStatusCode();
-                if (statusCode == 200) {
-                    responseString = EntityUtils.toString(r_entity);
-                } else {
-                    responseString = "Error occurred! Http Status Code: "
-                            + statusCode;
-                }
-
+                    int statusCode = response.getStatusLine().getStatusCode();
+                    if (statusCode == 200) {
+                        responseString = EntityUtils.toString(r_entity);
+                    } else {
+                        responseString = "Error occurred! Http Status Code: "
+                                + statusCode;
+                    }
+           /*     }
+                else{
+                    //ranges putted are not valid
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if(!setRanges()) {
+                                edit_P_name.setError("Can't be empty");
+                                edit_price.setError("Can't be empty");
+                            }else
+                                {
+                                    //invalid range toast will come
+                                }
+                            //Toast.makeText(Add_New_product.this, "Fill Fields", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }*/
 
             } catch (ClientProtocolException e) {
                 responseString = e.toString();
