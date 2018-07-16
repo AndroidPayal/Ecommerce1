@@ -64,7 +64,6 @@ public class ProductDetail extends AppCompatActivity {
     String url3=Base_url.My_cart_item_count;/*userid*/
     String url4=Base_url.Product_price_range;/*range id*/
 
-
     TextView p_name,desc,prize,tcolor,add_cart,category,p_available,t_sample,t_unit,t_unit2,text_sample_price;
     TextView first1,first2,first3,second1,second2,second3,third1,third2,third3,p_code;
 
@@ -141,7 +140,7 @@ public class ProductDetail extends AppCompatActivity {
         Udate1=user.get(SessionManager.KEY_createDate);
         Udate2=user.get(SessionManager.KEY_LastModified);
         Umob=user.get(SessionManager.KEY_mobile);
-        Log.d("sessionscreen","name_userId="+Uid+"\n_user_name="+Uname+"\nemail="+Umail
+        Log.d("sessionDeTailscreen","name_userId="+Uid+"\n_user_name="+Uname+"\nemail="+Umail
                 +"\ndate1="+Udate1+"\ndate2="+Udate2+"\nmobile="+Umob);
 
 
@@ -149,7 +148,9 @@ public class ProductDetail extends AppCompatActivity {
         if (ParentScreen.equals("01")){
             add_cart.setVisibility(View.VISIBLE);
             orderSample.setChecked(true);
-        }
+        }//come from cart to see detail, parentSreen=1
+        //come from dashboard-ViewDetail parentSreen=0
+        //come from dashboard-sampleClick parentSreen=01
 
         get_current_product_Detail();
 //        count=cart_item_count();
@@ -339,7 +340,11 @@ public class ProductDetail extends AppCompatActivity {
                     p_code.setText("ProductCode: "+product_code);
                     t_unit.setText(unit);
                     t_unit2.setText(unit);
+                    if(Umail==null){
+                        prize.setText("R price");
+                    }else
                     prize.setText(price);
+
                     init();
                     addBottomDots(0);
                     apply_ranges(product_id);

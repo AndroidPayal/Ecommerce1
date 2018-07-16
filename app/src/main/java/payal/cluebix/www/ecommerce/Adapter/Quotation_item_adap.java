@@ -20,7 +20,6 @@ import payal.cluebix.www.ecommerce.R;
 public class Quotation_item_adap extends RecyclerView.Adapter<Quotation_item_adap.ProductViewHolder> {
     private Context mCtx;
     private ArrayList<quotation2> productList;
-    Quotation_item_adap.ClickListener clickListener;
 
     public Quotation_item_adap(Context mCtx, ArrayList<quotation2> productList) {
         this.mCtx = mCtx;
@@ -72,9 +71,6 @@ public class Quotation_item_adap extends RecyclerView.Adapter<Quotation_item_ada
 */
     }
 
-    public void setClickListener(Quotation_item_adap.ClickListener clickListener){
-        this.clickListener=clickListener;
-    }
 
     public void notifyData(ArrayList<quotation2> myList) {
         this.productList = myList;
@@ -87,7 +83,7 @@ public class Quotation_item_adap extends RecyclerView.Adapter<Quotation_item_ada
     }
 
 
-    class ProductViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    class ProductViewHolder extends RecyclerView.ViewHolder {
 
         TextView q_name,q_desc,q_prise,q_qty,invoice_sample,invoice_sr_number,invoice_price;
 
@@ -106,17 +102,8 @@ public class Quotation_item_adap extends RecyclerView.Adapter<Quotation_item_ada
 
         }
 
-        @Override
-        public void onClick(View view) {
-            if (clickListener!=null){
-                clickListener.itemClicked(view,getPosition());
-            }
-        }
 
     }
 
-    public interface ClickListener{
-        public void itemClicked(View view, int position);
-    }
 
 }
