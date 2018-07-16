@@ -73,6 +73,7 @@ public class Recycler_item_adapter extends RecyclerView.Adapter<Recycler_item_ad
         slider_image=a.getProduct_images_Array();
 
         holder.textprize.setText(a.getPrice());
+        //Log.d("ProductPrice",a.getProduct_name()+" price= "+a.getPrice());
         holder.Product_name.setText(a.getProduct_name());
 
         if(!a.getManufacturing().equals("0"))
@@ -111,9 +112,7 @@ public class Recycler_item_adapter extends RecyclerView.Adapter<Recycler_item_ad
             Log.d("dates1","dt1="+dt1
                     +"\ndt2="+dt2+"\n elapsed="+elapsedDays
             );
-            /*
-            * dt1=Mon Jan 29 00:05:00 GMT+05:30 2018
-              dt2=Tue Jan 09 00:20:00 GMT+05:30 2018*/
+
 
         } catch (ParseException e) {
             e.printStackTrace();

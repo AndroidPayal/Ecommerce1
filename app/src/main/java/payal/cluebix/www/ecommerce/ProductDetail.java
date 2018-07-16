@@ -223,10 +223,10 @@ public class ProductDetail extends AppCompatActivity {
 
                     if (clickListener!=null){
                         clickListener.cart_count_bell(view);
-                        Log.d("listenerval","1="+clickListener+"");
+                        Log.d("listenerval","1st="+clickListener+"");
 
                     }else {
-                        Log.d("listenerval",clickListener+"=2");
+                        Log.d("listenerval",clickListener+"=2nd");
                     }
 
 
@@ -347,6 +347,7 @@ public class ProductDetail extends AppCompatActivity {
 
                     init();
                     addBottomDots(0);
+                    if(Umail != null)
                     apply_ranges(product_id);
 
                 } catch (JSONException e) {
@@ -558,7 +559,12 @@ public class ProductDetail extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent i= new Intent(ProductDetail.this,CenterActivity.class);
+        Intent i;
+        if (Umail == null){
+            i= new Intent(ProductDetail.this,GuestActivity.class);
+        }
+        else
+            i= new Intent(ProductDetail.this,CenterActivity.class);
         i.putExtra("dashTransition",true);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

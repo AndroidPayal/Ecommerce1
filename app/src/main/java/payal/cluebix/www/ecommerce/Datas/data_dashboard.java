@@ -27,11 +27,9 @@ public class data_dashboard {
     public data_dashboard(String ProductId,String product_name,String product_code,String color,String price
     ,String product_images,String sample, String manufacturing, String qty, String amount, int cart_disable)
     {
-
         this.ProductId= ProductId;
         this.product_name= product_name;
         this.product_code=product_code;
-
         this.color= color;
         this.price= price;//if accessed from dashboard it will have real vendor else retail price
         this.product_images= product_images;

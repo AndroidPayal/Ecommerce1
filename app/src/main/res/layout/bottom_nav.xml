@@ -8,11 +8,11 @@
     android:gravity="bottom"
     >
 
-  <!--  <LinearLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="@color/colorPrimaryDark"
-        android:clipChildren="false">-->
+        android:clipChildren="false">
 
         <android.support.design.widget.BottomNavigationView
             android:id="@+id/bottom_navigation1"
@@ -22,7 +22,7 @@
             app:itemIconTint="@color/bnv_tab_item_foreground"
             app:itemTextColor="@color/bnv_tab_item_foreground"
             app:itemBackground="@color/colorPrimaryDark"
-            android:layout_alignParentBottom="true">
+            >
             <!--   app:menu="@menu/bottom_navigation"
              -->
 
@@ -38,7 +38,6 @@
 
         </android.support.design.widget.BottomNavigationView>
 
-    <!--
-    </LinearLayout>-->
+    </LinearLayout>
 
 </LinearLayout>
