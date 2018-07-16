@@ -53,6 +53,7 @@
             android:name=".Update_profile"
             android:parentActivityName=".CenterActivity"
             android:theme="@style/AppThemeNoActionBar" />
+        <activity android:name=".GuestActivity"/>
         <activity
             android:name=".My_products"
             android:theme="@style/AppThemes2"

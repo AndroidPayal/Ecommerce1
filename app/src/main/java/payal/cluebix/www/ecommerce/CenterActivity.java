@@ -238,7 +238,7 @@ navigationView.setItemIconTintList(ColorStateList2);
                         break;
                     case R.id.logOut:
                         Toast.makeText(getApplicationContext(), "Logged out", Toast.LENGTH_SHORT).show();
-                        i = new Intent(CenterActivity.this, Login.class);
+                        i = new Intent(CenterActivity.this, GuestActivity.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                         startActivity(i);

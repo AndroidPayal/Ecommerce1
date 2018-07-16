@@ -10,6 +10,7 @@ import android.util.Log;
 
 
 import payal.cluebix.www.ecommerce.CenterActivity;
+import payal.cluebix.www.ecommerce.GuestActivity;
 import payal.cluebix.www.ecommerce.Login;
 
 public class SessionManager {
@@ -81,7 +82,8 @@ public class SessionManager {
 			_context.startActivity(i);
 		}
 		else{
-			Intent i = new Intent(_context, Login.class);
+			//Intent i = new Intent(_context, Login.class);
+			Intent i = new Intent(_context, GuestActivity.class);
 			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			_context.startActivity(i);

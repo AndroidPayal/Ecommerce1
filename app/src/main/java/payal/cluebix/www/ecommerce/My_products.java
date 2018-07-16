@@ -238,7 +238,7 @@ public class My_products extends AppCompatActivity {
                         drawerLayout.closeDrawers();
                         break;
                     case R.id.logOut:
-                        i= new Intent(My_products.this,Login.class);
+                        i= new Intent(My_products.this,GuestActivity.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(i);

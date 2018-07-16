@@ -194,27 +194,12 @@ public class Quotation_list extends AppCompatActivity implements Quote_list_adap
                         intent.putExtra("cartTransition",true);
                         startActivity(intent);
 */
-                      /*  Bundle bundle = new Bundle();
-                        bundle.putInt("cartTransition", 1);
 
-                        intent.putExtras(bundle);*/
-//
-//                        Fragment newFragment = new CartFragment();
-//                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//
-//                        transaction.replace(R.id.main_container, newFragment);
-//                        transaction.addToBackStack(null);
-//
-//                        transaction.commit();
-                        /*i= new Intent(Quotation_list.this,Cart.class);
-                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(i);*/
                         drawerLayout.closeDrawers();
                         break;
                     case R.id.logOut:
                         Toast.makeText(getApplicationContext(), "Logged out", Toast.LENGTH_SHORT).show();
-                        i= new Intent(Quotation_list.this,Login.class);
+                        i= new Intent(Quotation_list.this,GuestActivity.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(i);
