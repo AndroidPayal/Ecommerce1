@@ -6,8 +6,61 @@
     android:clipChildren="false"
 
     >
+
+
+
+<android.support.design.widget.CoordinatorLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
     <!--android:background="@color/colorPrimary"
     android:layout_marginTop="?attr/actionBarSize"-->
+
+
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/guest_toolbar2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:title="@string/app_name"
+            app:titleTextColor="#fff" />
+
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_search2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:contentInsetStart="0dp"
+            >
+
+            <SearchView
+                android:id="@+id/guest_activity_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:textColorHint="#656565"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="7dp"
+                android:layout_marginRight="7dp"
+                android:drawablePadding="7dp"
+                android:textSize="12dp"
+                android:drawableStart="@drawable/ic_search_black_24dp"
+                android:hint="Search products here"
+                android:background="@drawable/input_search_background"
+                />
+
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
 
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
@@ -17,12 +70,14 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         >
 
+
         <!--i replaced nested scroll with scroll view-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:background="@color/colorPrimary"
+
             >
 
 
@@ -390,7 +445,9 @@
                 android:id="@+id/loader"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone"
+                >
                 <ProgressBar
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -402,21 +459,23 @@
                     android:textColor="@color/colorAccent"
                     android:gravity="center"/>
             </LinearLayout>
-        <android.support.design.widget.FloatingActionButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/floatingActionButton"
-            app:fabSize="normal"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_margin="30dp"
-            android:clickable="true"
-            app:srcCompat="@android:drawable/stat_sys_phone_call" />
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
+</android.support.design.widget.CoordinatorLayout>
 
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+    android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="24dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:fabSize="normal"
+    android:padding="2dp"
+    android:src="@drawable/ic_call_white_24dp"
+    />
 </RelativeLayout>
 
 
