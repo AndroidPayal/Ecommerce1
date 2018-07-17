@@ -4,28 +4,20 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.support.v7.widget.ToolbarWidgetWrapper;
 import android.text.Html;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -70,7 +62,6 @@ public class GuestActivity extends AppCompatActivity implements Recycler_item_ad
     LinearLayout loader_linear;
     View v2;
     SearchView tool_search;
-   Toolbar toolbar, search_toolbar;
 
     ArrayList<String> Product_id_array=new ArrayList<>();
     ArrayList<String> P_id_array_of_cartItems=new ArrayList<>();
@@ -78,15 +69,10 @@ public class GuestActivity extends AppCompatActivity implements Recycler_item_ad
 
     Button dummy_cart;
 
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guest);
-
 
         callFab = findViewById(R.id.floatingActionButton);
         recyclerView=(RecyclerView)findViewById(R.id.recycler1);
@@ -95,13 +81,6 @@ public class GuestActivity extends AppCompatActivity implements Recycler_item_ad
         loader_linear=(LinearLayout)findViewById(R.id.loader);
         v2=(View)findViewById(R.id.view_for_margin);
         dummy_cart=(Button) findViewById(R.id.dummy_cart);
-
-         toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.guest_toolbar2);
-
-         search_toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar_search2);
-
-                 setSupportActionBar(toolbar);
-
 
         slider_image.clear();
         slider_image.add(((BitmapDrawable) getResources().getDrawable(R.drawable.sl4)).getBitmap());
@@ -141,45 +120,12 @@ public class GuestActivity extends AppCompatActivity implements Recycler_item_ad
                 @Override
                 public void onClick(View view) {
 
-                    startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse("tel://"+"1234567890")));
                  //   startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("tel://" + "8149977891")));
-
+                    Intent i=new Intent(GuestActivity.this,Login.class);
+                    startActivity(i);
                 }
             });
 
-
-
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-
-        getMenuInflater().inflate(R.menu.menu_toolbar_guest,menu);
-
-        return super.onCreateOptionsMenu(menu);
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-
-        int itemId = item.getItemId();
-
-        if(itemId == R.id.toolbar_guest_login)
-        {
-            startActivity(new Intent(GuestActivity.this,Login.class));
-        }
-
-        if(itemId == R.id.toolbar_guest_cart) {
-
-            return super.onOptionsItemSelected(item);
-        }
-
-
-        return super.onOptionsItemSelected(item);
     }
 
     private void init() {

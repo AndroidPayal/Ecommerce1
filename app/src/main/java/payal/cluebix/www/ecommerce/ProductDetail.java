@@ -48,6 +48,7 @@ import payal.cluebix.www.ecommerce.Datas.Base_url;
 import payal.cluebix.www.ecommerce.Datas.data_dashboard;
 import payal.cluebix.www.ecommerce.Handlers.RquestHandler;
 import payal.cluebix.www.ecommerce.Handlers.SessionManager;
+import payal.cluebix.www.ecommerce.Handlers.myDbClass;
 
 public class ProductDetail extends AppCompatActivity {
     String Tag = "product_detail_screen";
@@ -76,6 +77,9 @@ public class ProductDetail extends AppCompatActivity {
     ArrayList<String> min1=new ArrayList<>();
     ArrayList<String> max1=new ArrayList<>();
     ArrayList<String> price1=new ArrayList<>();
+  ArrayList<String> AllData;
+    /*Productid ,category_name,product_name , brand ,product_code ," +
+                "price ,unit ,manufacturing ,qty ,sample , sample_price , color , description )*/
 
     EditText prodruct_quantity;
     CheckBox orderSample;
@@ -85,6 +89,7 @@ public class ProductDetail extends AppCompatActivity {
     LinearLayout linear_detail,linear_detail_start;
 
     public static ClickListener clickListener;
+
 
     public ProductDetail(){}
     public ProductDetail(ClickListener clicklistener){
@@ -152,10 +157,13 @@ public class ProductDetail extends AppCompatActivity {
         //come from dashboard-ViewDetail parentSreen=0
         //come from dashboard-sampleClick parentSreen=01
 
+        AllData = new ArrayList<>();
         get_current_product_Detail();
 //        count=cart_item_count();
 
-        check_for_cart();
+
+            //check_for_cart();
+
         add_cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -167,38 +175,51 @@ public class ProductDetail extends AppCompatActivity {
     }
 
     private void check_for_cart() {
-        StringRequest stringRequest2=new StringRequest(Request.Method.POST, url3+Uid, new Response.Listener<String>(){
-            @Override
-            public void onResponse(String response) {
+        linear_detail_start.setVisibility(View.GONE);
+        linear_detail.setVisibility(View.VISIBLE);
+        if (Umail!=null) {
 
-                JSONObject post_data;
-                try {
-                    JSONObject jsonObject=new JSONObject(response);
-                    String success=jsonObject.getString("success");
-                    JSONArray jsonArray=jsonObject.getJSONArray("addedCarts");
-                    for(int i=0;i<jsonArray.length();i++) {
-                        post_data = jsonArray.getJSONObject(i);
-                        String product_id=post_data.getString("product_id");
-                        if(product_id.equals(prod_id)){
-                            add_cart.setText("Added To Cart");
-                            add_cart.setClickable(false);
-                        }
+            StringRequest stringRequest2 = new StringRequest(Request.Method.POST, url3 + Uid, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+
+                    JSONObject post_data;
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        String success = jsonObject.getString("success");
+                        JSONArray jsonArray = jsonObject.getJSONArray("addedCarts");
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            post_data = jsonArray.getJSONObject(i);
+                            String product_id = post_data.getString("product_id");
+                            if (product_id.equals(prod_id)) {
+                                add_cart.setText("Added To Cart");
+                                add_cart.setClickable(false);
+                            }
 /*
  {"id":"100","product_id":"2","product_name":"Demo1","price":"200.00","qty":"1","user_id":"51","is_active":"1"}*/
 
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }}
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("dashboard_error_res",error+"");
-                Toast.makeText(ProductDetail.this, "Server Connection Failed!", Toast.LENGTH_SHORT).show();
-            }
-        });
-        RquestHandler.getInstance(ProductDetail.this).addToRequestQueue(stringRequest2);
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.d("dashboard_error_res", error + "");
+                    Toast.makeText(ProductDetail.this, "Server Connection Failed!", Toast.LENGTH_SHORT).show();
+                }
+            });
+            RquestHandler.getInstance(ProductDetail.this).addToRequestQueue(stringRequest2);
 
+        }else{
+            if(new myDbClass(ProductDetail.this).checkIdExistance(AllData.get(0)))//calloing idExixtance check method with productId
+            {
+                //returns true if if exists
+                add_cart.setText("Added To Cart");
+                add_cart.setClickable(false);
+            }
+        }
     }
 
     private boolean add_item_to_cart(String Current_prod_id, View view) {
@@ -219,51 +240,62 @@ public class ProductDetail extends AppCompatActivity {
 
                 if(orderSample.isChecked()|| Integer.parseInt(quantity)>0) {
                     add_cart.setClickable(false);
-                    add_cart.setText("Adding...");
 
-                    if (clickListener!=null){
-                        clickListener.cart_count_bell(view);
-                        Log.d("listenerval","1st="+clickListener+"");
+                    if (Umail != null) {
+                        add_cart.setText("Adding...");
 
-                    }else {
-                        Log.d("listenerval",clickListener+"=2nd");
-                    }
+                        if (clickListener != null) {
+                            clickListener.cart_count_bell(view);
+                            Log.d("listenerval", "1st=" + clickListener + "");
+
+                        } else {
+                            Log.d("listenerval", clickListener + "=2nd");
+                        }
 
 
-                    Log.e("validat1 url=", url2 + Current_prod_id + "/" + quantity + "/" + sample + "/" + Uid);
-                    StringRequest stringRequest = new StringRequest(Request.Method.POST, url2 + Current_prod_id + "/" + quantity + "/" + sample + "/" + Uid, new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            Log.d("dashboard_cart:", response);
-                            //                count++;
-                            //invalidateOptionsMenu().
+                        Log.e("validat1 url=", url2 + Current_prod_id + "/" + quantity + "/" + sample + "/" + Uid);
+                        StringRequest stringRequest = new StringRequest(Request.Method.POST, url2 + Current_prod_id + "/" + quantity + "/" + sample + "/" + Uid, new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                Log.d("dashboard_cart:", response);
+                                //                count++;
+                                //invalidateOptionsMenu().
 
       /*{"success":true,"cart":0}*/
-                            try {
-                                JSONObject obj=new JSONObject(response);
+                                try {
+                                    JSONObject obj = new JSONObject(response);
 
-                                String success=obj.getString("success");
-                                if (success.equalsIgnoreCase("true")){
-                                    add_cart.setText("Added To Cart");
-                                }else{
-                                    add_cart.setText("Network error!Retry");
-                                    add_cart.setClickable(true);
+                                    String success = obj.getString("success");
+                                    if (success.equalsIgnoreCase("true")) {
+                                        add_cart.setText("Added To Cart");
+                                    } else {
+                                        add_cart.setText("Network error!Retry");
+                                        add_cart.setClickable(true);
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
                                 }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
 
-                       //     add_cart.setClickable(false);
-                         //   Toast.makeText(ProductDetail.this, "Cart response: " + response, Toast.LENGTH_SHORT).show();
-                        }
-                    }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Log.d("dashboard_cart_res", error + "");
-                            Toast.makeText(ProductDetail.this, "Some error occured!", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    RquestHandler.getInstance(ProductDetail.this).addToRequestQueue(stringRequest);
+                                //     add_cart.setClickable(false);
+                                //   Toast.makeText(ProductDetail.this, "Cart response: " + response, Toast.LENGTH_SHORT).show();
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.d("dashboard_cart_res", error + "");
+                                Toast.makeText(ProductDetail.this, "Some error occured!", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        RquestHandler.getInstance(ProductDetail.this).addToRequestQueue(stringRequest);
+                    }else{
+                        //this code runs when guest user adds item to cart
+                        new myDbClass(ProductDetail.this).InsertAllValues(AllData.get(0),AllData.get(1),AllData.get(2),AllData.get(3),AllData.get(4)
+                        ,AllData.get(5),AllData.get(6),AllData.get(7),AllData.get(8),AllData.get(9),AllData.get(10)
+                                ,AllData.get(11),AllData.get(12));
+                        /*AllData Array Val= Productid ,category_name,product_name , brand ,product_code ," +
+                "price ,unit ,manufacturing ,qty ,sample , sample_price , color , description */
+                        add_cart.setText("Added To Cart");
+                    }
                 }
                 else{
                     Toast.makeText(this, "Fill quantity to Order", Toast.LENGTH_SHORT).show();
@@ -279,8 +311,8 @@ public class ProductDetail extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 Log.d(Tag,"product detail on res="+response);
-                linear_detail_start.setVisibility(View.GONE);
-                linear_detail.setVisibility(View.VISIBLE);
+               /* linear_detail_start.setVisibility(View.GONE);
+                linear_detail.setVisibility(View.VISIBLE);*/
                 String product_id= null,category_name= null,product_name= null,brand= null,product_code= null
                         ,price= null,manufacturing= null,qty= null,sample= null,unit= null,color
                         = null,description= null,product_images = null,user_id= null,rangId= null,amount= null,percent;
@@ -310,6 +342,11 @@ public class ProductDetail extends AppCompatActivity {
                          amount = post_data.getString("amount");
                          percent = post_data.getString("percent");
                     }
+                    /*Productid ,category_name,product_name , brand ,product_code ," +
+                "price ,unit ,manufacturing ,qty ,sample , sample_price , color , description )*/
+                    AllData.add(product_id);AllData.add(category_name);AllData.add(product_name);AllData.add(brand);AllData.add(product_code);AllData.add(price);AllData.add(unit);AllData.add(manufacturing);AllData.add(qty);AllData.add(sample);AllData.add(sample_price);AllData.add(color);AllData.add(description);
+
+                    check_for_cart();
 
                     available=qty;
                     if(manufacturing.equals("1")){

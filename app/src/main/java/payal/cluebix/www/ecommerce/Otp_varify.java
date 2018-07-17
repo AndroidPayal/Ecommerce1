@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import payal.cluebix.www.ecommerce.Datas.Base_url;
 import payal.cluebix.www.ecommerce.Handlers.SessionManager;
+import payal.cluebix.www.ecommerce.Handlers.myDbClass;
 
 public class Otp_varify extends AppCompatActivity {
 
@@ -37,8 +38,11 @@ public class Otp_varify extends AppCompatActivity {
 
             //    Log.e("myotp","1="+Base_url.otp+"\n2="+otp2);
                 if(otp2.equals(Base_url.otp)) {
-                    session.createLoginSession(Base_url.id, Base_url.name,Base_url.username,Base_url.email,Base_url.mobile,Base_url.created_date
-                            ,Base_url.updated_date, Base_url.gst_number,Base_url.city);
+                    session.createLoginSession(Base_url.id, Base_url.name,Base_url.username,Base_url.email,Base_url.mobile
+                            ,Base_url.created_date,Base_url.updated_date, Base_url.gst_number,Base_url.city);
+
+                    //new myDbClass(Otp_varify.this);
+                    new myDbClass().DeleteAll();
 
                     new Handler().postDelayed(new Runnable() {
 

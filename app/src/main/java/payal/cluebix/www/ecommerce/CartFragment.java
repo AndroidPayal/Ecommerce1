@@ -73,9 +73,6 @@ public class CartFragment extends Fragment implements CartAdapter.ClickListener 
         Cart_id_array.clear();Product_id_array.clear();availables.clear();
     }
 
- /*   public CartFragment(RemoveCountLinstener clickListener){
-        this.clickListener=clickListener;
-    }*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -160,7 +157,6 @@ public class CartFragment extends Fragment implements CartAdapter.ClickListener 
 
                 }else
                     Toast.makeText(getActivity(), "No data in Cart!", Toast.LENGTH_SHORT).show();
-
             }
         });
 

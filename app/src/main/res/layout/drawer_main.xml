@@ -38,6 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:contentInsetStart="0dp"
+
                 >
 
                 <SearchView
@@ -56,6 +57,7 @@
                     android:hint="Search products here"
                     android:background="@drawable/input_search_background"
                     />
+
 
             </android.support.v7.widget.Toolbar>
 
