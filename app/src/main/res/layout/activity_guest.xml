@@ -30,7 +30,9 @@
             android:layout_height="wrap_content"
             app:layout_scrollFlags="scroll|enterAlways"
             app:title="@string/app_name"
-            app:titleTextColor="#fff" />
+            app:titleTextColor="#fff"
+
+            />
 
 
         <android.support.v7.widget.Toolbar
@@ -38,6 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:contentInsetStart="0dp"
+            android:theme="@style/AppTheme.NoActionBar"
             >
 
             <LinearLayout
@@ -50,6 +53,8 @@
 
                 <SearchView
                     android:id="@+id/guest_activity_search"
+                    android:iconifiedByDefault="false"
+                    android:focusableInTouchMode="true"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="12dp"
@@ -61,17 +66,20 @@
                     android:drawablePadding="7dp"
                     android:drawableStart="@drawable/ic_search_black_24dp"
                     android:gravity="center_vertical"
-                    android:hint="Search products here"
-                    android:textColorHint="#656565"
+                    android:queryHint="Search here"
                     android:textSize="12dp" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:padding="4dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginTop="5dp"
                 android:layout_gravity="center_vertical"
+                android:layout_marginBottom="9dp"
                 android:text="Filter"
+                android:textColor="#fff"
+                android:background="@drawable/filter_button_background"
                 />
 
 
