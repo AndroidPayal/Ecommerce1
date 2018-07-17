@@ -89,6 +89,9 @@ public class Recycler_item_adapter extends RecyclerView.Adapter<Recycler_item_ad
             holder.view_detail.setText("Added to Cart");
             //holder.add_to_cart.setClickable(false);
         }
+
+        holder.product_code.setText("Product Code:"+a.getProduct_code());
+
         init(slider_image, holder);
         addBottomDots( holder,0);
 
@@ -145,7 +148,7 @@ public class Recycler_item_adapter extends RecyclerView.Adapter<Recycler_item_ad
         ViewPager vp_slider;
         LinearLayout ll_dots;
         TextView textprize,new_tag, text_manufact,text_sample;
-        TextView Product_name,view_detail;
+        TextView Product_name,view_detail,product_code;
      //   ProgressBar progress;
 
         public ProductViewHolder(View itemView) {
@@ -159,6 +162,7 @@ public class Recycler_item_adapter extends RecyclerView.Adapter<Recycler_item_ad
             textprize=itemView.findViewById(R.id.text_prize);
             Product_name=itemView.findViewById(R.id.product_name);
             view_detail=itemView.findViewById(R.id.viewDetail);
+            product_code=itemView.findViewById(R.id.product_code);
          //   add_to_cart=itemView.findViewById(R.id.add_to_cart);
             new_tag=itemView.findViewById(R.id.new_tag);
           //  progress=itemView.findViewById(R.id.progress);
@@ -195,7 +199,7 @@ public class Recycler_item_adapter extends RecyclerView.Adapter<Recycler_item_ad
             }
         }
 
-        public interface ClickListener{
+    public interface ClickListener{
              void itemClicked(View view, int position);
              void onLongClick(View view, int position);
             void sampleClicked(View view, int position);

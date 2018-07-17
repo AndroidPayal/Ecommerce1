@@ -68,7 +68,7 @@
                 </FrameLayout>
 
                 <TextView
-                    android:id="@+id/retail_product_code"
+                    android:id="@+id/product_code"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentRight="true"
                     android:layout_width="wrap_content"

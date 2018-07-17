@@ -13,6 +13,7 @@ public class data_dashboard {
 
     String ProductId;
     String product_name;
+    String product_code;
     String color;
     String price;
     String product_images;
@@ -23,14 +24,16 @@ public class data_dashboard {
 /*
 * (product_id, product_name, color, price, product_images, createdBy, Sample, manufacturing, amount)*/
 
-    public data_dashboard(String ProductId,String product_name,String color,String price
+    public data_dashboard(String ProductId,String product_name,String product_code,String color,String price
     ,String product_images,String sample, String manufacturing, String qty, String amount, int cart_disable)
     {
 
         this.ProductId= ProductId;
         this.product_name= product_name;
+        this.product_code=product_code;
+
         this.color= color;
-        this.price= price;
+        this.price= price;//if accessed from dashboard it will have real vendor else retail price
         this.product_images= product_images;
         this.sample= sample;
         this.manufacturing= manufacturing;
@@ -38,6 +41,11 @@ public class data_dashboard {
         this.amount= amount;
         this.cart_disable=cart_disable;
     }
+
+    public String getProduct_code() {
+        return product_code;
+    }
+
 
     public String getProductId() {
         return ProductId;

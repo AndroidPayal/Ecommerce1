@@ -58,7 +58,7 @@ import payal.cluebix.www.ecommerce.Datas.Base_url;
 import payal.cluebix.www.ecommerce.Datas.quotation2;
 import payal.cluebix.www.ecommerce.Handlers.RquestHandler;
 
-public class Quotation_items_list extends AppCompatActivity implements Quotation_item_adap.ClickListener {
+public class Quotation_items_list extends AppCompatActivity {
 
     Quotation_item_adap adapter;
     RecyclerView recyclerView;
@@ -108,7 +108,6 @@ public class Quotation_items_list extends AppCompatActivity implements Quotation
 
 
         adapter=new Quotation_item_adap(getApplicationContext(),product_item);
-        adapter.setClickListener(this);
         recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new DividerItemDecoration(this,linearLayoutManager.getOrientation()));
         recyclerView.setAdapter(adapter);
@@ -228,18 +227,6 @@ public class Quotation_items_list extends AppCompatActivity implements Quotation
             }
         });
         RquestHandler.getInstance(Quotation_items_list.this).addToRequestQueue(stringRequest);
-
-    }
-
-    @Override
-    public void itemClicked(View view, int position) {
-
-        quotation2 a=product_item.get(position);
-
-        Intent i=new Intent(this,ProductDetail.class);
-        i.putExtra("selected_prod_id",a.getProduct_id());
-        i.putExtra("ParentScreen","2");
-        startActivity(i);
 
     }
 

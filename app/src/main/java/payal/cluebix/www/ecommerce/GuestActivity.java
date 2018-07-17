@@ -134,8 +134,6 @@ public class GuestActivity extends AppCompatActivity implements Recycler_item_ad
         adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
 
-
-
         callFab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -227,20 +225,13 @@ public class GuestActivity extends AppCompatActivity implements Recycler_item_ad
                     JSONArray jsonArray=new JSONArray(response);
                     for(int i=0;i<jsonArray.length();i++) {
                         post_data = jsonArray.getJSONObject(i);
-/* latest response-
-*{      "id": "4",
-        "product_name": "Demo4",
-        "price": "300.00",
-        "color": "lime,indigo",
-        "product_images": "Company_Logo1.png,fb-dp.png,india_11.png",
-        "sample": "1",
-        "manufacturing": "0",
-        "amount": "9.00",
-        "percent": "%"
-    }
+/*
+{"id":"24","product_name":"this is test product","product_code":"896833","price":"345.00","retail_price":"0.00","color":"red","product_images":"79e,79f","sample":"0","unit":"ufndi","manufacturing":"0","qty":"4","amount":"5.00","percent":"%"},
 * */
                         String product_id = post_data.getString("id");
                         String product_name = post_data.getString("product_name");
+                        String product_code= post_data.getString("product_code");
+                        String retail_price=post_data.getString("retail_price");
                         String color = post_data.getString("color");
                         String price = post_data.getString("price");
                         String product_images = post_data.getString("product_images");
@@ -258,8 +249,8 @@ public class GuestActivity extends AppCompatActivity implements Recycler_item_ad
                         if(P_id_array_of_cartItems.contains(product_id))
                             cart_disable=1;
                         Log.d("Guest_act_screen","cart disable value="+cart_disable+" name="+product_name);
-                        product_item.add(new data_dashboard(product_id, product_name
-                                , color, price, product_images, sample, manufacturing,qty, amount,cart_disable));
+                        product_item.add(new data_dashboard(product_id, product_name,product_code
+                                , color, retail_price, product_images, sample, manufacturing,qty, amount,cart_disable));
                     }
 
                     adapter.notifyData(product_item);
@@ -334,6 +325,3 @@ public class GuestActivity extends AppCompatActivity implements Recycler_item_ad
 
 
 }
-
-
-
