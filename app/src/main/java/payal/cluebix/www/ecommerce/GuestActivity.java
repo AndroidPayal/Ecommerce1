@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -126,9 +129,8 @@ public class GuestActivity extends AppCompatActivity implements Recycler_item_ad
                 @Override
                 public void onClick(View view) {
 
-                 //   startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("tel://" + "8149977891")));
-                    Intent i=new Intent(GuestActivity.this,Login.class);
-                    startActivity(i);
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("tel://" + "8149977891")));
+
                 }
             });
 
@@ -278,5 +280,30 @@ public class GuestActivity extends AppCompatActivity implements Recycler_item_ad
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // TODO Auto-generated method stub
+        getMenuInflater().inflate(R.menu.menu_toolbar_guest, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id=item.getItemId();
+        Intent intent;
+        switch (id) {
+            case R.id.toolbar_guest_cart:
+                intent = new Intent(GuestActivity.this, GuestCart.class);
+                startActivity(intent);
+                break;
+            case R.id.toolbar_guest_login:
+                intent=new Intent(GuestActivity.this,Login.class);
+                startActivity(intent);
+                break;
+
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
 }

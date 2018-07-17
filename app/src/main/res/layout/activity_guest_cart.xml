@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    ><!--    android:background="@color/colorPrimary"
+-->
+    <LinearLayout
+        android:id="@+id/linear_cart"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/linear_subtotal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/White"
+            android:orientation="vertical"
+
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+
+
+                <TextView
+                    android:layout_weight="1"
+                    android:id="@+id/cart_subtotal1"
+                    android:layout_width="0dp"
+                    android:gravity="right"
+                    android:layout_height="wrap_content"
+                    android:text="Cart Subtotal (n items): "
+                    android:textColor="#747171"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
+
+                <TextView
+                    android:id="@+id/cart_subtotal2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_weight="1"
+                    android:text="Rs.n.00"
+                    android:textColor="#de1a1a"
+                    android:textSize="19dp"
+                    android:textStyle="bold|italic" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/t_checkout"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="1dp"
+                android:background="@drawable/gradient_background"
+                android:elevation="3dp"
+                android:gravity="center"
+                android:text="Generate Quotation"
+                android:textAllCaps="true"
+                android:textColor="#fff"
+
+                android:textSize="18dp" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="2dp"
+            android:background="#c0c0c0"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_cart"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="60dp"
+            android:layout_weight="1"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/linear_cart_start"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Loading..."
+            android:textColor="@color/colorAccent"
+            android:gravity="center"/>
+
+    </LinearLayout>
+
+</LinearLayout>

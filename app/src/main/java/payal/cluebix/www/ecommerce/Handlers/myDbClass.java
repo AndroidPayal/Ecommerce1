@@ -54,15 +54,18 @@ public class myDbClass {
         ArrayList<sample_Cart> dataArray=new ArrayList<>();
         String a="SELECT * from cart_item";
         cr = db.rawQuery(a,null);
-
-        while (cr.moveToNext()){
-            dataArray.add( new sample_Cart("0",cr.getString(cr.getColumnIndex("Productid")),cr.getString(cr.getColumnIndex                          ("product_name")),cr.getString(cr.getColumnIndex("price")),
-                    cr.getString(cr.getColumnIndex("sample")),cr.getString(cr.getColumnIndex("sample_price")),
-                            cr.getString(cr.getColumnIndex("qty")),cr.getString(cr.getColumnIndex("user_id")),
-                            cr.getString(cr.getColumnIndex("manufacturing")),cr.getString(cr.getColumnIndex("description"))   ,
-                            cr.getString(cr.getColumnIndex("brand")),cr.getString(cr.getColumnIndex("product_images")),
-                            cr.getString(cr.getColumnIndex("quantity"))));
+        if (cr.moveToFirst()) {
+            do {
+                // get the data into array, or class variable
+                dataArray.add( new sample_Cart("0",cr.getString(cr.getColumnIndex("Productid")),cr.getString(cr.getColumnIndex                          ("product_name")),cr.getString(cr.getColumnIndex("price")),
+                        cr.getString(cr.getColumnIndex("sample")),cr.getString(cr.getColumnIndex("sample_price")),
+                        cr.getString(cr.getColumnIndex("qty")),cr.getString(cr.getColumnIndex("user_id")),
+                        cr.getString(cr.getColumnIndex("manufacturing")),cr.getString(cr.getColumnIndex("description"))   ,
+                        cr.getString(cr.getColumnIndex("brand")),cr.getString(cr.getColumnIndex("product_images")),
+                        cr.getString(cr.getColumnIndex("quantity"))));
+            } while (cr.moveToNext());
         }
+
 
         Log.d("dbClass","fetching all value total = "+dataArray.size());
 
