@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
@@ -61,6 +62,8 @@ public class GuestActivity extends AppCompatActivity implements Recycler_item_ad
     Slider_adap_add_product sliderPagerAdapter;
     LinearLayout loader_linear;
     View v2;
+
+    Toolbar toolbar;
     SearchView tool_search;
 
     ArrayList<String> Product_id_array=new ArrayList<>();
@@ -79,6 +82,11 @@ public class GuestActivity extends AppCompatActivity implements Recycler_item_ad
         l2_dots=(LinearLayout)findViewById(R.id.l2_dots);
         loader_linear=(LinearLayout)findViewById(R.id.loader);
         v2=(View)findViewById(R.id.view_for_margin);
+
+        toolbar = findViewById(R.id.guest_toolbar2);
+
+        setSupportActionBar(toolbar);
+
 
         slider_image.clear();
         slider_image.add(((BitmapDrawable) getResources().getDrawable(R.drawable.sl4)).getBitmap());
