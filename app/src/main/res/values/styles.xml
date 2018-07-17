@@ -9,6 +9,8 @@
     </style>
 
     <style name="AppThemeNoActionBar" parent="AppTheme">
+        <item name="android:textColorPrimary">#fff</item>
+        <item name="actionMenuTextColor">#fff</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
@@ -47,9 +49,12 @@
     </style>
 
     <style name="AppTheme.NoActionBar">
+
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
+
 
 </resources>
 

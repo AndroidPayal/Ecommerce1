@@ -45,16 +45,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
-                    android:padding="5dp"
                     android:textColorHint="#656565"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="10dp"
-                    android:drawablePadding="10dp"
-                    android:textSize="15dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginRight="7dp"
+                    android:drawablePadding="7dp"
+                    android:textSize="12dp"
                     android:drawableStart="@drawable/ic_search_black_24dp"
                     android:hint="Search products here"
                     android:background="@drawable/input_search_background"
-                    android:layout_marginHorizontal="5dp"
                     />
 
             </android.support.v7.widget.Toolbar>
