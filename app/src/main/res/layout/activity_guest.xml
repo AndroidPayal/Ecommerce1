@@ -40,22 +40,62 @@
             app:contentInsetStart="0dp"
             >
 
-            <SearchView
-                android:id="@+id/guest_activity_search"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:textColorHint="#656565"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="7dp"
-                android:layout_marginRight="7dp"
-                android:drawablePadding="7dp"
-                android:textSize="12dp"
-                android:drawableStart="@drawable/ic_search_black_24dp"
-                android:hint="Search products here"
-                android:background="@drawable/input_search_background"
+                android:orientation="horizontal"
+                android:weightSum="4"
+                >
+
+
+                <SearchView
+                    android:id="@+id/guest_activity_search"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginRight="7dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_weight="3.9"
+                    android:background="@drawable/input_search_background"
+                    android:drawablePadding="7dp"
+                    android:drawableStart="@drawable/ic_search_black_24dp"
+                    android:gravity="center_vertical"
+                    android:hint="Search products here"
+                    android:textColorHint="#656565"
+                    android:textSize="12dp" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:padding="4dp"
+                android:layout_gravity="center_vertical"
+                android:text="Filter"
                 />
+
+
+            </LinearLayout>
+
+
+
+
+            <!--<SearchView-->
+                <!--android:id="@+id/guest_activity_search"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:textColorHint="#656565"-->
+                <!--android:layout_marginTop="4dp"-->
+                <!--android:layout_marginBottom="10dp"-->
+                <!--android:layout_marginLeft="7dp"-->
+                <!--android:layout_marginRight="7dp"-->
+                <!--android:drawablePadding="7dp"-->
+                <!--android:textSize="12dp"-->
+                <!--android:drawableStart="@drawable/ic_search_black_24dp"-->
+                <!--android:hint="Search products here"-->
+                <!--android:background="@drawable/input_search_background"-->
+                <!--/>-->
 
         </android.support.v7.widget.Toolbar>
 
