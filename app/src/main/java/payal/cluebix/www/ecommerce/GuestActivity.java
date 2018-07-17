@@ -67,7 +67,6 @@ public class GuestActivity extends AppCompatActivity implements Recycler_item_ad
     ArrayList<String> P_id_array_of_cartItems=new ArrayList<>();
     ArrayList<String> name_list=new ArrayList<>();
 
-    Button dummy_cart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +79,6 @@ public class GuestActivity extends AppCompatActivity implements Recycler_item_ad
         l2_dots=(LinearLayout)findViewById(R.id.l2_dots);
         loader_linear=(LinearLayout)findViewById(R.id.loader);
         v2=(View)findViewById(R.id.view_for_margin);
-        dummy_cart=(Button) findViewById(R.id.dummy_cart);
 
         slider_image.clear();
         slider_image.add(((BitmapDrawable) getResources().getDrawable(R.drawable.sl4)).getBitmap());

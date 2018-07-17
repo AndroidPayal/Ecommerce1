@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="payal.cluebix.www.ecommerce">
 
-    <!-- pw:payalpalash1 -->
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -51,7 +51,10 @@
             android:name=".Update_profile"
             android:parentActivityName=".CenterActivity"
             android:theme="@style/AppThemeNoActionBar" />
-        <activity android:name=".GuestActivity" />
+
+        <activity android:name=".GuestActivity"
+            android:theme="@style/AppThemeNoActionBar"/>
+
         <activity
             android:name=".My_products"
             android:label="My Products"
@@ -82,13 +85,13 @@
         </service>
         -->
 
-        <meta-data
+      <!--  <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/logo2" />
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorAccent" />
-
+-->
         <activity
             android:name=".Quotation_items_list"
             android:label="Invoice">
@@ -128,6 +131,7 @@
             android:label="MultiVendor"
             android:launchMode="singleTask"
             android:theme="@style/AppThemes2" />
+
         <activity android:name=".GuestCart"></activity>
     </application>
 
