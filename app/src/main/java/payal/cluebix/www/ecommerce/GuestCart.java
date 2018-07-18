@@ -84,6 +84,11 @@ public class GuestCart extends AppCompatActivity implements CartAdapter.ClickLis
             @Override
             public void onClick(View v) {
                 //checkout
+                Intent i = new Intent(GuestCart.this, Quotation_items_list.class);
+                i.putExtra("screen","1");
+                i.putExtra("quote_id","0");
+                i.putExtra("userid","0");
+                startActivity(i);
             }
         });
 

@@ -52,11 +52,15 @@ import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 
 import payal.cluebix.www.ecommerce.Adapter.Quotation_item_adap;
 import payal.cluebix.www.ecommerce.Datas.Base_url;
 import payal.cluebix.www.ecommerce.Datas.quotation2;
+import payal.cluebix.www.ecommerce.Datas.sample_Cart;
 import payal.cluebix.www.ecommerce.Handlers.RquestHandler;
+import payal.cluebix.www.ecommerce.Handlers.SessionManager;
+import payal.cluebix.www.ecommerce.Handlers.myDbClass;
 
 public class Quotation_items_list extends AppCompatActivity {
 
@@ -70,6 +74,9 @@ public class Quotation_items_list extends AppCompatActivity {
     int quant=0,invoice_items=0;Float total_price=0.0f;
     ArrayList<String> qutation_table_item=new ArrayList<>();
 
+    SessionManager session;
+    String Uid;String Uname,Umail,Udate1,Udate2,Umob;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -78,6 +85,17 @@ public class Quotation_items_list extends AppCompatActivity {
         setContentView(R.layout.activity_invoice);
 
         product_item = new ArrayList<>();
+
+        session=new SessionManager(this.getApplicationContext());
+        HashMap<String, String> user = session.getUserDetails();
+        Uname = user.get(SessionManager.KEY_NAME);
+        Uid = user.get(SessionManager.KEY_ID);
+        Umail=user.get(SessionManager.KEY_email);
+        Udate1=user.get(SessionManager.KEY_createDate);
+        Udate2=user.get(SessionManager.KEY_LastModified);
+        Umob=user.get(SessionManager.KEY_mobile);
+        Log.d("sessionscreen","name_userId="+Uid+"\n_user_name="+Uname+"\nemail="+Umail
+                +"\ndate1="+Udate1+"\ndate2="+Udate2+"\nmobile="+Umob);
 
         screen=getIntent().getStringExtra("screen");
         quote_no=getIntent().getStringExtra("quote_id");
@@ -98,28 +116,39 @@ public class Quotation_items_list extends AppCompatActivity {
         linearLayoutManager.setAutoMeasureEnabled(true);
         recyclerView.setLayoutManager(linearLayoutManager);
 
+        adapter=new Quotation_item_adap(getApplicationContext(),product_item);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.addItemDecoration(new DividerItemDecoration(this,linearLayoutManager.getOrientation()));
+        recyclerView.setAdapter(adapter);
+
+
         get_old_Element();
 
         t_Quantity.setText("Total Items Ordered: "+invoice_items);//quant
         t_price.setText("Grand Total: "+total_price);
      /*   created_Date.setText("created date");
         expiry_date.setText("expiry date");*/
-        quotation_id.setText("Quotation Code:"+quote_no);
+
+        if (Umail !=null) {
+            quotation_id.setText("Quotation Code:" + quote_no);
+        }
+        else {
+            quotation_id.setVisibility(View.GONE);
+            created_Date.setVisibility(View.GONE);
+            expiry_date.setVisibility(View.GONE);
+        }
 
 
-        adapter=new Quotation_item_adap(getApplicationContext(),product_item);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.addItemDecoration(new DividerItemDecoration(this,linearLayoutManager.getOrientation()));
-        recyclerView.setAdapter(adapter);
 
     }
 
     private void get_old_Element() {
 
-        StringRequest stringRequest=new StringRequest(Request.Method.POST, url+quote_no+"/"+user_id, new Response.Listener<String>(){
+        if(Umail!=null){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url + quote_no + "/" + user_id, new Response.Listener<String>() {
             @Override
             public void onResponse(final String response) {
-                Log.d("quotescreen1","quotaion detail="+response+"\n quote url="+url+quote_no+"/"+user_id);
+                Log.d("quotescreen1", "quotaion detail=" + response + "\n quote url=" + url + quote_no + "/" + user_id);
 
                 /*
                 *  {
@@ -146,10 +175,10 @@ public class Quotation_items_list extends AppCompatActivity {
     }*/
                 JSONObject post_data;
                 try {
-                    JSONArray jsonArray=new JSONArray(response);
-                    for(int i=0;i<jsonArray.length();i++) {
+                    JSONArray jsonArray = new JSONArray(response);
+                    for (int i = 0; i < jsonArray.length(); i++) {
                         post_data = jsonArray.getJSONObject(i);
-                        Log.d("quotescreen1","quotaion in="+post_data.getString("id"));
+                        Log.d("quotescreen1", "quotaion in=" + post_data.getString("id"));
 
                         String id = post_data.getString("id");
                         String quote_id = post_data.getString("quote_id");
@@ -160,57 +189,39 @@ public class Quotation_items_list extends AppCompatActivity {
                         String qty = post_data.getString("qty");
                         String description = post_data.getString("description");
                         String brand = post_data.getString("brand");
-                       // String product_images = post_data.getString("product_images");
+                        // String product_images = post_data.getString("product_images");
                         String user_id = post_data.getString("user_id");
-                        String created_date1=post_data.getString("created_date");
-                        String expiry_date1=post_data.getString("expiry_date");
-                        String sample=post_data.getString("sample");
-                        String sample_price=post_data.getString("sample_price");
+                        String created_date1 = post_data.getString("created_date");
+                        String expiry_date1 = post_data.getString("expiry_date");
+                        String sample = post_data.getString("sample");
+                        String sample_price = post_data.getString("sample_price");
 
-                        product_item.add(new quotation2(id, quote_id,shopping_cart_id,user_id,product_id
-                                ,product_name,price,qty,description,brand
-                                ,sample,sample_price));//,product_images
+                        product_item.add(new quotation2(id, quote_id, shopping_cart_id, user_id, product_id
+                                , product_name, price, qty, description, brand
+                                , sample, sample_price));//,product_images
 
-                        quant=quant+Integer.parseInt(qty);
+                        quant = quant + Integer.parseInt(qty);
                         invoice_items++;
                         if (sample.equals("1")) {
                             total_price = total_price + (Float.parseFloat(price) * Integer.parseInt(qty))
-                                        +Float.parseFloat(sample_price);
-                        }else{
+                                    + Float.parseFloat(sample_price);
+                        } else {
                             total_price = total_price + (Float.parseFloat(price) * Integer.parseInt(qty));
                         }
 
-                        created_Date.setText("Gen:"+created_date1);
-                        expiry_date.setText("Exp:"+expiry_date1);
+                        created_Date.setText("Gen:" + created_date1);
+                        expiry_date.setText("Exp:" + expiry_date1);
 
-                        pdfcontent.setText(pdfcontent.getText()+"Product "+i+"_ID : "+product_id+"\nName : "+product_name
-                                +"\nPrice : "+price
-                                +"\nQuantity ordered : "+qty
-                                +"\nProduct Description : "+description
-                                +"\nBrand : "+brand
-                                +"\n\n---------------------------\n");
+                        pdfcontent.setText(pdfcontent.getText() + "Product " + i + "_ID : " + product_id + "\nName : " + product_name
+                                + "\nPrice : " + price
+                                + "\nQuantity ordered : " + qty
+                                + "\nProduct Description : " + description
+                                + "\nBrand : " + brand
+                                + "\n\n---------------------------\n");
 
-/*String id, String quote_id, String shopping_cart_id
-            , String user_id, String product_id, String product_name, String price,String qty,String description
-    ,String brand, String product_images*/
-/*
-*{
-        "id": "10",
-        "quote_id": "Q-5",
-        "shopping_cart_id": "15",
-        "product_id": "3",
-        "product_name": "classy look wallpaper",
-        "price": "253.00",
-        "qty": "1",
-        "description": "this is very good layer wall paper to display this time",
-        "brand": "Unique Wallpaper",
-        "user_id": "1",
-        "amount": null,
-        "percent": null
-    }*/
                     }
-                    t_Quantity.setText("Total Items Ordered: "+invoice_items);//quant
-                    t_price.setText("Grand Total: "+total_price);
+                    t_Quantity.setText("Total Items Ordered: " + invoice_items);//quant
+                    t_price.setText("Grand Total: " + total_price);
 
                     adapter.notifyData(product_item);
                 } catch (JSONException e) {
@@ -222,13 +233,54 @@ public class Quotation_items_list extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("quotescreen1","volley error="+error+"");
+                Log.d("quotescreen1", "volley error=" + error + "");
                 Toast.makeText(Quotation_items_list.this, "Server Connection Failed!", Toast.LENGTH_SHORT).show();
             }
         });
         RquestHandler.getInstance(Quotation_items_list.this).addToRequestQueue(stringRequest);
+    }else {
+
+
+            ArrayList<sample_Cart> datas = new myDbClass(Quotation_items_list.this).fetchAllValue();
+
+            for (int i = 0; i < datas.size(); i++) {
+                sample_Cart a=datas.get(i);
+                quant = quant + Integer.parseInt(a.getQty());
+                invoice_items++;
+                if (a.getSample().equals("1")) {
+                    total_price = total_price + (Float.parseFloat(a.getPrice()) * Integer.parseInt(a.getQty()))
+                            + Float.parseFloat(a.getSamplePrice());
+                } else {
+                    total_price = total_price + (Float.parseFloat(a.getPrice()) * Integer.parseInt(a.getQty()));
+                }
+
+
+                pdfcontent.setText(pdfcontent.getText() + "Product " + i + "_ID : " + a.getProduct_id() + "\nName : " + a.getProduct_nam()
+                        + "\nPrice : " + a.getPrice()
+                        + "\nQuantity ordered : " + a.getQty()
+                        + "\nProduct Description : " + a.getDescription()
+                        + "\nBrand : " + a.getBrand()
+                        + "\n\n---------------------------\n");
+
+                product_item.add(new quotation2("0", "0", "0", "0", a.getProduct_id()
+                        , a.getProduct_nam(), a.getPrice(), a.getQty(), a.getDescription(), a.getBrand()
+                        , a.getSample(), a.getSamplePrice()));
+            }
+
+            t_Quantity.setText("Total Items Ordered: " + invoice_items);//quant
+            t_price.setText("Grand Total: " + total_price);
+
+            adapter.notifyData(product_item);
+
+
+        }
+
+
+
 
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -562,9 +614,16 @@ public class Quotation_items_list extends AppCompatActivity {
         super.onBackPressed();
         Log.d("backPress",screen);
         if (screen.equals("1")){
-            Intent i=new Intent(Quotation_items_list.this,CenterActivity.class);
-            i.putExtra("cartTransition","dash");
-            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            Intent i = null;
+            if(Umail !=null) {
+                 i = new Intent(Quotation_items_list.this, CenterActivity.class);
+
+            }else{
+                i = new Intent(Quotation_items_list.this, GuestActivity.class);
+                new myDbClass(Quotation_items_list.this).DeleteAll();
+            }
+            i.putExtra("cartTransition", "dash");
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i);
         }
     }
