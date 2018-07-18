@@ -27,58 +27,55 @@ public class myDbClass {
         Log.d("dbClass","creating db via constructor");
         db=context.openOrCreateDatabase("MultiVendor", MODE_PRIVATE, null);
 
-        db.execSQL("create table IF NOT EXISTS cart_item(id INTEGER PRIMARY KEY AUTOINCREMENT, Productid varchar(30)," +
+        db.execSQL("create table IF NOT EXISTS cart_item2(id INTEGER PRIMARY KEY AUTOINCREMENT, Productid varchar(30)," +
                 "category_name varchar(50),product_name varchar(50), brand varchar(50),product_code varchar(50)," +
                 "price varchar(50),unit varchar(50),manufacturing varchar(50),qty varchar(50)," +
-                "sample varchar(50), sample_price varchar(50), color varchar(50), description varchar(50))");
-
+                "sample varchar(50), sample_price varchar(50), color varchar(50), description varchar(50)," +
+                " quantityOrder varchar(50), images varchar(200))");
+                //qty= available
+                //quantityOrder = oredered quantity
     }
 
     public void InsertAllValues(String Productid,String category_name, String product_name, String brand,String product_code,
             String price, String unit,String manufacturing, String qty,String sample, String sample_price,
-                String color, String description){
+                String color, String description,String quantityOrder,String images){
         Log.d("dbClass","inside insert function");
-        String q="INSERT INTO cart_item( Productid ,category_name,product_name , brand ,product_code ," +
-                "price ,unit ,manufacturing ,qty ,sample , sample_price , color , description )VALUES ('"+Productid+"',                            '"+category_name+"', '"+product_name+"', '"+brand+"', '"+product_code+"', '"+price+"', '"
+        String q="INSERT INTO cart_item2( Productid ,category_name,product_name , brand ,product_code ," +
+                "price ,unit ,manufacturing ,qty ,sample , sample_price , color , description ,quantityOrder,images)VALUES ('"+Productid+"','"+category_name+"', '"+product_name+"', '"+brand+"', '"+product_code+"', '"+price+"', '"
                 +unit+"', '"+manufacturing+"', '"+qty+"', '"+sample+"', '"+sample_price+"', '"
-                +color+"', '"+description+"')";
+                +color+"', '"+description+"', '"+quantityOrder+"', '"+images+"')";
         db.execSQL(q);
 
     }
 
     public ArrayList<sample_Cart> fetchAllValue(){
-        /*smplecart= sample_Cart(cart_id, product_id, product_name, price,sample, sample_price
-                , qty, user_id,manufacturing, description, brand, product_images, quantity)*/
-
-
+       /*sample_Cart(String cart_id,String product_id,String product_name,String price,String sample, String samplePrice,String qty
+            ,String user_id, String manufacturing,String description,String brand, String images_string,String quantity){
+*/
         ArrayList<sample_Cart> dataArray=new ArrayList<>();
-        String a="SELECT * from cart_item";
+        String a="SELECT * from cart_item2";
         cr = db.rawQuery(a,null);
         if (cr.moveToFirst()) {
             do {
                 // get the data into array, or class variable
                 dataArray.add( new sample_Cart("0",cr.getString(cr.getColumnIndex("Productid")),cr.getString(cr.getColumnIndex                          ("product_name")),cr.getString(cr.getColumnIndex("price")),
                         cr.getString(cr.getColumnIndex("sample")),cr.getString(cr.getColumnIndex("sample_price")),
-                        cr.getString(cr.getColumnIndex("qty")),"userid",//this for user_id
+                        cr.getString(cr.getColumnIndex("quantityOrder")),"userid",//this for user_id
                         cr.getString(cr.getColumnIndex("manufacturing")),cr.getString(cr.getColumnIndex("description"))   ,
                         //if manufacturing !=0 means it contain availablity value
-                        cr.getString(cr.getColumnIndex("brand")),"images",//blank for images
-                        "available"));
+                        cr.getString(cr.getColumnIndex("brand")),cr.getString(cr.getColumnIndex("images")),
+                        cr.getString(cr.getColumnIndex("qty"))));
             } while (cr.moveToNext());
         }
 
-/*id INTEGER PRIMARY KEY AUTOINCREMENT, Productid varchar(30)," +
-                "category_name varchar(50),product_name varchar(50), brand varchar(50),product_code varchar(50)," +
-                "price varchar(50),unit varchar(50),manufacturing varchar(50),qty varchar(50)," +
-                "sample varchar(50), sample_price varchar(50), color varchar(50), description varchar(50))");*/
-        Log.d("dbClass","fetching all cart data total = "+dataArray.size());
+       Log.d("dbClass","fetching all cart data total = "+dataArray.size());
 
         return dataArray;
     }
     public boolean checkIdExistance(String Productid){
         Log.d("dbClass","cheking id existance for "+Productid);
 
-        String a="SELECT Productid from cart_item";
+        String a="SELECT Productid from cart_item2";
         cr = db.rawQuery(a,null);
         if (cr != null && cr.moveToFirst()) {
             while ( cr.moveToNext()) {
@@ -94,7 +91,20 @@ public class myDbClass {
 
     }
 
+    public void DeleteOneRow(String Product_id){
+        Log.d("dbClass","deleting one item from cart");
+        String q="delete from cart_item2 where Productid='"+Product_id+"'";
 
+        db.execSQL(q);
+
+    }
+
+    public void UpdateValue(String ColumnName,String newValue,String Productid){
+        Log.d("dbClass","update value of any item");
+        /* UPDATE `cart_item2` SET `quantityOrder` = `3` where Productid=`24`*/
+        String q="UPDATE cart_item2 SET "+ColumnName+" = '"+newValue+"' where Productid='"+Productid+"'";
+        db.execSQL(q);
+    }
     public void DeleteAll(){
 /*public void onTrimMemory(final int level) {
     if (level == ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN) {
@@ -103,14 +113,13 @@ public class myDbClass {
         Log.d("dbClass","database deleting function");
 
         try {
-            String q = "DROP TABLE cart_item";
+            String q = "DROP TABLE cart_item2";
             db.execSQL(q);
-            q = "DROP DATABASE MultiVendor";
+            q = "drop database 'MultiVendor'";
             db.execSQL(q);
         }catch (Exception e){
             e.printStackTrace();
         }
-
     }
 
 }

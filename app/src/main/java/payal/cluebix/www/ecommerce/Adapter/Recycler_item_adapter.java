@@ -82,7 +82,8 @@ public class Recycler_item_adapter extends RecyclerView.Adapter<Recycler_item_ad
             holder.text_manufact.setText("In Stock : "+a.getQty());
         }
 
-        if(!a.getSample().equals("0"))
+        Log.d("samplevalue","ITEM ADAPTER sample status="+a.getSample());
+        if(!a.getSample().trim().equals("0"))
             holder.text_sample.setVisibility(View.VISIBLE);
 
         Log.d("cartval",a.getCart_disable()+" name="+a.getProduct_name());

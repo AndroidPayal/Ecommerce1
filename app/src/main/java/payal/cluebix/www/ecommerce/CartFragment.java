@@ -239,8 +239,7 @@ public class CartFragment extends Fragment implements CartAdapter.ClickListener 
                 @Override
                 public void onResponse(final String response) {
                     if (response.equalsIgnoreCase("success")) {
-                        product_item.set(position, new sample_Cart(array_cart_items.get(position).getCart_id(), array_cart_items.get(position).getProduct_id()
-                                , array_cart_items.get(position).getProduct_nam(), array_cart_items.get(position).getPrice()
+                        product_item.set(position, new sample_Cart(array_cart_items.get(position).getCart_id(), array_cart_items.get(position).getProduct_id(), array_cart_items.get(position).getProduct_nam(), array_cart_items.get(position).getPrice()
                                 ,array_cart_items.get(position).getSample()
                                 ,array_cart_items.get(position).getSamplePrice()
                                 , "" + quantity, array_cart_items.get(position).getUser_id(),
@@ -326,7 +325,6 @@ public class CartFragment extends Fragment implements CartAdapter.ClickListener 
                     t=t-1;
                     tv.setText(""+t);
                     Log.d("listenerval","t2="+t);
-
                 }
                 else {
                     Toast.makeText(getActivity(), "Error! Retry after some time", Toast.LENGTH_SHORT).show();

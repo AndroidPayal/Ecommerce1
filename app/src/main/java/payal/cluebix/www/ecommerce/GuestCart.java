@@ -97,18 +97,22 @@ public class GuestCart extends AppCompatActivity implements CartAdapter.ClickLis
 
         ArrayList<sample_Cart> datas=new myDbClass(GuestCart.this).fetchAllValue();
         product_item.addAll(datas);
-        Log.d("dbclass_Guest",product_item.size()+" data comed="+datas.size());
+            //Log.d("dbclass_Guest",product_item.size()+" data comed="+datas.size());
 
         for (int i=0;i<product_item.size();i++) {
-  /*smplecart= sample_Cart(cart_id, product_id, product_name, price,sample, sample_price
+                /*smplecart= sample_Cart(cart_id, product_id, product_name, price,sample, sample_price
                 , qty, user_id,manufacturing, description, brand, product_images, quantity)*/
             sample_Cart a=product_item.get(i);
-            availables.add(Integer.parseInt(a.getManufacturing()));
+            availables.add(Integer.parseInt(a.getQuantity()));
                         Log.e("guestcartscreen",a.getCart_id());
                         total=total+Integer.parseInt(a.getQty());
                         itemCount++;
+
+                        if(!a.getSample().equals("0"))
                         GrandTotal=GrandTotal+(Float.parseFloat(a.getPrice())*Integer.parseInt(a.getQty()))
                                 +Float.parseFloat(a.getSamplePrice());
+                        else
+                            GrandTotal=GrandTotal+(Float.parseFloat(a.getPrice())*Integer.parseInt(a.getQty()));
 
                         Cart_id_array.add(a.getCart_id());
                         element_quantity_array.add(a.getQty());
@@ -124,18 +128,106 @@ public class GuestCart extends AppCompatActivity implements CartAdapter.ClickLis
 
     @Override
     public void itemClicked(View view, int position) {
-        //remove button
+        //remove button// remove this row from database
+
+                    int qt=Integer.parseInt(product_item.get(position).getQty());
+                    total=total-qt;
+                    itemCount--;
+                if(!product_item.get(position).getSample().equals("0"))
+                      GrandTotal=GrandTotal-(Float.parseFloat(product_item.get(position).getPrice())*qt)
+                            -Float.parseFloat(product_item.get(position).getSamplePrice());
+                else
+                    GrandTotal=GrandTotal-(Float.parseFloat(product_item.get(position).getPrice())*qt);
+
+                    cartsub_total.setText("Cart Subtotal ("+itemCount+" items): ");
+                    cartsub_total2.setText("Rs."+GrandTotal);
+
+
+                   /* TextView tv = findViewById(R.id.text_count);///this is text view of main screen which contail cart item count
+                    int t= Integer.parseInt(tv.getText().toString());
+                    t=t-1;
+                    tv.setText(""+t);*/
+
+        new myDbClass(GuestCart.this).DeleteOneRow(product_item.get(position).getProduct_id());
+        product_item.remove(position);
+        adapter.notifyItemRemoved(position);
     }
 
     @Override
     public void plusClicked(ArrayList<sample_Cart> array, View view, int position) {
+        final int quantity = Integer.parseInt(element_quantity_array.get(position)) + 1;
 
+        if ((quantity > 0 )&& (quantity<=availables.get(position))) {
+            element_quantity_array.set(position, "" + quantity);
+
+
+            product_item.set(position, new sample_Cart(array_cart_items.get(position).getCart_id(), array_cart_items.get(position).getProduct_id(), array_cart_items.get(position).getProduct_nam(), array_cart_items.get(position).getPrice()
+                    ,array_cart_items.get(position).getSample()
+                    , array_cart_items.get(position).getSamplePrice()
+                    , "" + quantity, array_cart_items.get(position).getUser_id()
+                    , array_cart_items.get(position).getManufacturing(), array_cart_items.get(position).getDescription()
+                    , array_cart_items.get(position).getBrand(), array_cart_items.get(position).getImages_string()
+                    , array_cart_items.get(position).getQuantity()));
+
+            //                Toast.makeText(getActivity(), "" + product_item.size(), Toast.LENGTH_SHORT).show();
+
+            total = total + 1;
+            GrandTotal = GrandTotal + Float.parseFloat(product_item.get(position).getPrice());
+            //     cartsub_total.setText("Cart Subtotal ("+total+" items): ");
+            cartsub_total.setText("Cart Subtotal ("+itemCount+" items): ");
+            cartsub_total2.setText("Rs." + GrandTotal);
+
+            new myDbClass(GuestCart.this).UpdateValue("quantityOrder",""+quantity,array_cart_items.get(position).getProduct_id());
+
+            adapter.notifyitem(new sample_Cart(array_cart_items.get(position).getCart_id(), array_cart_items.get(position).getProduct_id()
+                            , array_cart_items.get(position).getProduct_nam(), array_cart_items.get(position).getPrice()
+                            ,array_cart_items.get(position).getSample()
+                            , array_cart_items.get(position).getSamplePrice()
+                            , "" + quantity, array_cart_items.get(position).getUser_id()
+                            , array_cart_items.get(position).getManufacturing(), array_cart_items.get(position).getDescription()
+                            , array_cart_items.get(position).getBrand(), array_cart_items.get(position).getImages_string()
+                            , array_cart_items.get(position).getQuantity())
+                    ,position);
+
+        }
     }
 
     @Override
     public void minusClicked(ArrayList<sample_Cart> array, View view, int position) {
+        final int quantity=Integer.parseInt(element_quantity_array.get(position))-1;
 
-    }
+        if(quantity>=0) {
+            element_quantity_array.set(position, "" + quantity);
+            product_item.set(position, new sample_Cart(array_cart_items.get(position).getCart_id(), array_cart_items.get(position).getProduct_id(), array_cart_items.get(position).getProduct_nam(), array_cart_items.get(position).getPrice()
+                    ,array_cart_items.get(position).getSample()
+                    ,array_cart_items.get(position).getSamplePrice()
+                    , "" + quantity, array_cart_items.get(position).getUser_id(),
+                    array_cart_items.get(position).getManufacturing(),
+                    array_cart_items.get(position).getDescription()
+                    , array_cart_items.get(position).getBrand(), array_cart_items.get(position).getImages_string()
+                    ,array_cart_items.get(position).getQuantity()));
+            //                 Toast.makeText(getActivity(), "" + product_item.size(), Toast.LENGTH_SHORT).show();
+
+            total = total - 1;
+            GrandTotal = GrandTotal - Float.parseFloat(product_item.get(position).getPrice());
+            //     cartsub_total.setText("Cart Subtotal ("+total+" items): ");
+            cartsub_total.setText("Cart Subtotal ("+itemCount+" items): ");
+            cartsub_total2.setText("Rs." + GrandTotal);
+
+            new myDbClass(GuestCart.this).UpdateValue("quantityOrder",""+quantity,array_cart_items.get(position).getProduct_id());
+
+            adapter.notifyitem(new sample_Cart(array_cart_items.get(position).getCart_id(), array_cart_items.get(position).getProduct_id(), array_cart_items.get(position).getProduct_nam(), array_cart_items.get(position).getPrice()
+                            ,array_cart_items.get(position).getSample()
+                            ,array_cart_items.get(position).getSamplePrice()
+                            , "" + quantity, array_cart_items.get(position).getUser_id(),
+                            array_cart_items.get(position).getManufacturing(),
+                            array_cart_items.get(position).getDescription()
+                            , array_cart_items.get(position).getBrand(), array_cart_items.get(position).getImages_string()
+                            ,array_cart_items.get(position).getQuantity())
+                    ,position);
+
+            }
+        }
 
     @Override
     public void imageClicked(View view, int position) {

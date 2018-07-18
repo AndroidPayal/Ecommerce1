@@ -144,6 +144,7 @@
                             android:padding="4dp"
                             android:text="Sample Available"
                             android:textColor="#0a9f02"
+                            android:visibility="invisible"
                             android:textSize="11dp" />
 
                         <TextView
