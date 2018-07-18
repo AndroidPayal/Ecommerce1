@@ -38,6 +38,7 @@ import payal.cluebix.www.ecommerce.Datas.Base_url;
 import payal.cluebix.www.ecommerce.Datas.data_dashboard;
 import payal.cluebix.www.ecommerce.Handlers.RquestHandler;
 import payal.cluebix.www.ecommerce.Handlers.SessionManager;
+import payal.cluebix.www.ecommerce.Handlers.myDbClass;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -306,4 +307,9 @@ public class GuestActivity extends AppCompatActivity implements Recycler_item_ad
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onTrimMemory(int level) {
+        super.onTrimMemory(level);
+        new myDbClass(GuestActivity.this).DeleteAll();
+    }
 }

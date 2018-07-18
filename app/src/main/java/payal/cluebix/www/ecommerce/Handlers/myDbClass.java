@@ -59,15 +59,19 @@ public class myDbClass {
                 // get the data into array, or class variable
                 dataArray.add( new sample_Cart("0",cr.getString(cr.getColumnIndex("Productid")),cr.getString(cr.getColumnIndex                          ("product_name")),cr.getString(cr.getColumnIndex("price")),
                         cr.getString(cr.getColumnIndex("sample")),cr.getString(cr.getColumnIndex("sample_price")),
-                        cr.getString(cr.getColumnIndex("qty")),cr.getString(cr.getColumnIndex("user_id")),
+                        cr.getString(cr.getColumnIndex("qty")),"userid",//this for user_id
                         cr.getString(cr.getColumnIndex("manufacturing")),cr.getString(cr.getColumnIndex("description"))   ,
-                        cr.getString(cr.getColumnIndex("brand")),cr.getString(cr.getColumnIndex("product_images")),
-                        cr.getString(cr.getColumnIndex("quantity"))));
+                        //if manufacturing !=0 means it contain availablity value
+                        cr.getString(cr.getColumnIndex("brand")),"images",//blank for images
+                        "available"));
             } while (cr.moveToNext());
         }
 
-
-        Log.d("dbClass","fetching all value total = "+dataArray.size());
+/*id INTEGER PRIMARY KEY AUTOINCREMENT, Productid varchar(30)," +
+                "category_name varchar(50),product_name varchar(50), brand varchar(50),product_code varchar(50)," +
+                "price varchar(50),unit varchar(50),manufacturing varchar(50),qty varchar(50)," +
+                "sample varchar(50), sample_price varchar(50), color varchar(50), description varchar(50))");*/
+        Log.d("dbClass","fetching all cart data total = "+dataArray.size());
 
         return dataArray;
     }

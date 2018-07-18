@@ -67,15 +67,18 @@ public class GuestCart extends AppCompatActivity implements CartAdapter.ClickLis
         recyclerView.setLayoutManager(new LinearLayoutManager(GuestCart.this));
 
         product_item.clear();
+
+        adapter=new CartAdapter(GuestCart.this,product_item);
+        adapter.setClickListener(this);
+        recyclerView.setAdapter(adapter);
+
         array_cart_items=get_old_Element();
 
         array_temp.addAll(array_cart_items);
 
         cartsub_total.setText("Cart Subtotal ("+itemCount+" items): ");
         cartsub_total2.setText("Rs."+GrandTotal);
-        adapter=new CartAdapter(getApplicationContext(),product_item);
-        adapter.setClickListener(this);
-        recyclerView.setAdapter(adapter);
+
 
         t_checkout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,12 +97,13 @@ public class GuestCart extends AppCompatActivity implements CartAdapter.ClickLis
 
         ArrayList<sample_Cart> datas=new myDbClass(GuestCart.this).fetchAllValue();
         product_item.addAll(datas);
+        Log.d("dbclass_Guest",product_item.size()+" data comed="+datas.size());
 
         for (int i=0;i<product_item.size();i++) {
   /*smplecart= sample_Cart(cart_id, product_id, product_name, price,sample, sample_price
                 , qty, user_id,manufacturing, description, brand, product_images, quantity)*/
             sample_Cart a=product_item.get(i);
-            availables.add(Integer.parseInt(a.getQuantity()));
+            availables.add(Integer.parseInt(a.getManufacturing()));
                         Log.e("guestcartscreen",a.getCart_id());
                         total=total+Integer.parseInt(a.getQty());
                         itemCount++;
