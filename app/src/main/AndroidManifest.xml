@@ -132,7 +132,8 @@
             android:launchMode="singleTask"
             android:theme="@style/AppThemes2" />
 
-        <activity android:name=".GuestCart"></activity>
+        <activity android:name=".GuestCart"
+            android:parentActivityName=".GuestActivity"></activity>
     </application>
 
 </manifest>

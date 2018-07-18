@@ -65,6 +65,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ProductViewHol
         else
             holder.Avl.setText("Owner");
 
+        Log.d("samplevalue","cart adapter sample status:"+a.getSample());
         if (a.getSample().equals("1"))
             holder.sample.setText("Sample:"+a.getSamplePrice());
         else

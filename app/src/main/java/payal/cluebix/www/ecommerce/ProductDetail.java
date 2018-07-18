@@ -289,9 +289,9 @@ public class ProductDetail extends AppCompatActivity {
                         RquestHandler.getInstance(ProductDetail.this).addToRequestQueue(stringRequest);
                     }else{
                         //this code runs when guest user adds item to cart
-                        new myDbClass(ProductDetail.this).InsertAllValues(AllData.get(0),AllData.get(1),AllData.get(2),AllData.get(3),AllData.get(4)
-                        ,AllData.get(5),AllData.get(6),AllData.get(7),AllData.get(8),AllData.get(9),AllData.get(10)
-                                ,AllData.get(11),AllData.get(12));
+                        new myDbClass(ProductDetail.this).InsertAllValues(AllData.get(0),AllData.get(1),AllData.get(2),AllData.get                  (3),AllData.get(4) ,AllData.get(5),AllData.get(6),AllData.get(7),AllData.get(8),AllData.get(9),AllData.get(10)
+                                ,AllData.get(11),AllData.get(12),quantity+"" //quantity=quantity ordered
+                                ,AllData.get(14));
                         /*AllData Array Val= Productid ,category_name,product_name , brand ,product_code ," +
                 "price ,unit ,manufacturing ,qty ,sample , sample_price , color , description */
                         add_cart.setText("Added To Cart");
@@ -314,7 +314,7 @@ public class ProductDetail extends AppCompatActivity {
                /* linear_detail_start.setVisibility(View.GONE);
                 linear_detail.setVisibility(View.VISIBLE);*/
                 String product_id= null,category_name= null,product_name= null,brand= null,product_code= null
-                        ,price= null,manufacturing= null,qty= null,sample= null,unit= null,color
+                        ,price= null,retail_price=null,manufacturing= null,qty= null,sample= null,unit= null,color
                         = null,description= null,product_images = null,user_id= null,rangId= null,amount= null,percent;
                 JSONObject post_data;
                 try {
@@ -329,6 +329,7 @@ public class ProductDetail extends AppCompatActivity {
                          brand = post_data.getString("brand");
                          product_code = post_data.getString("product_code");
                          price = post_data.getString("price");
+                        retail_price=post_data.getString("retail_price");
                          manufacturing = post_data.getString("manufacturing");
                          qty = post_data.getString("qty");
                          sample = post_data.getString("sample");
@@ -342,9 +343,11 @@ public class ProductDetail extends AppCompatActivity {
                          amount = post_data.getString("amount");
                          percent = post_data.getString("percent");
                     }
-                    /*Productid ,category_name,product_name , brand ,product_code ," +
-                "price ,unit ,manufacturing ,qty ,sample , sample_price , color , description )*/
-                    AllData.add(product_id);AllData.add(category_name);AllData.add(product_name);AllData.add(brand);AllData.add(product_code);AllData.add(price);AllData.add(unit);AllData.add(manufacturing);AllData.add(qty);AllData.add(sample);AllData.add(sample_price);AllData.add(color);AllData.add(description);
+
+                    AllData.add(product_id);AllData.add(category_name);AllData.add(product_name);AllData.add(brand);AllData.add(product_code);AllData.add(retail_price);AllData.add(unit);AllData.add(manufacturing);AllData.add(qty);AllData.add(sample);AllData.add(sample_price);AllData.add(color);AllData.add(description);AllData.add("0");AllData.add(product_images);
+/*InsertAllValues(String Productid,String category_name, String product_name, String brand,String product_code,
+            String price, String unit,String manufacturing, String qty,String sample, String sample_price,
+                String color, String description,String quantityOrder,String images)*/
 
                     check_for_cart();
 
@@ -358,6 +361,7 @@ public class ProductDetail extends AppCompatActivity {
                         p_available.setText("Available : " + qty);
                     }
 
+                    Log.d("samplevalue","view detail sample status:"+sample);
                     if (sample.equals("0")){
                         LinearLayout linearLayout=(LinearLayout)findViewById(R.id.sample_layout1);
                         linearLayout.setVisibility(View.GONE);
@@ -378,7 +382,7 @@ public class ProductDetail extends AppCompatActivity {
                     t_unit.setText(unit);
                     t_unit2.setText(unit);
                     if(Umail==null){
-                        prize.setText("R price");
+                        prize.setText(retail_price);
                     }else
                     prize.setText(price);
 
@@ -576,19 +580,17 @@ public class ProductDetail extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         //cart icon clicked
 
-
             if(R.id.action_cart ==  item.getItemId()){
+                if (Umail!=null) {
+                    Intent intent = new Intent(ProductDetail.this, CenterActivity.class);
+                    intent.putExtra("cartTransition", true);
+                    startActivity(intent);
+                }else{
+                    Intent i=new Intent(ProductDetail.this,GuestCart.class);
+                    startActivity(i);
+                }
+            }
 
-            Intent intent = new Intent(ProductDetail.this, CenterActivity.class);
-
-            intent.putExtra("cartTransition", true);
-            startActivity(intent);}
-
-        //}
-   /*     CartFragment fragment = new CartFragment();
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.main_container, fragment);
-        transaction.commit();*/
 
         return super.onOptionsItemSelected(item);
     }
