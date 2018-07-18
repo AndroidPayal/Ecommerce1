@@ -33,7 +33,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import payal.cluebix.www.ecommerce.Adapter.GridAdapter;
 import payal.cluebix.www.ecommerce.Adapter.MyProductsAdapter;
 import payal.cluebix.www.ecommerce.Datas.Base_url;
 import payal.cluebix.www.ecommerce.Datas.sample_myProduct;

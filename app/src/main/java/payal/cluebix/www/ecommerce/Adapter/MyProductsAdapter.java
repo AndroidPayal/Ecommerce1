@@ -13,8 +13,12 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
+import payal.cluebix.www.ecommerce.Datas.Base_url;
 import payal.cluebix.www.ecommerce.Datas.quotation1;
 
 import payal.cluebix.www.ecommerce.Datas.sample_myProduct;
@@ -53,11 +57,26 @@ public class MyProductsAdapter extends RecyclerView.Adapter<MyProductsAdapter.Vi
     public void onBindViewHolder(MyProductsAdapter.ViewHolder holder, int position) {
         sample_myProduct a= productList.get(position);
 
+
+
+
+        String image_names=a.getProduct_images_String();
+
+        List<String> items = Arrays.asList(image_names.split(","));
+        String first_image_url= Base_url.IMAGE_DIRECTORY_NAME+""+items.get(0);
+// imageView.setImageBitmap(product.get(i).getimage());
         Picasso.with(mCtx)
-                .load(a.getProduct_images_String()) // chceck and confirm ///////////// MUST NOT BE NEGLECTED
+                .load(first_image_url)
                 .placeholder(R.drawable.loading) // optional
                 .error(R.drawable.error_load)         // optional
                 .into(holder.productImage);
+
+//
+//        Picasso.with(mCtx)
+//                .load(imageUrl[0]) // chceck and confirm ///////////// MUST NOT BE NEGLECTED
+//                .placeholder(R.drawable.loading) // optional
+//                .error(R.drawable.error_load)         // optional
+//                .into(holder.productImage);
 
 
         holder.productName.setText(a.getProduct_name());
