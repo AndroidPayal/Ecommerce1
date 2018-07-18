@@ -190,7 +190,6 @@ public class Product_My_Detail extends AppCompatActivity {
         dialog = new Dialog(Product_My_Detail.this);
         dialog.setCancelable(false);
         dialog.setContentView(R.layout.progress_dialog);
-
         Window window = dialog.getWindow();
         window.setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
 
@@ -319,6 +318,9 @@ public class Product_My_Detail extends AppCompatActivity {
 
                            // e_prize.setText(price);
                             e_color.setText(color);
+
+
+
                           /*  edit_spin1.setText(first_price);
                             edit_spin2.setText(second_price);
                             edit_spin3.setText(third_price);*/

@@ -9,6 +9,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
@@ -31,6 +34,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import payal.cluebix.www.ecommerce.Adapter.GridAdapter;
+import payal.cluebix.www.ecommerce.Adapter.MyProductsAdapter;
 import payal.cluebix.www.ecommerce.Datas.Base_url;
 import payal.cluebix.www.ecommerce.Datas.sample_myProduct;
 import payal.cluebix.www.ecommerce.Handlers.RquestHandler;
@@ -40,7 +44,10 @@ public class My_products extends AppCompatActivity {
 
     GridView grid;
     //ArrayList<sample_myProduct> product;
-    GridAdapter adapter;
+
+    RecyclerView recyclerView;
+
+    MyProductsAdapter adapter;
     Toolbar toolbar;
     private DrawerLayout drawerLayout;
     FloatingActionButton fab;
@@ -58,11 +65,12 @@ public class My_products extends AppCompatActivity {
         setContentView(R.layout.drawer_my_product);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        grid=(GridView)findViewById(R.id.grid_view);
+//        grid=(GridView)findViewById(R.id.grid_view);
         fab=(FloatingActionButton)findViewById(R.id.fab);
       //  notapproved=(Button)findViewById(R.id.notApproved);
         setSupportActionBar(toolbar);
 
+        recyclerView = (RecyclerView) findViewById(R.id.my_product_recyclerView);
 
 
         session=new SessionManager(getApplicationContext());
@@ -76,8 +84,15 @@ public class My_products extends AppCompatActivity {
 
         initNavigationDrawer();
 
-        adapter=new GridAdapter(getApplicationContext(),product_item);
-        grid.setAdapter(adapter);
+
+        //sets GridAdapter data set
+        adapter=new MyProductsAdapter(getApplicationContext(),product_item);
+
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new GridLayoutManager(this,2));
+
+        recyclerView.setAdapter(adapter);
+//        grid.setAdapter(adapter);
 
         //Log.d("_correct_res","product array1: "+product_item);
 
@@ -96,23 +111,23 @@ public class My_products extends AppCompatActivity {
             }
         });
 
-        grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-               // Toast.makeText(My_products.this, "clicked at : "+i, Toast.LENGTH_SHORT).show();
-                Log.d("clicked_","myProductPage:"+i+"\nprod id:"+Product_id_array.get(i));
-                /*
-                * on grid item click open item detail
-                * inside that in floating button show option of update */
-
-                Intent intent=new Intent(My_products.this,Product_My_Detail.class);
-                intent.putExtra("current_product_id",Product_id_array.get(i));
-                Log.d("_correct_res","send id:"+Product_id_array.get(i)+"\nitem array id="+product_item.get(i).getProductId()
-                +"\nname:"+product_item.get(i).getProduct_name());
-                startActivity(intent);
-
-            }
-        });
+//        grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//               // Toast.makeText(My_products.this, "clicked at : "+i, Toast.LENGTH_SHORT).show();
+//                Log.d("clicked_","myProductPage:"+i+"\nprod id:"+Product_id_array.get(i));
+//                /*
+//                * on grid item click open item detail
+//                * inside that in floating button show option of update */
+//
+//                Intent intent=new Intent(My_products.this,Product_My_Detail.class);
+//                intent.putExtra("current_product_id",Product_id_array.get(i));
+//                Log.d("_correct_res","send id:"+Product_id_array.get(i)+"\nitem array id="+product_item.get(i).getProductId()
+//                +"\nname:"+product_item.get(i).getProduct_name());
+//                startActivity(intent);
+//
+//            }
+//        });
 
 
     }
