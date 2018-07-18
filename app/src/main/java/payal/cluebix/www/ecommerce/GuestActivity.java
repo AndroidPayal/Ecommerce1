@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.TooltipCompat;
 import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
@@ -87,7 +88,7 @@ public class GuestActivity extends AppCompatActivity implements Recycler_item_ad
         loader_linear=(LinearLayout)findViewById(R.id.loader);
         v2=(View)findViewById(R.id.view_for_margin);
 
-        toolbar = findViewById(R.id.guest_toolbar2);
+        toolbar = (Toolbar) findViewById(R.id.guest_toolbar2);
 
         setSupportActionBar(toolbar);
 
