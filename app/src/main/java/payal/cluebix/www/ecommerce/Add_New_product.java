@@ -132,7 +132,7 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
 
     CheckBox sample_availability,check_manufacture;
     Button submit;
-    EditText edit_P_name,edit_price,edit_sample_price,edit_qty,edit_desc;
+    EditText edit_P_name,edit_price,edit_sample_price,edit_qty,edit_desc,edit_retail_price;
     SearchableSpinner spinner_category,spin_company,spin_unit;
     public static String selected_category="";
     public static String selected_company="";
@@ -177,6 +177,7 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
         edit_P_name=(EditText)findViewById(R.id.edit_name);
         spin_unit=(SearchableSpinner) findViewById(R.id.spin_unit);
         edit_price=(EditText)findViewById(R.id.edit_price);
+        edit_retail_price=(EditText)findViewById(R.id.retailprise);
         edit_qty=(EditText)findViewById(R.id.edit_quantity);
         edit_sample_price=(EditText)findViewById(R.id.sample_price);
         sample_availability=(CheckBox)findViewById(R.id.check_sample);
@@ -294,7 +295,8 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
             if (setRanges()&& !(TextUtils.isEmpty(selected_category) &&
                     edit_P_name.getText().toString().trim().equals("") &&
                         TextUtils.isEmpty(selected_company) &&
-                            edit_price.getText().toString().trim().equals(""))) {
+                            edit_price.getText().toString().trim().equals("")
+                                && edit_retail_price.getText().toString().trim().equals(""))) {
                 new Add_New_product.UploadFileToServer().execute();
                 Log.d("submitTest","inside if");
             }else{
@@ -305,6 +307,7 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
 
                     edit_P_name.setError("Can't be empty");
                     edit_price.setError("Can't be empty");
+                    edit_retail_price.setError("Can't be empty");
                 }//else toast of invalid range will come
             }
         }
@@ -878,7 +881,6 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
                         ) {*/
 
 
-
                     for (int j = 0; j < min_range.size(); j++) {
                         entity.addPart("min[]", new StringBody(min_range.get(j) + ""));
                         entity.addPart("max[]", new StringBody(max_range.get(j) + ""));
@@ -914,8 +916,27 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
                     entity.addPart("sample_price", new StringBody(edit_sample_price.getText().toString().trim()));
                     entity.addPart("unit", new StringBody(selected_unit1));
                     entity.addPart("manufacturing", new StringBody(manufacture_state));
+                entity.addPart("retail_price", new StringBody(edit_retail_price.getText().toString().trim()));
+                entity.addPart("created_by", new StringBody(Uid));
 
-
+//add  retail prise adn created by
+/*category_name,
+product_name,
+brand,
+description,
+product_code,
+color,
+price,
+manufacturing
+retail_price,
+qty,
+sample,
+sample_price,
+unit,
+product_images,
+created_date,
+created_by,
+city,*/
                     totalSize = entity.getContentLength();
                     /*Log.d("Tag___", "total data size=" + totalSize + ""
                             + "category:" + selected_category

@@ -177,6 +177,7 @@
                 />
 
             <EditText
+                android:id="@+id/retailprise"
                 android:layout_width="0dp"
                 android:layout_weight="0.925"
                 android:layout_height="match_parent"
