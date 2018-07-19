@@ -507,7 +507,6 @@
             android:textColor="#fff"
             android:textSize="15dp"
             android:text="Change Image"
-            android:onClick="changeImageClicked"
             android:visibility="gone"
             />
 

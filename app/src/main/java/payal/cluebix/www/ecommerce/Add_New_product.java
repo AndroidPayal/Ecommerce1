@@ -81,8 +81,6 @@ import payal.cluebix.www.ecommerce.Handlers.SessionManager;
 
 public class Add_New_product extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
-
-
     private String Tag="Add_New_product_screen";
 
     public static int index=0;
@@ -227,10 +225,13 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
                 if(check_manufacture.isChecked()){
                     manufacture_state="on";
                     text_edit_quantity.setVisibility(View.GONE);
+                    edit_qty.setVisibility(View.GONE);
                 }
                 else {
                     manufacture_state="false";
                     text_edit_quantity.setVisibility(View.VISIBLE);
+                    edit_qty.setVisibility(View.VISIBLE);
+
                 }
                 Log.d(Tag,"manufacture state="+manufacture_state);
             }
@@ -738,11 +739,6 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
 
     }
 
-    public void changeImageClicked(View view)
-    {
-
-
-    }
 
     public void onDelete(View v){
 
@@ -872,6 +868,7 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
             String responseString = null;
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(url1+Uid);
+            Log.d("Apicontroller","url="+url1+Uid);
             try {
                 AndroidMultiPartEntity entity = new AndroidMultiPartEntity(
                         new AndroidMultiPartEntity.ProgressListener() {
@@ -922,9 +919,12 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
                     entity.addPart("sample", new StringBody(sample_state));
                     entity.addPart("sample_price", new StringBody(edit_sample_price.getText().toString().trim()));
                     entity.addPart("unit", new StringBody(selected_unit1));
-                    entity.addPart("manufacturing", new StringBody(manufacture_state));
+
+                entity.addPart("manufacturing", new StringBody(manufacture_state));
                 entity.addPart("retail_price", new StringBody(edit_retail_price.getText().toString().trim()));
                 entity.addPart("created_by", new StringBody(Uid));
+                entity.addPart("category_type", new StringBody("category type dym"));
+
 
 //add  retail prise adn created by
 /*category_name,
@@ -945,25 +945,25 @@ created_date,
 created_by,
 city,*/
                     totalSize = entity.getContentLength();
-                    /*Log.d("Tag___", "total data size=" + totalSize + ""
+                    Log.d("Tag___", "total data size=" + totalSize + ""
                             + "category:" + selected_category
                             + "product name:" + edit_P_name.getText().toString().trim() + "brand:" + selected_company
                             + "desc:" + selected_description
                             + "price:" + edit_price.getText().toString().trim()
                             + "qty:" + edit_qty.getText().toString().trim() + "sample:" + sample_state + "Sprice:"
                             + " manufact state:" + manufacture_state
-                            + edit_sample_price.getText().toString().trim() + "unit:" + selected_unit1);*/
+                            + edit_sample_price.getText().toString().trim() + "unit:" + selected_unit1);
                     httppost.setEntity(entity);
                     HttpResponse response = httpclient.execute(httppost);
                     HttpEntity r_entity = response.getEntity();
 
                     int statusCode = response.getStatusLine().getStatusCode();
-                    if (statusCode == 200) {
+                  //  if (statusCode == 200) {
                         responseString = EntityUtils.toString(r_entity);
-                    } else {
+                 /*   } else {
                         responseString = "Error occurred! Http Status Code: "
                                 + statusCode;
-                    }
+                    }*/
            /*     }
                 else{
                     //ranges putted are not valid
@@ -993,9 +993,14 @@ city,*/
         @Override
         protected void onPostExecute(String result) {
             Log.e("TAG__", "Response from server: " + result);
-            textResp.setText("Status : "+result);
-            textOk.setVisibility(View.VISIBLE);
-            prog.setVisibility(View.INVISIBLE);
+            if(result.equalsIgnoreCase("success")) {
+                textResp.setText("Status : " + result);
+                textOk.setVisibility(View.VISIBLE);
+                prog.setVisibility(View.INVISIBLE);
+            }else{
+                dialog.dismiss();
+                Toast.makeText(Add_New_product.this, "Unfilled Detail or Server Error!", Toast.LENGTH_SHORT).show();
+            }
             super.onPostExecute(result);
         }
 

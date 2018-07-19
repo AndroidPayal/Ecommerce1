@@ -11,7 +11,7 @@ public class Base_url {
     public static final String Registration_url=base_url+"UserController/registerByCandidate";
 
     public static final String Dashboard_url=base_url+"ApiController/shopUnit/";/*/user_id*/
-    public static final String Load_more_url=base_url+"ApiController/loadMore/";/*/Last Product id */
+    public static final String Load_more_url=base_url+"ApiController/loadMore/";/*/Last Product's id */
     public static final String Add_product_url=base_url+"ApiController/storeProduct/";/*/userid*/
 
     public static final String Product_Detail_url=base_url+"ApiController/productDetail/";/*/product_id*/
