@@ -55,7 +55,7 @@ public class GuestActivity extends AppCompatActivity implements Recycler_item_ad
     String url1= Base_url.Dashboard_url;
     String url3=Base_url.My_cart_item_count;
 
-    ArrayList<data_dashboard> product_item;
+    ArrayList<data_dashboard> product_item = new ArrayList<>();
     SessionManager session;
     public static int count=0;
     View v;
@@ -93,6 +93,8 @@ public class GuestActivity extends AppCompatActivity implements Recycler_item_ad
         setSupportActionBar(toolbar);
 
 
+
+
         slider_image.clear();
         slider_image.add(((BitmapDrawable) getResources().getDrawable(R.drawable.sl4)).getBitmap());
         slider_image.add(((BitmapDrawable) getResources().getDrawable(R.drawable.sl2)).getBitmap());
@@ -123,9 +125,31 @@ public class GuestActivity extends AppCompatActivity implements Recycler_item_ad
         count=cart_item_count();
         get_old_Element();
 
-        adapter= new Recycler_item_adapter(GuestActivity.this,product_item,name_list);
-        adapter.setClickListener(this);
-        recyclerView.setAdapter(adapter);
+        Log.d("UNMESH'S LOG",""+product_item);
+
+//        adapter= new Recycler_item_adapter(getApplicationContext(),product_item);
+//        adapter.setClickListener(this);
+//        recyclerView.setAdapter(adapter);
+
+
+        tool_search = (SearchView) findViewById(R.id.guest_activity_search);
+
+
+        tool_search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+                adapter.getFilter().filter(newText);
+
+                return false;
+            }
+        });
+
 
         callFab.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -212,7 +236,14 @@ public class GuestActivity extends AppCompatActivity implements Recycler_item_ad
                                 , color, retail_price, product_images, sample, manufacturing,qty, amount,cart_disable));
                     }
 
-                    adapter.notifyData(product_item);
+//                    adapter.notifyData(product_item);
+
+
+                    adapter= new Recycler_item_adapter(getApplicationContext(),product_item);
+                    adapter.setClickListener(GuestActivity.this);
+                    recyclerView.setAdapter(adapter);
+
+
                     loader_linear.setVisibility(View.GONE);
                     v2.setVisibility(View.VISIBLE);
                 } catch (JSONException e) {

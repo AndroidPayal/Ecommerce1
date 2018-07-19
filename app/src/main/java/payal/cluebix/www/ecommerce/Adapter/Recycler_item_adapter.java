@@ -48,11 +48,13 @@ public class Recycler_item_adapter extends RecyclerView.Adapter<Recycler_item_ad
     List<String> slider_image;
     private TextView[] dots;
 
-    public Recycler_item_adapter(Context mCtx, List<data_dashboard> productList,List<String> name_list) {
+    public Recycler_item_adapter(Context mCtx, List<data_dashboard> productList) {
         this.mCtx = mCtx;
         this.productList = productList;
-        this.productList_Copy=productList;
-        productList_names=name_list;
+        productList_Copy= new ArrayList<>(productList);
+
+
+
         //productList_Copy.addAll(productList);
     }
 
@@ -288,73 +290,138 @@ public class Recycler_item_adapter extends RecyclerView.Adapter<Recycler_item_ad
 
     @Override
     public Filter getFilter() {
-        return new Filter() {
-            @Override
-            protected FilterResults performFiltering(CharSequence constraint) {
-                String charString = constraint.toString().trim();
-                if (charString.isEmpty()) {
-                    productList = productList_Copy;
-                }else{
-                    List<data_dashboard> filteredList = new ArrayList<>();
-                        for(data_dashboard row:productList_Copy){
-                            if (row.getProduct_name().toLowerCase().contains(charString.toLowerCase()) ) {
-                                //||row.pr().contains(charSequence)
-                                filteredList.add(row);
-                            }
-                        }
-                        productList=filteredList;
-                }
-                FilterResults filterResults = new FilterResults();
-                filterResults.values = productList;
-                return null;
+
+
+
+                                                // OLD filter code
+
+
+
+
+//        return new Filter() {
+//            @Override
+//            protected FilterResults performFiltering(CharSequence constraint) {
+//                String charString = constraint.toString().trim();
+//                if (charString.isEmpty()) {
+//                    productList = productList_Copy;
+//                }else{
+//                    List<data_dashboard> filteredList = new ArrayList<>();
+//                        for(data_dashboard row:productList_Copy){
+//                            if (row.getProduct_name().toLowerCase().contains(charString.toLowerCase()) ) {
+//                                //||row.pr().contains(charSequence)
+//                                filteredList.add(row);
+//                            }
+//                        }
+//                        productList=filteredList;
+//                }
+//                FilterResults filterResults = new FilterResults();
+//                filterResults.values = productList;
+//                return null;
+//            }
+//
+//            @SuppressWarnings("unchecked")
+//            @Override
+//            protected void publishResults(CharSequence constraint, FilterResults results) {
+//                try {
+//                    Log.d("resultVal",results.values+"");
+//                    productList = (ArrayList<data_dashboard>) results.values;
+//                    if (results.count > 0) {
+//                        notifyDataSetChanged();
+//                    } else {
+//                        Toast.makeText(mCtx, "no data", Toast.LENGTH_SHORT).show();
+//                    }
+//                }catch (NullPointerException e){
+//                    Log.e("nullPointerExce",e+"");
+//                }
+//
+//            }
+//        };
+
+
+
+        return exampleFilter;
+
+
+    }
+
+
+    Filter exampleFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+
+            List<data_dashboard> filteredList = new ArrayList<>();
+
+            if(constraint == null || constraint.length() == 0)
+            {
+                filteredList.addAll(productList_Copy);
+
+                Log.d("Adapter Filter Response"," for empty char"+productList_Copy);
             }
 
-            @SuppressWarnings("unchecked")
-            @Override
-            protected void publishResults(CharSequence constraint, FilterResults results) {
-                try {
-                    Log.d("resultVal",results.values+"");
-                    productList = (ArrayList<data_dashboard>) results.values;
-                    if (results.count > 0) {
-                        notifyDataSetChanged();
-                    } else {
-                        Toast.makeText(mCtx, "no data", Toast.LENGTH_SHORT).show();
+            else{
+
+                Log.d("Adapter Filter Response"," entered value : "+constraint);
+                String filterCharSequence = constraint.toString().toLowerCase().trim();
+
+                for(data_dashboard item : productList_Copy)
+                {
+
+                    if(item.getProduct_name().toLowerCase().contains(filterCharSequence))
+                    {
+                        filteredList.add(item);
                     }
-                }catch (NullPointerException e){
-                    Log.e("nullPointerExce",e+"");
                 }
 
             }
-        };
-    }
 
-    public void filter(String charText) {
-        charText = charText.toLowerCase(Locale.getDefault());
-        ArrayList<data_dashboard> listcpy=new ArrayList<>();
-        listcpy.addAll(productList);
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
 
-        Log.d("filter123","start size=productList:"
-                +productList.size()
-            +"\nproductcpy:"+productList_Copy.size()
-                +"\nnamelist"+productList_names.size()
-                +"\ncopylist:"+listcpy.size());
-
-        productList.clear();
-
-        if (charText.length() == 0) {
-            productList.addAll(productList_Copy);
+            return results;
         }
-        else{
-            for (int i=0;i<listcpy.size();i++ ) {
-                if (productList_names.get(i).toLowerCase(Locale.getDefault()).contains(charText)) {
-                    productList.add(listcpy.get(i));
-                }
-            }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+
+            productList.clear();
+
+            productList.addAll((List) results.values);
+
+//            notifyData(productList);
+
+            notifyDataSetChanged();
         }
-        Log.d("filter123","end size=productList:"+productList.size()
-                +"\nproductcpy:"+productList_Copy.size()+"\nnamelist"+productList_names.size()
-                +"\ncopylist:"+listcpy.size());
-        notifyDataSetChanged();
-    }
+    };
+
+
+
+//    public void filter(String charText) {
+//        charText = charText.toLowerCase(Locale.getDefault());
+//        ArrayList<data_dashboard> listcpy=new ArrayList<>();
+//        listcpy.addAll(productList);
+//
+//        Log.d("filter123","start size=productList:"
+//                +productList.size()
+//            +"\nproductcpy:"+productList_Copy.size()
+//                +"\nnamelist"+productList_names.size()
+//                +"\ncopylist:"+listcpy.size());
+//
+//        productList.clear();
+//
+//        if (charText.length() == 0) {
+//            productList.addAll(productList_Copy);
+//        }
+//        else{
+//            for (int i=0;i<listcpy.size();i++ ) {
+//                if (productList_names.get(i).toLowerCase(Locale.getDefault()).contains(charText)) {
+//                    productList.add(listcpy.get(i));
+//                }
+//            }
+//        }
+//        Log.d("filter123","end size=productList:"+productList.size()
+//                +"\nproductcpy:"+productList_Copy.size()+"\nnamelist"+productList_names.size()
+//                +"\ncopylist:"+listcpy.size());
+//        notifyDataSetChanged();
+//    }
 }
 

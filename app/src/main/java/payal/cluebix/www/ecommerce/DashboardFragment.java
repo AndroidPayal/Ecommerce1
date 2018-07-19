@@ -147,9 +147,9 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
         count=cart_item_count();
         get_old_Element();
 
-        adapter= new Recycler_item_adapter(getActivity(),product_item,name_list);
-        adapter.setClickListener(this);
-        recyclerView.setAdapter(adapter);
+//        adapter= new Recycler_item_adapter(getActivity(),product_item);
+//        adapter.setClickListener(this);
+//        recyclerView.setAdapter(adapter);
 
         return v;
     }
@@ -231,7 +231,13 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
                                 , color, price, product_images, sample, manufacturing,qty, amount,cart_disable));
                     }
 
-                    adapter.notifyData(product_item);
+//                    adapter.notifyData(product_item);
+
+                    adapter= new Recycler_item_adapter(getActivity(),product_item);
+                    adapter.setClickListener(DashboardFragment.this);
+                    recyclerView.setAdapter(adapter);
+
+
                     loader_linear.setVisibility(View.GONE);
                     v2.setVisibility(View.VISIBLE);
                 } catch (JSONException e) {
