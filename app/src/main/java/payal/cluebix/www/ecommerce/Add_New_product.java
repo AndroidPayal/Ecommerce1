@@ -97,9 +97,8 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
     TextView button_image_add;
 
     ProgressBar prog;
-    TextView textProg;
-    TextView textOk;
-    TextView textResp;
+
+    TextView textOk,text_edit_quantity,textResp,textProg;
     Dialog dialog;
 
     SessionManager session;
@@ -131,9 +130,9 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
     String url_Company_fetch=Base_url.List_all_company;
 
     CheckBox sample_availability,check_manufacture;
-    Button submit;
+    Button submit,change_image;
     EditText edit_P_name,edit_price,edit_sample_price,edit_qty,edit_desc,edit_retail_price;
-    SearchableSpinner spinner_category,spin_company,spin_unit;
+    SearchableSpinner spinner_category,spin_company,spin_unit,spin_category_type;
     public static String selected_category="";
     public static String selected_company="";
     public static String selected_unit1="";
@@ -144,28 +143,19 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
     ArrayList<EditText> editTextArrayList;
 
     ArrayList<ArrayList> ranges = new ArrayList<>();
-/*
-    ArrayList<Integer> range_int = new ArrayList<>();
-*/
 
     ArrayList<Integer> min_range=new ArrayList<>();
     ArrayList<Integer> max_range=new ArrayList<>();
     ArrayList<Integer> price_range=new ArrayList<>();
-/*
-    ArrayList<EditText> min_range_edit=new ArrayList<>();
-    ArrayList<EditText> max_range_edit=new ArrayList<>();
-    ArrayList<EditText> price_range_edit=new ArrayList<>();*/
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add__new_product);
 
-
-
-
         linearLayout= (LinearLayout)findViewById(R.id.ParentLinearLayout);
-        onAddField(new View(getApplicationContext()));
+     //   onAddField(new View(getApplicationContext()));
 
         vp=(ViewPager)findViewById(R.id.vp1);
         button_image_add=(TextView)findViewById(R.id.button_image_add);
@@ -183,6 +173,9 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
         sample_availability=(CheckBox)findViewById(R.id.check_sample);
         edit_desc=(EditText)findViewById(R.id.edit_desc);
         check_manufacture=(CheckBox)findViewById(R.id.check_manufacture);
+        text_edit_quantity=(TextView)findViewById(R.id.edit_quantity_text);
+        spin_category_type=(SearchableSpinner)findViewById(R.id.spin_category_type);
+        change_image=(Button)findViewById(R.id.change_image);
 
         session=new SessionManager(getApplicationContext());
         HashMap<String, String> user = session.getUserDetails();
@@ -211,6 +204,8 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
         });
         final LinearLayout sample_layout = (LinearLayout) findViewById(R.id.linear_sample);
 
+
+
         sample_availability.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -231,9 +226,12 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(check_manufacture.isChecked()){
                     manufacture_state="on";
-
+                    text_edit_quantity.setVisibility(View.GONE);
                 }
-                else manufacture_state="false";
+                else {
+                    manufacture_state="false";
+                    text_edit_quantity.setVisibility(View.VISIBLE);
+                }
                 Log.d(Tag,"manufacture state="+manufacture_state);
             }
         });
@@ -251,6 +249,7 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
         spin_unit.setOnItemSelectedListener(this);
 
         button_image_add.setOnClickListener(this);
+        change_image.setOnClickListener(this);
         submit.setOnClickListener(this);
 
 
@@ -285,7 +284,7 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
     @Override// button to choose image
     public void onClick(View view) {
         //code to allow user to select product images from gallery
-        if (view.getId()==R.id.button_image_add) {
+        if (view.getId()==R.id.button_image_add || view.getId()==R.id.change_image) {
             Intent intent = new Intent(Add_New_product.this, AlbumSelectActivity.class);
             intent.putExtra(Constants.INTENT_EXTRA_LIMIT, Base_url.numberOfImagesToSelect);
             startActivityForResult(intent, Constants.REQUEST_CODE);
@@ -809,6 +808,8 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == Constants.REQUEST_CODE && resultCode == RESULT_OK && data != null) {
 
+            change_image.setVisibility(View.VISIBLE);
+            imagePath.clear();imageNameList.clear();imageArray.clear();slider_image.clear();
             ArrayList<Image> images = data.getParcelableArrayListExtra(Constants.INTENT_EXTRA_IMAGES);
 
             for (int i = 0; i < images.size(); i++) {
