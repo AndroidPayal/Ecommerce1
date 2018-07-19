@@ -701,7 +701,13 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
 
             Log.d("ranges output",""+min_range+max_range+price_range);
 
+
             if(min_range.size()==0)
+            {
+                rangeIsSet = true;
+            }
+
+            else if(min_range.size()==0 && ranges.size() > 0)
             {
                 //provides user entry
                 Log.d("user entry","user blocked");

@@ -65,6 +65,8 @@ public class MyProductsAdapter extends RecyclerView.Adapter<MyProductsAdapter.Vi
         List<String> items = Arrays.asList(image_names.split(","));
         String first_image_url= Base_url.IMAGE_DIRECTORY_NAME+""+items.get(0);
 // imageView.setImageBitmap(product.get(i).getimage());
+
+
         Picasso.with(mCtx)
                 .load(first_image_url)
                 .placeholder(R.drawable.loading) // optional

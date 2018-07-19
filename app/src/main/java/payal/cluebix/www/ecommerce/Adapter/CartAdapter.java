@@ -17,18 +17,29 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import payal.cluebix.www.ecommerce.CenterActivity;
 import payal.cluebix.www.ecommerce.Datas.Base_url;
 import payal.cluebix.www.ecommerce.R;
 import payal.cluebix.www.ecommerce.Datas.sample_Cart;
+
+
+
+
 
 /**
  * Created by speed on 26-Mar-18.
  */
 
+
+
+
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ProductViewHolder> {
     private Context mCtx;
     private ArrayList<sample_Cart> productList=new ArrayList<>();
     CartAdapter.ClickListener clickListener;
+
+
+
 
     public CartAdapter(Context mCtx, ArrayList<sample_Cart> productList) {
         this.productList.clear();
