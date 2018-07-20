@@ -390,6 +390,7 @@ android:layout_marginTop="?attr/actionBarSize"-->
                 android:gravity="right"
                 android:padding="5dp"
                 android:drawablePadding="5dp"
+                android:visibility="gone"
                 />
             <View
                 android:id="@+id/view_for_margin"

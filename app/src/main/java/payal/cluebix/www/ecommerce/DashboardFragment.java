@@ -1,5 +1,7 @@
 package payal.cluebix.www.ecommerce;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
@@ -129,7 +131,7 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
         l2_dots=(LinearLayout)v.findViewById(R.id.l2_dots);
         loader_linear=(LinearLayout)v.findViewById(R.id.loader);
         v2=(View)v.findViewById(R.id.view_for_margin);
-        tool_search=(SearchView)getActivity().findViewById(R.id.search_edit);
+        tool_search=(SearchView)getActivity().findViewById(R.id.main_activity_search);
         load_more=(TextView)v.findViewById(R.id.load_more);
 
         tool_search.setIconifiedByDefault(false);
@@ -246,6 +248,7 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
 
                     loader_linear.setVisibility(View.GONE);
                     v2.setVisibility(View.VISIBLE);
+                    load_more.setVisibility(View.VISIBLE);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -347,6 +350,10 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
     public void onClick(View v) {
         if(v.getId()==R.id.load_more){
 
+            load_more.setClickable(false);
+            final ProgressDialog dialog = ProgressDialog.show(getActivity(), "","Loading...", true);
+            dialog.show();
+
             StringRequest stringRequest=new StringRequest(Request.Method.POST, url4+Lastid, new Response.Listener<String>(){
                 @Override
                 public void onResponse(String response) {//url1+Uid
@@ -354,6 +361,8 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
 
                     JSONObject post_data;
                     try {
+                        load_more.setClickable(true);
+
                         JSONObject obj=new JSONObject(response);
                         JSONArray jsonArray=obj.getJSONArray("products");
                         for(int i=0;i<jsonArray.length();i++) {
@@ -388,7 +397,9 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
                                     , color, price, product_images, sample, manufacturing,qty, amount,cart_disable));
                         }
 
+
                     adapter.notifyData(product_item);
+                        dialog.dismiss();
 
 
                     } catch (JSONException e) {
