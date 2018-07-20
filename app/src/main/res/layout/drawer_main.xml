@@ -41,22 +41,72 @@
 
                 >
 
-                <SearchView
-                    android:id="@+id/search_edit"
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:textColorHint="#656565"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginLeft="7dp"
-                    android:layout_marginRight="7dp"
-                    android:drawablePadding="7dp"
-                    android:textSize="12dp"
-                    android:drawableStart="@drawable/ic_search_black_24dp"
-                    android:hint="Search products here"
-                    android:background="@drawable/input_search_background"
-                    />
+                    android:orientation="horizontal"
+                    android:weightSum="4"
+                    >
+
+
+                    <SearchView
+                        android:id="@+id/guest_activity_search"
+                        android:iconifiedByDefault="false"
+                        android:focusableInTouchMode="true"
+                        android:focusedByDefault="false"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:layout_marginLeft="7dp"
+                        android:layout_marginRight="7dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_weight="3.9"
+                        android:background="@drawable/input_search_background"
+                        android:drawablePadding="7dp"
+                        android:drawableStart="@drawable/ic_search_black_24dp"
+                        android:gravity="center_vertical"
+                        android:queryHint="Search here"
+                        android:textSize="12dp" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginBottom="9dp"
+                        android:text="Filter"
+                        android:textColor="#fff"
+                        android:background="@drawable/filter_button_background"
+                        />
+
+
+                </LinearLayout>
+
+
+
+
+
+
+
+                <!--<SearchView-->
+                    <!--android:id="@+id/search_edit"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:gravity="center_vertical"-->
+                    <!--android:textColorHint="#656565"-->
+                    <!--android:layout_marginTop="4dp"-->
+                    <!--android:layout_marginBottom="10dp"-->
+                    <!--android:layout_marginLeft="7dp"-->
+                    <!--android:layout_marginRight="7dp"-->
+                    <!--android:drawablePadding="7dp"-->
+                    <!--android:textSize="12dp"-->
+                    <!--android:drawableStart="@drawable/ic_search_black_24dp"-->
+                    <!--android:hint="Search products here"-->
+                    <!--android:background="@drawable/input_search_background"-->
+                    <!--/>-->
 
 
             </android.support.v7.widget.Toolbar>
