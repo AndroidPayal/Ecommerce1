@@ -50,6 +50,8 @@ import java.util.TimerTask;
 public class GuestActivity extends AppCompatActivity implements Recycler_item_adapter.ClickListener, View.OnClickListener {
 
     private FloatingActionButton callFab;
+    Button filterButton;
+
     RecyclerView recyclerView;
     Recycler_item_adapter adapter;
 
@@ -115,6 +117,16 @@ public class GuestActivity extends AppCompatActivity implements Recycler_item_ad
         tool_search.setSubmitButtonEnabled(true);
         tool_search.setQueryHint("Search Here");
         tool_search.setOnQueryTextListener(this);*/
+
+       filterButton = (Button) findViewById(R.id.filterButton);
+
+       filterButton.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+
+               startActivity(new Intent(GuestActivity.this,FilterActivity.class));
+           }
+       });
 
         init();
         Timer timer = new Timer();

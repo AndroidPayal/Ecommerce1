@@ -134,7 +134,8 @@
         <activity
             android:name=".GuestCart"
             android:parentActivityName=".GuestActivity" />
-        <activity android:name=".FilterActivity"></activity>
+        <activity android:name=".FilterActivity" />
+        <activity android:name=".FilterResultActivity"></activity>
     </application>
 
 </manifest>

@@ -1,7 +1,5 @@
 package payal.cluebix.www.ecommerce;
 
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
@@ -58,7 +56,7 @@ import payal.cluebix.www.ecommerce.R;
  * Created by speed on 11-Jun-18.
  */
 
-public class DashboardFragment extends Fragment implements Recycler_item_adapter.ClickListener, SearchView.OnQueryTextListener, View.OnClickListener {
+public class DashboardFragment extends Fragment implements Recycler_item_adapter.ClickListener, SearchView.OnQueryTextListener {
 
     private String Tag="Dashboard_screen";
     RecyclerView recyclerView;
@@ -67,7 +65,6 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
     String url1= Base_url.Dashboard_url;
     String url2=Base_url.Add_prod_to_Cart;
     String url3=Base_url.My_cart_item_count;
-    String url4=Base_url.Load_more_url;
 
     ArrayList<String> Product_id_array=new ArrayList<>();
     ArrayList<String> P_id_array_of_cartItems=new ArrayList<>();
@@ -76,7 +73,7 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
     ArrayList<data_dashboard> product_item;
 
     SessionManager session;
-    String Uid;String Uname,Umail,Udate1,Udate2,Umob,Lastid="0";
+    String Uid;String Uname,Umail,Udate1,Udate2,Umob;
     public static int count=0;
     View v;
 
@@ -88,7 +85,6 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
     LinearLayout loader_linear;
     View v2;
     SearchView tool_search;
-    TextView load_more;
 
     public DashboardFragment() {
     }
@@ -101,6 +97,13 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
         slider_image.add(((BitmapDrawable) getResources().getDrawable(R.drawable.sl2)).getBitmap());
         slider_image.add(((BitmapDrawable) getResources().getDrawable(R.drawable.sl4)).getBitmap());
         slider_image.add(((BitmapDrawable) getResources().getDrawable(R.drawable.sl2)).getBitmap());
+
+/*
+        slider_image.add(((BitmapDrawable) getResources().getDrawable(R.drawable.people_login1)).getBitmap());
+        slider_image.add(((BitmapDrawable) getResources().getDrawable(R.drawable.logo2)).getBitmap());
+        slider_image.add(((BitmapDrawable) getResources().getDrawable(R.drawable.people_login)).getBitmap());
+        slider_image.add(((BitmapDrawable) getResources().getDrawable(R.drawable.logo2)).getBitmap());
+*/
 
         setHasOptionsMenu(true);
 
@@ -124,8 +127,7 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
         l2_dots=(LinearLayout)v.findViewById(R.id.l2_dots);
         loader_linear=(LinearLayout)v.findViewById(R.id.loader);
         v2=(View)v.findViewById(R.id.view_for_margin);
-        tool_search=(SearchView)getActivity().findViewById(R.id.main_activity_search);
-        load_more=(TextView)v.findViewById(R.id.load_more);
+//        tool_search=(SearchView)getActivity().findViewById(R.id.search_edit);
 
         tool_search.setIconifiedByDefault(false);
         tool_search.setSubmitButtonEnabled(true);
@@ -143,13 +145,12 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
 
 
         count=cart_item_count();
-     //   get_old_Element();
+        get_old_Element();
 
 //        adapter= new Recycler_item_adapter(getActivity(),product_item);
 //        adapter.setClickListener(this);
 //        recyclerView.setAdapter(adapter);
 
-        load_more.setOnClickListener(this);
         return v;
     }
 
@@ -226,8 +227,6 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
                         if(P_id_array_of_cartItems.contains(product_id))
                             cart_disable=1;
                         Log.d(Tag,"cart disable value="+cart_disable+" name="+product_name);
-
-                        Lastid=product_id;
                         product_item.add(new data_dashboard(product_id, product_name,product_code
                                 , color, price, product_images, sample, manufacturing,qty, amount,cart_disable));
                     }
@@ -241,7 +240,6 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
 
                     loader_linear.setVisibility(View.GONE);
                     v2.setVisibility(View.VISIBLE);
-                    load_more.setVisibility(View.VISIBLE);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -279,7 +277,6 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
 * {"id":"100","product_id":"2","product_name":"Demo1","price":"200.00","qty":"1","user_id":"51","is_active":"1"}*/
 
                     }
-                    get_old_Element();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -338,89 +335,6 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
         adapter.getFilter().filter(newText);
 
         return false;
-    }
-
-    @Override
-    public void onClick(View v) {
-        if(v.getId()==R.id.load_more){
-
-            load_more.setClickable(false);
-            final ProgressDialog dialog = ProgressDialog.show(getActivity(), "","Loading...", true);
-            dialog.show();
-
-            StringRequest stringRequest=new StringRequest(Request.Method.POST, url4+Lastid, new Response.Listener<String>(){
-                @Override
-                public void onResponse(String response) {//url1+Uid
-                    Log.d("dashboard_correct_res","response load more="+response);
-
-                    JSONObject post_data;String error="";
-                    try {
-                        load_more.setClickable(true);
-
-                        JSONObject obj=new JSONObject(response);
-                        try {
-                            error = obj.getString("error");
-                            if(error.equalsIgnoreCase("true")){
-                                dialog.cancel();
-                                Toast.makeText(getActivity(), "No More Data!", Toast.LENGTH_SHORT).show();
-                            }
-                        }catch (JSONException e){
-                            e.printStackTrace();
-                        }
-
-                        JSONArray jsonArray=obj.getJSONArray("products");
-                        for(int i=0;i<jsonArray.length();i++) {
-                            post_data = jsonArray.getJSONObject(i);
-/*
-{"id":"24","product_name":"this is test product","product_code":"896833","price":"345.00","retail_price":"700.00","color":"red","product_images":"79e,79f","sample":"0","unit":"ufndi","manufacturing":"0","qty":"4","amount":"5.00","percent":"%"},{
-* */
-                            String product_id = post_data.getString("id");
-                            String product_name = post_data.getString("product_name");
-                            String product_code= post_data.getString("product_code");
-                            String retail_price=post_data.getString("retail_price");
-                            String color = post_data.getString("color");
-                            String price = post_data.getString("price");
-                            String product_images = post_data.getString("product_images");
-                            String sample=post_data.getString("sample");
-                            String manufacturing=post_data.getString("manufacturing");
-                            String qty=post_data.getString("qty");
-                            String amount=post_data.getString("amount");
-                            String percent=post_data.getString("percent");
-
-
-                            Product_id_array.add(product_id);
-                            int cart_disable = 0;
-                            name_list.add(product_name);
-
-                            if(P_id_array_of_cartItems.contains(product_id))
-                                cart_disable=1;
-                            Log.d(Tag,"cart disable value="+cart_disable+" name="+product_name);
-
-                            Lastid=product_id;
-                            product_item.add(new data_dashboard(product_id, product_name,product_code
-                                    , color, price, product_images, sample, manufacturing,qty, amount,cart_disable));
-                        }
-
-
-                    adapter.notifyData(product_item);
-                        dialog.dismiss();
-
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.d("dashboard_error_res",error+"");
-                    Toast.makeText(getActivity(), "Server Connection Failed!", Toast.LENGTH_SHORT).show();
-                }
-            });
-            RquestHandler.getInstance(getActivity()).addToRequestQueue(stringRequest);
-
-        }
     }
 
 
