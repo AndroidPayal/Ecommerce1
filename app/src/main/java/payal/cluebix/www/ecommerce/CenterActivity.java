@@ -72,6 +72,8 @@ public class CenterActivity extends AppCompatActivity implements ProductDetail.C
         super.onCreate(savedInstanceState);
         setContentView(R.layout.drawer_main);
 
+        new ProductDetail(CenterActivity.this);
+
         session = new SessionManager(getApplicationContext());
         HashMap<String, String> user = session.getUserDetails();
         Uname = user.get(SessionManager.KEY_NAME);

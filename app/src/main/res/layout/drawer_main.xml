@@ -51,7 +51,7 @@
 
 
                     <SearchView
-                        android:id="@+id/guest_activity_search"
+                        android:id="@+id/main_activity_search"
                         android:iconifiedByDefault="false"
                         android:focusableInTouchMode="true"
                         android:focusedByDefault="false"

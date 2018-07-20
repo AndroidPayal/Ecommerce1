@@ -65,7 +65,7 @@ public class ProductDetail extends AppCompatActivity {
     String url3=Base_url.My_cart_item_count;/*userid*/
     String url4=Base_url.Product_price_range;/*range id*/
 
-    TextView p_name,desc,prize,tcolor,add_cart,category,p_available,t_sample,t_unit,t_unit2,text_sample_price;
+    TextView p_name,desc,prize,tcolor,add_cart,category,category_type,p_available,t_sample,t_unit,t_unit2,text_sample_price;
     TextView first1,first2,first3,second1,second2,second3,third1,third2,third3,p_code;
 
     SessionManager session;
@@ -121,6 +121,7 @@ public class ProductDetail extends AppCompatActivity {
         p_code=(TextView)findViewById(R.id.p_code);
         add_cart=(TextView)findViewById(R.id.add_cart);
         category=(TextView)findViewById(R.id.category);
+        category_type=(TextView)findViewById(R.id.category_type);
         vp_slider = (ViewPager) findViewById(R.id.view_slider1);
         l2_dots = (LinearLayout) findViewById(R.id.l2_dots);
         p_available=(TextView)findViewById(R.id.product_available);
@@ -291,7 +292,7 @@ public class ProductDetail extends AppCompatActivity {
                         //this code runs when guest user adds item to cart
                         new myDbClass(ProductDetail.this).InsertAllValues(AllData.get(0),AllData.get(1),AllData.get(2),AllData.get                  (3),AllData.get(4) ,AllData.get(5),AllData.get(6),AllData.get(7),AllData.get(8),AllData.get(9),AllData.get(10)
                                 ,AllData.get(11),AllData.get(12),quantity+"" //quantity=quantity ordered
-                                ,AllData.get(14));
+                                ,AllData.get(14),AllData.get(15));
                         /*AllData Array Val= Productid ,category_name,product_name , brand ,product_code ," +
                 "price ,unit ,manufacturing ,qty ,sample , sample_price , color , description */
                         add_cart.setText("Added To Cart");
@@ -313,7 +314,7 @@ public class ProductDetail extends AppCompatActivity {
                 Log.d(Tag,"product detail on res="+response);
                /* linear_detail_start.setVisibility(View.GONE);
                 linear_detail.setVisibility(View.VISIBLE);*/
-                String product_id= null,category_name= null,product_name= null,brand= null,product_code= null
+                String product_id= null,category_name= null,type=null,product_name= null,brand= null,product_code= null
                         ,price= null,retail_price=null,manufacturing= null,qty= null,sample= null,unit= null,color
                         = null,description= null,product_images = null,user_id= null,rangId= null,amount= null,percent;
                 JSONObject post_data;
@@ -325,6 +326,7 @@ public class ProductDetail extends AppCompatActivity {
                         post_data = jsonArray.getJSONObject(i);
                          product_id = post_data.getString("id");
                          category_name = post_data.getString("category_name");
+                        type=post_data.getString("type");
                          product_name = post_data.getString("product_name");
                          brand = post_data.getString("brand");
                          product_code = post_data.getString("product_code");
@@ -344,7 +346,7 @@ public class ProductDetail extends AppCompatActivity {
                          percent = post_data.getString("percent");
                     }
 
-                    AllData.add(product_id);AllData.add(category_name);AllData.add(product_name);AllData.add(brand);AllData.add(product_code);AllData.add(retail_price);AllData.add(unit);AllData.add(manufacturing);AllData.add(qty);AllData.add(sample);AllData.add(sample_price);AllData.add(color);AllData.add(description);AllData.add("0");AllData.add(product_images);
+                    AllData.add(product_id);AllData.add(category_name);AllData.add(product_name);AllData.add(brand);AllData.add(product_code);AllData.add(retail_price);AllData.add(unit);AllData.add(manufacturing);AllData.add(qty);AllData.add(sample);AllData.add(sample_price);AllData.add(color);AllData.add(description);AllData.add("0");AllData.add(product_images);AllData.add(type);
 /*InsertAllValues(String Productid,String category_name, String product_name, String brand,String product_code,
             String price, String unit,String manufacturing, String qty,String sample, String sample_price,
                 String color, String description,String quantityOrder,String images)*/
@@ -377,7 +379,8 @@ public class ProductDetail extends AppCompatActivity {
 
                     tcolor.setText("Available in Color: "+color);
 
-                    category.setText("CATEGORY: "+category_name);
+                    category.setText("CATEGORY : "+category_name);
+                    category_type.setText("TYPE : "+type);
                     p_code.setText("ProductCode: "+product_code);
                     t_unit.setText(unit);
                     t_unit2.setText(unit);
