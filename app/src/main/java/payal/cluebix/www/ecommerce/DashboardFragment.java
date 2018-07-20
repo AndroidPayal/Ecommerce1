@@ -102,13 +102,6 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
         slider_image.add(((BitmapDrawable) getResources().getDrawable(R.drawable.sl4)).getBitmap());
         slider_image.add(((BitmapDrawable) getResources().getDrawable(R.drawable.sl2)).getBitmap());
 
-/*
-        slider_image.add(((BitmapDrawable) getResources().getDrawable(R.drawable.people_login1)).getBitmap());
-        slider_image.add(((BitmapDrawable) getResources().getDrawable(R.drawable.logo2)).getBitmap());
-        slider_image.add(((BitmapDrawable) getResources().getDrawable(R.drawable.people_login)).getBitmap());
-        slider_image.add(((BitmapDrawable) getResources().getDrawable(R.drawable.logo2)).getBitmap());
-*/
-
         setHasOptionsMenu(true);
 
         count=0;
@@ -150,7 +143,7 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
 
 
         count=cart_item_count();
-        get_old_Element();
+     //   get_old_Element();
 
 //        adapter= new Recycler_item_adapter(getActivity(),product_item);
 //        adapter.setClickListener(this);
@@ -286,6 +279,7 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
 * {"id":"100","product_id":"2","product_name":"Demo1","price":"200.00","qty":"1","user_id":"51","is_active":"1"}*/
 
                     }
+                    get_old_Element();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -359,11 +353,21 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
                 public void onResponse(String response) {//url1+Uid
                     Log.d("dashboard_correct_res","response load more="+response);
 
-                    JSONObject post_data;
+                    JSONObject post_data;String error="";
                     try {
                         load_more.setClickable(true);
 
                         JSONObject obj=new JSONObject(response);
+                        try {
+                            error = obj.getString("error");
+                            if(error.equalsIgnoreCase("true")){
+                                dialog.cancel();
+                                Toast.makeText(getActivity(), "No More Data!", Toast.LENGTH_SHORT).show();
+                            }
+                        }catch (JSONException e){
+                            e.printStackTrace();
+                        }
+
                         JSONArray jsonArray=obj.getJSONArray("products");
                         for(int i=0;i<jsonArray.length();i++) {
                             post_data = jsonArray.getJSONObject(i);

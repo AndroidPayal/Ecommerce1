@@ -351,6 +351,7 @@ public class CartFragment extends Fragment implements CartAdapter.ClickListener 
                 linear_cart_start.setVisibility(View.GONE);
                 linear_cart.setVisibility(View.VISIBLE);
                 product_item.clear();
+                itemCount=0;
 
                 JSONObject post_data;
                 try {

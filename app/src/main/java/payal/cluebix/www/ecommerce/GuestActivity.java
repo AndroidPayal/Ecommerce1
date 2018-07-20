@@ -1,5 +1,6 @@
 package payal.cluebix.www.ecommerce;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -46,7 +47,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class GuestActivity extends AppCompatActivity implements Recycler_item_adapter.ClickListener {
+public class GuestActivity extends AppCompatActivity implements Recycler_item_adapter.ClickListener, View.OnClickListener {
 
     private FloatingActionButton callFab;
     RecyclerView recyclerView;
@@ -66,7 +67,9 @@ public class GuestActivity extends AppCompatActivity implements Recycler_item_ad
     List<Bitmap> slider_image=new ArrayList<>();
     Slider_adap_add_product sliderPagerAdapter;
     LinearLayout loader_linear;
-    View v2;
+
+    String url4=Base_url.Load_more_url;
+
 
     Toolbar toolbar;
     SearchView tool_search;
@@ -74,7 +77,8 @@ public class GuestActivity extends AppCompatActivity implements Recycler_item_ad
     ArrayList<String> Product_id_array=new ArrayList<>();
     ArrayList<String> P_id_array_of_cartItems=new ArrayList<>();
     ArrayList<String> name_list=new ArrayList<>();
-
+    TextView load_more;
+    String Lastid="0";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +90,7 @@ public class GuestActivity extends AppCompatActivity implements Recycler_item_ad
         viewPager=(ViewPager)findViewById(R.id.front_viewPager);
         l2_dots=(LinearLayout)findViewById(R.id.l2_dots);
         loader_linear=(LinearLayout)findViewById(R.id.loader);
-        v2=(View)findViewById(R.id.view_for_margin);
+        load_more=(TextView)findViewById(R.id.load_more_guest);
 
         toolbar = (Toolbar) findViewById(R.id.guest_toolbar2);
 
@@ -134,6 +138,8 @@ public class GuestActivity extends AppCompatActivity implements Recycler_item_ad
 
         tool_search = (SearchView) findViewById(R.id.guest_activity_search);
 
+
+        load_more.setOnClickListener(this);
 
         tool_search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -234,6 +240,8 @@ public class GuestActivity extends AppCompatActivity implements Recycler_item_ad
                         Log.d("Guest_act_screen","cart disable value="+cart_disable+" name="+product_name);
                         product_item.add(new data_dashboard(product_id, product_name,product_code
                                 , color, retail_price, product_images, sample, manufacturing,qty, amount,cart_disable));
+
+                        Lastid=product_id;
                     }
 
 //                    adapter.notifyData(product_item);
@@ -245,7 +253,6 @@ public class GuestActivity extends AppCompatActivity implements Recycler_item_ad
 
 
                     loader_linear.setVisibility(View.GONE);
-                    v2.setVisibility(View.VISIBLE);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -290,6 +297,79 @@ public class GuestActivity extends AppCompatActivity implements Recycler_item_ad
 
     @Override
     public void Add_to_cart(View view, int position) {
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        load_more.setClickable(false);
+        final ProgressDialog dialog = ProgressDialog.show(GuestActivity.this, "","Loading...", true);
+        dialog.show();
+
+        StringRequest stringRequest=new StringRequest(Request.Method.POST, url4+Lastid, new Response.Listener<String>(){
+            @Override
+            public void onResponse(String response) {//url1+Uid
+                Log.d("dashboard_correct_res","response load more="+response);
+
+                JSONObject post_data;
+                try {
+                    load_more.setClickable(true);
+
+                    JSONObject obj=new JSONObject(response);
+                    JSONArray jsonArray=obj.getJSONArray("products");
+                    for(int i=0;i<jsonArray.length();i++) {
+                        post_data = jsonArray.getJSONObject(i);
+/*
+{"id":"24","product_name":"this is test product","product_code":"896833","price":"345.00","retail_price":"700.00","color":"red","product_images":"79e,79f","sample":"0","unit":"ufndi","manufacturing":"0","qty":"4","amount":"5.00","percent":"%"},{
+* */
+                        String product_id = post_data.getString("id");
+                        String product_name = post_data.getString("product_name");
+                        String product_code= post_data.getString("product_code");
+                        String retail_price=post_data.getString("retail_price");
+                        String color = post_data.getString("color");
+                        String price = post_data.getString("price");
+                        String product_images = post_data.getString("product_images");
+                        String sample=post_data.getString("sample");
+                        String manufacturing=post_data.getString("manufacturing");
+                        String qty=post_data.getString("qty");
+                        String amount=post_data.getString("amount");
+                        String percent=post_data.getString("percent");
+
+
+                        Product_id_array.add(product_id);
+                        int cart_disable = 0;
+                        name_list.add(product_name);
+
+                        if(P_id_array_of_cartItems.contains(product_id))
+                            cart_disable=1;
+                        Log.d("Tag","cart disable value="+cart_disable+" name="+product_name);
+
+                        Lastid=product_id;
+                        product_item.add(new data_dashboard(product_id, product_name,product_code
+                                , color, price, product_images, sample, manufacturing,qty, amount,cart_disable));
+
+                        Lastid=product_id;
+                    }
+
+
+                    adapter.notifyData(product_item);
+                    dialog.dismiss();
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("dashboard_error_res",error+"");
+                Toast.makeText(GuestActivity.this, "Server Connection Failed!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        RquestHandler.getInstance(GuestActivity.this).addToRequestQueue(stringRequest);
+
 
     }
 
