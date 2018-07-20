@@ -113,10 +113,13 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
     ArrayList<unit_color_data> unit_list=new ArrayList<>();
     ArrayList<company_data> company_list=new ArrayList<>();
     ArrayList<String> selected_color_list=new ArrayList<>();
+    ArrayList<unit_color_data> type_list=new ArrayList<>();
+
 
     ArrayList<String> category_name_list=new ArrayList<>();
     ArrayList<String> color_name_list=new ArrayList<>();
     ArrayList<String> unit_name_list=new ArrayList<>();
+    ArrayList<String> type_name_list=new ArrayList<>();
     ArrayList<String> company_name_list=new ArrayList<>();
 
     final List<KeyPairBoolData> bool_color = new ArrayList<KeyPairBoolData>();
@@ -125,6 +128,7 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
     String url_Category_fetch=Base_url.List_all_category;
     String url_Color_fetch=Base_url.List_all_color;
     String url_Unit_fetch=Base_url.List_all_unit;
+    String url_type_Unit_fetch=Base_url.List_all_type_category;
     String url_Company_fetch=Base_url.List_all_company;
 
     CheckBox sample_availability,check_manufacture;
@@ -134,6 +138,7 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
     public static String selected_category="";
     public static String selected_company="";
     public static String selected_unit1="";
+    public static String selected_type_category="";
     public static String selected_description="";
     public static String sample_state="false",manufacture_state="false";
 
@@ -183,7 +188,7 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
 
         category_list.clear();color_name_list.clear();color_list.clear();category_list.clear();
         unit_list.clear();unit_name_list.clear();company_name_list.clear();company_list.clear();
-        min_range.clear();max_range.clear();price_range.clear();
+        min_range.clear();max_range.clear();price_range.clear();type_list.clear();type_name_list.clear();
 
         getOldElements();
 
@@ -237,7 +242,11 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
             }
         });
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item, category_name_list);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item, type_name_list);
+        spin_category_type.setAdapter(adapter);
+        spin_category_type.setOnItemSelectedListener(this);
+
+        adapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item, category_name_list);
         spinner_category.setAdapter(adapter);
         spinner_category.setOnItemSelectedListener(this);
 
@@ -339,6 +348,52 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
         getColor();
         getUnit();
         getCompany();
+        getTypeCategory();
+    }
+
+    private void getTypeCategory() {
+        /*{"success":"true","units":[{"id":"1","type":"Wall","created_at":"2018-07-11","updated_at":"2018-07-11"}*/
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url_type_Unit_fetch, new Response.Listener<String>() {
+            @Override
+            public void onResponse(final String response) {
+ /*{
+    "success": "true",
+    "units": [
+        {
+            "id": "1",
+            "unit_name": "PSC"
+        },*/
+                JSONObject post_data;
+                try {
+                    JSONObject jsonObj=new JSONObject(response);
+                    String success=jsonObj.getString("success");
+                    JSONArray jsonArray=jsonObj.getJSONArray("units");
+                    for(int i=0;i<jsonArray.length();i++) {
+                        post_data = jsonArray.getJSONObject(i);
+                        String id=post_data.getString("id");
+                        String type=post_data.getString("type");
+                        String created_at=post_data.getString("created_at");
+                        String updated_at=post_data.getString("updated_at");
+
+                        type_list.add(new unit_color_data(id,type));
+                        type_name_list.add(type);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(Tag, "Volley error: "+error );
+                Toast.makeText(Add_New_product.this, "Server Connection Failed!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        RquestHandler.getInstance(Add_New_product.this).addToRequestQueue(stringRequest);
+
+
     }
 
     private void getCompany() {
@@ -923,7 +978,7 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
                 entity.addPart("manufacturing", new StringBody(manufacture_state));
                 entity.addPart("retail_price", new StringBody(edit_retail_price.getText().toString().trim()));
                 entity.addPart("created_by", new StringBody(Uid));
-                entity.addPart("category_type", new StringBody("category type dym"));
+                entity.addPart("category_type", new StringBody(selected_type_category));
 
 
 //add  retail prise adn created by

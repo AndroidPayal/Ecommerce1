@@ -253,6 +253,7 @@ public class GuestActivity extends AppCompatActivity implements Recycler_item_ad
 
 
                     loader_linear.setVisibility(View.GONE);
+                    load_more.setVisibility(View.VISIBLE);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
