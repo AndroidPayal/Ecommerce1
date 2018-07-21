@@ -32,6 +32,7 @@ import payal.cluebix.www.ecommerce.Datas.Base_url;
 import payal.cluebix.www.ecommerce.Datas.data_dashboard;
 import payal.cluebix.www.ecommerce.Datas.unit_color_data;
 import payal.cluebix.www.ecommerce.Handlers.RquestHandler;
+import payal.cluebix.www.ecommerce.Handlers.SessionManager;
 
 public class FilterActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -41,6 +42,10 @@ public class FilterActivity extends AppCompatActivity implements AdapterView.OnI
     ArrayList<String> cityList=new ArrayList<>();
     String url_get_citites=Base_url.ListgetCities;
     public static String location;
+    SessionManager session;
+    HashMap<String,String> userSession;
+    String username;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,9 +58,16 @@ public class FilterActivity extends AppCompatActivity implements AdapterView.OnI
 
         getCityList();
 
+        session = new SessionManager(getApplicationContext());
+
+         userSession = session.getUserDetails();
+
+        username = ""+userSession.get(session.KEY_email);
+
+        Log.d("filterxyz",""+userSession.get(session.KEY_email));
 
 
-        final String url = "http://democs.com/demo/vendor/ApiController/search";
+
 
 
 
@@ -66,6 +78,8 @@ public class FilterActivity extends AppCompatActivity implements AdapterView.OnI
         locationEditText.setOnItemSelectedListener(this);
 
         textView.setOnClickListener(new View.OnClickListener() {
+
+
             @Override
             public void onClick(View v) {
 
@@ -136,14 +150,35 @@ public class FilterActivity extends AppCompatActivity implements AdapterView.OnI
 
                 minRange = minRangeEditText.getText().toString().trim();
                 maxRange = maxRangeEditText.getText().toString().trim();
+//
+//                if( session.getUserDetails())
+//                {
+//
+//                }
+
+                    String url = "http://democs.com/demo/vendor/ApiController/search";
+
+                    if(username.equals(null) || username.equals(""))
+                    {
+
+                        url = "http://democs.com/demo/vendor/ApiController/search";
+                    }
+                    else{
+
+                        url = "http://democs.com/demo/vendor/ApiController/search/"+session.KEY_ID;
+                    }
 
                 Intent intent = new Intent(getApplicationContext(),FilterResultActivity.class);
-
+                        intent.putExtra("url",url);
                         intent.putExtra("location",location);
                         intent.putExtra("minRange",minRange);
                         intent.putExtra("maxRange",maxRange);
 
-                startActivity(intent);}
+                startActivity(intent);
+
+                finishAfterTransition();
+
+                }
 
             }
         });
