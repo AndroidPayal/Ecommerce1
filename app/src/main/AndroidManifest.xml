@@ -135,7 +135,9 @@
             android:name=".GuestCart"
             android:parentActivityName=".GuestActivity" />
         <activity android:name=".FilterActivity" />
-        <activity android:name=".FilterResultActivity"></activity>
+        <activity android:name=".FilterResultActivity"
+            android:theme="@style/AppThemeNoActionBar"
+            ></activity>
     </application>
 
 </manifest>
