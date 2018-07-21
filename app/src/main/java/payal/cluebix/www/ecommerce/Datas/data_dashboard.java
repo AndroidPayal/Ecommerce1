@@ -12,7 +12,7 @@ import java.util.List;
 public class data_dashboard {
 
     String ProductId;
-    String product_name;
+     String product_name;
     String product_code;
     String color;
     String price;

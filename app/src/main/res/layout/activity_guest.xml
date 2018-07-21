@@ -491,9 +491,9 @@
                 android:id="@+id/load_more_guest"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableRight="@drawable/down"
+                android:drawableLeft="@drawable/down"
                 android:text="More"
-                android:gravity="right"
+                android:gravity="left"
                 android:padding="5dp"
                 android:drawablePadding="5dp"
                 android:visibility="gone"/>

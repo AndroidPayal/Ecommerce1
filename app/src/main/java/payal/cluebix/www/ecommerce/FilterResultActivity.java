@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -113,7 +114,10 @@ public class FilterResultActivity extends AppCompatActivity {
         final String location = extras.getString("location");
         final String minRange = extras.getString("minRange");
         final String maxRange = extras.getString("maxRange");
+        final String username = extras.getString("username");
         final String url = extras.getString("url");
+
+        Log.d("appendedurl",""+url);
 
 
 
@@ -180,10 +184,10 @@ public class FilterResultActivity extends AppCompatActivity {
 
                         String product_name = post_data.getString("product_name");
 
-                        Log.d("myitem",product_name);
-                        String product_code= post_data.getString("product_code");
+                        Log.d("myitem", product_name);
+                        String product_code = post_data.getString("product_code");
 
-                        String retail_price=post_data.getString("retail_price");
+                        String retail_price = post_data.getString("retail_price");
 
                         String color = post_data.getString("color");
 
@@ -191,12 +195,11 @@ public class FilterResultActivity extends AppCompatActivity {
 
                         String product_images = post_data.getString("product_images");
 
-                        String sample=post_data.getString("sample");
+                        String sample = post_data.getString("sample");
 
-                        String manufacturing=post_data.getString("manufacturing");
+                        String manufacturing = post_data.getString("manufacturing");
 
-                        String qty=post_data.getString("qty");
-
+                        String qty = post_data.getString("qty");
 
 
 //sample price, type
@@ -209,30 +212,32 @@ public class FilterResultActivity extends AppCompatActivity {
                         name_list.add(product_name);
 
 
+                        if (P_id_array_of_cartItems.contains(product_id))
 
+                            cart_disable = 1;
 
-
-                        if(P_id_array_of_cartItems.contains(product_id))
-
-                            cart_disable=1;
-
-                        Log.d("product name","cart disable value="+cart_disable+" name="+product_name);
-
+                        Log.d("product name", "cart disable value=" + cart_disable + " name=" + product_name);
 
 
 //                        Lastid=product_id;
 
-                        product_item.add(new data_dashboard(product_id, product_name,product_code
+                        Log.d("usersession",""+username);
 
-                                , color, retail_price, product_images, sample, manufacturing,qty, "",cart_disable));
+                        if (username.equals("null")) {
 
+                            product_item.add(new data_dashboard(product_id, product_name, product_code
 
+                                    , color, retail_price, product_images, sample, manufacturing, qty, "", cart_disable));
+                        } else {
 
+                            product_item.add(new data_dashboard(product_id, product_name, product_code
+
+                                    , color, price, product_images, sample, manufacturing, qty, "", cart_disable));
+                        }
 
                     }
 
 
-                    Log.d("unmesh123","after loop="+product_item.get(0));
 
 
 
@@ -249,7 +254,7 @@ public class FilterResultActivity extends AppCompatActivity {
                     recyclerView.setAdapter(adapter);
 
 
-                    Log.d("filter jsonResponse",""+resultSet.get(0));
+//                    Log.d("filter jsonResponse",""+resultSet.get(0));
 
 
 

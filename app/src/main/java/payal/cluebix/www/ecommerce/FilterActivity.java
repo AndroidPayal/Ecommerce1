@@ -62,9 +62,9 @@ public class FilterActivity extends AppCompatActivity implements AdapterView.OnI
 
          userSession = session.getUserDetails();
 
-        username = ""+userSession.get(session.KEY_email);
+        username = ""+userSession.get(session.KEY_ID);
 
-        Log.d("filterxyz",""+userSession.get(session.KEY_email));
+        Log.d("filterxyz",""+userSession.get(session.KEY_ID));
 
 
 
@@ -163,13 +163,15 @@ public class FilterActivity extends AppCompatActivity implements AdapterView.OnI
 
                         url = "http://democs.com/demo/vendor/ApiController/search";
                     }
-                    else{
 
-                        url = "http://democs.com/demo/vendor/ApiController/search/"+session.KEY_ID;
+                    else if(!username.isEmpty()){
+
+                        url = "http://democs.com/demo/vendor/ApiController/search/"+username;
                     }
 
                 Intent intent = new Intent(getApplicationContext(),FilterResultActivity.class);
                         intent.putExtra("url",url);
+                        intent.putExtra("username",username);
                         intent.putExtra("location",location);
                         intent.putExtra("minRange",minRange);
                         intent.putExtra("maxRange",maxRange);
