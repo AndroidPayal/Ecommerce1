@@ -127,6 +127,7 @@ public class CartFragment extends Fragment implements CartAdapter.ClickListener 
             public void onClick(View view) {
                 if(!product_item.isEmpty()) {
 
+                    t_checkout.setClickable(false);
                     StringRequest stringRequest = new StringRequest(Request.Method.POST, url4 + Uid, new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
