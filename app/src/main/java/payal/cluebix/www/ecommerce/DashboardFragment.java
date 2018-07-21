@@ -127,7 +127,7 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
         l2_dots=(LinearLayout)v.findViewById(R.id.l2_dots);
         loader_linear=(LinearLayout)v.findViewById(R.id.loader);
         v2=(View)v.findViewById(R.id.view_for_margin);
-//        tool_search=(SearchView)getActivity().findViewById(R.id.search_edit);
+        tool_search=(SearchView)getActivity().findViewById(R.id.main_activity_search);
 
         tool_search.setIconifiedByDefault(false);
         tool_search.setSubmitButtonEnabled(true);

@@ -3,9 +3,13 @@ package payal.cluebix.www.ecommerce;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Filterable;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,6 +18,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,26 +30,28 @@ import java.util.Map;
 
 import payal.cluebix.www.ecommerce.Datas.Base_url;
 import payal.cluebix.www.ecommerce.Datas.data_dashboard;
+import payal.cluebix.www.ecommerce.Datas.unit_color_data;
 import payal.cluebix.www.ecommerce.Handlers.RquestHandler;
 
-public class FilterActivity extends AppCompatActivity {
+public class FilterActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     public ArrayList<data_dashboard> copyofData;
 
-
-
-
+    SearchableSpinner locationEditText;
+    ArrayList<String> cityList=new ArrayList<>();
+    String url_get_citites=Base_url.ListgetCities;
+    public static String location;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter);
 
 
-       EditText locationEditText = (EditText) findViewById(R.id.filterLocationEditText);
+        locationEditText = (SearchableSpinner) findViewById(R.id.filterLocationEditText);
         EditText minRangeEditText = (EditText) findViewById(R.id.filterMinRange);
         EditText maxRangeEditText = (EditText) findViewById(R.id.filterMaxRange);
 
-
+        getCityList();
 
 
 
@@ -54,30 +61,35 @@ public class FilterActivity extends AppCompatActivity {
 
         TextView textView = (TextView) findViewById(R.id.filterTextView);
 
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item, cityList);
+        locationEditText.setAdapter(adapter);
+        locationEditText.setOnItemSelectedListener(this);
+
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
 
-                EditText locationEditText = (EditText) findViewById(R.id.filterLocationEditText);
+          //      EditText locationEditText = (EditText) findViewById(R.id.filterLocationEditText);
                 EditText minRangeEditText = (EditText) findViewById(R.id.filterMinRange);
                 EditText maxRangeEditText = (EditText) findViewById(R.id.filterMaxRange);
 
 
                 boolean enterFlag = true;
 
-                String location,minRange,maxRange;
+                String minRange,maxRange;
 
                 int minRangeInt,maxRangeInt;
 
-                location = locationEditText.getText().toString().toLowerCase().trim();
+               // location = ;//locationEditText.getText().toString().toLowerCase().trim();
 
 
-                if(locationEditText.getText().toString().isEmpty() || locationEditText.getText().toString() == null )
+                if(TextUtils.isEmpty(location))
                 {
                     location = "";
                 }
 
+                Log.d("locationVal","selected location="+location);
 
                 // Number validation
 
@@ -290,7 +302,54 @@ public class FilterActivity extends AppCompatActivity {
 
 
 
-}  }
+}
+
+    private void getCityList() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url_get_citites, new Response.Listener<String>() {
+            @Override
+            public void onResponse(final String response) {
+ /*{"success":"true","cities":[{"city":""},{"city":"Balauda-Bazar"},,*/
+
+
+                JSONObject post_data;
+                try {
+                    JSONObject jsonObj=new JSONObject(response);
+                    String success=jsonObj.getString("success");
+                    JSONArray jsonArray=jsonObj.getJSONArray("cities");
+                    for(int i=0;i<jsonArray.length();i++) {
+                        post_data = jsonArray.getJSONObject(i);
+                        String id="0";
+                        String city=post_data.getString("city");
+
+                        //cityList.add(new unit_color_data(id,city));
+                        cityList.add(city);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Filterscreen", "Volley error: "+error );
+                Toast.makeText(FilterActivity.this, "Server Connection Failed!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        RquestHandler.getInstance(FilterActivity.this).addToRequestQueue(stringRequest);
+
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        location=cityList.get(position);
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+}
 
 
 

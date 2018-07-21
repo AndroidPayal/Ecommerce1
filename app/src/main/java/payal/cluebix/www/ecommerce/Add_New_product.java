@@ -904,6 +904,7 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
                     TextUtils.isEmpty(selected_company) &&
                     edit_price.getText().toString().trim().equals("")){
 */
+         Log.d("Apicontroller1","pre executing");
                 dialog.show();
            // }
             prog.setProgress(0);
@@ -923,7 +924,7 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
             String responseString = null;
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(url1+Uid);
-            Log.d("Apicontroller","url="+url1+Uid);
+            Log.d("Apicontroller1","url="+url1+Uid);
             try {
                 AndroidMultiPartEntity entity = new AndroidMultiPartEntity(
                         new AndroidMultiPartEntity.ProgressListener() {
@@ -1047,7 +1048,7 @@ city,*/
 
         @Override
         protected void onPostExecute(String result) {
-            Log.e("TAG__", "Response from server: " + result);
+            Log.e("Apicontroller1", "Response from server: " + result);
             if(result.equalsIgnoreCase("success")) {
                 textResp.setText("Status : " + result);
                 textOk.setVisibility(View.VISIBLE);

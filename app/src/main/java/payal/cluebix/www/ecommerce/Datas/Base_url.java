@@ -14,6 +14,7 @@ public class Base_url {
     public static final String Load_more_url=base_url+"ApiController/loadMore/";/*/Last Product's id */
     public static final String Add_product_url=base_url+"ApiController/storeProduct/";/*/userid*/
     public static final String List_all_type_category=base_url+"ApiController/getCategoryType";
+    public static final String ListgetCities = base_url+"ApiController/getCities";
 
 
     public static final String Product_Detail_url=base_url+"ApiController/productDetail/";/*/product_id*/

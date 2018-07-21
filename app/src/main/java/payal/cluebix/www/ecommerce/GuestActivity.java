@@ -15,6 +15,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.TooltipCompat;
 import android.text.Html;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -162,6 +163,7 @@ public class GuestActivity extends AppCompatActivity implements Recycler_item_ad
             @Override
             public boolean onQueryTextChange(String newText) {
 
+                if (!TextUtils.isEmpty(newText))
                 adapter.getFilter().filter(newText);
 
                 return false;
