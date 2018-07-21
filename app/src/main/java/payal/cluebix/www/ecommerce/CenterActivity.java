@@ -24,6 +24,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,6 +56,7 @@ public class CenterActivity extends AppCompatActivity implements ProductDetail.C
     private DrawerLayout drawerLayout;
     Toolbar toolbar, search_tool2;
     FloatingActionButton floatb;
+    Button filterButton;
 
 //    private ArrayList<ImageEntry> mSelectedImages = new ArrayList<>();
     SessionManager session;
@@ -281,6 +283,17 @@ navigationView.setItemIconTintList(ColorStateList2);
         };
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
+
+        filterButton = (Button) findViewById(R.id.vendor_filter_button);
+
+        filterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                startActivity(new Intent(getApplicationContext(),FilterActivity.class));
+
+            }
+        });
 
     }
 

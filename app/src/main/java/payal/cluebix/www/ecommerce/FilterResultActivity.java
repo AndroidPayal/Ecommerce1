@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -42,6 +43,7 @@ public class FilterResultActivity extends AppCompatActivity {
     FloatingActionButton callFab;
  SearchView searchView;
  Button filterButton;
+ ProgressBar filterProgressBar;
 
 
     ArrayList<data_dashboard> productList = new ArrayList<>();
@@ -51,8 +53,8 @@ public class FilterResultActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter_result);
 
-        final String url = "http://democs.com/demo/vendor/ApiController/search";
 
+        filterProgressBar = findViewById(R.id.filter_progress);
 
         callFab = (FloatingActionButton) findViewById(R.id.floatingActionButton);
 
@@ -111,6 +113,7 @@ public class FilterResultActivity extends AppCompatActivity {
         final String location = extras.getString("location");
         final String minRange = extras.getString("minRange");
         final String maxRange = extras.getString("maxRange");
+        final String url = extras.getString("url");
 
 
 
@@ -240,6 +243,9 @@ public class FilterResultActivity extends AppCompatActivity {
 
 
                     adapter= new Recycler_item_adapter(getApplicationContext(),product_item);
+
+                    filterProgressBar.setVisibility(View.GONE);
+
                     recyclerView.setAdapter(adapter);
 
 
@@ -271,6 +277,8 @@ public class FilterResultActivity extends AppCompatActivity {
             @Override
 
             public void onErrorResponse(VolleyError error) {
+
+                filterProgressBar.setVisibility(View.GONE);
 
                 Log.d("dashboard_error_res",error+"");
 
