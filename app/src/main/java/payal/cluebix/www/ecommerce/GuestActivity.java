@@ -142,7 +142,7 @@ public class GuestActivity extends AppCompatActivity implements Recycler_item_ad
         count=cart_item_count();
         get_old_Element();
 
-        Log.d("UNMESH'S LOG",""+product_item);
+    //    Log.d("UNMESH'S LOG",""+product_item);
 
 //        adapter= new Recycler_item_adapter(getApplicationContext(),product_item);
 //        adapter.setClickListener(this);
@@ -261,7 +261,7 @@ public class GuestActivity extends AppCompatActivity implements Recycler_item_ad
 //                    adapter.notifyData(product_item);
 
 
-                    adapter= new Recycler_item_adapter(getApplicationContext(),product_item);
+                    adapter= new Recycler_item_adapter(GuestActivity.this,product_item);
                     adapter.setClickListener(GuestActivity.this);
                     recyclerView.setAdapter(adapter);
 

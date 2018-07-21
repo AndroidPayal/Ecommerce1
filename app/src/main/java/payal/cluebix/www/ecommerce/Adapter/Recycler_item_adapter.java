@@ -75,7 +75,7 @@ public class Recycler_item_adapter extends RecyclerView.Adapter<Recycler_item_ad
         slider_image=a.getProduct_images_Array();
 
         holder.textprize.setText(a.getPrice());
-        //Log.d("ProductPrice",a.getProduct_name()+" price= "+a.getPrice());
+//        Log.d("ProductPrice",a.getProduct_name()+" price= "+a.getPrice());
         holder.Product_name.setText(a.getProduct_name());
 
         if(!a.getManufacturing().equals("0"))
@@ -210,6 +210,7 @@ public class Recycler_item_adapter extends RecyclerView.Adapter<Recycler_item_ad
 
     private void init(List<String> slider_image,final ProductViewHolder holder) {
 
+        Log.d("images","slider images="+slider_image);
     try {
         sliderPagerAdapter = new Slider_adapter((Activity) mCtx, slider_image);
         holder.vp_slider.setAdapter(sliderPagerAdapter);
@@ -233,7 +234,7 @@ public class Recycler_item_adapter extends RecyclerView.Adapter<Recycler_item_ad
         });
     }catch (Exception e){
 
-    e.printStackTrace();
+    Log.e("images Error",""+e);
 }
     }
 
@@ -257,35 +258,6 @@ public class Recycler_item_adapter extends RecyclerView.Adapter<Recycler_item_ad
             }catch (Exception e){e.printStackTrace();}
     }
 
-   /* private class valueFilter extends Filter{
-
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            FilterResults results = new FilterResults();
-
-          *//*  if (constraint != null && constraint.length() > 0) {
-                ArrayList<data_dashboard> filterList = new ArrayList<data_dashboard>();
-
-                for (int i = 0; i < mStringFilterList.size(); i++) {
-                    if ((mStringFilterList.get(i)..toUpperCase())
-                            .contains(constraint.toString().toUpperCase())) {
-                        data_dashboard babydata = new data_dashboard(mStringFilterList.get(i)
-                                , mStringFilterList.get(i)
-                                .getBabypicture());
-                        filterList.add(babydata);
-                    }
-                }
-                }else{
-                results.count = mStringFilterList.size();
-                results.values = mStringFilterList;
-            }*//*
-
-                return null;
-        }
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-        }
-    }*/
 
 
     @Override
