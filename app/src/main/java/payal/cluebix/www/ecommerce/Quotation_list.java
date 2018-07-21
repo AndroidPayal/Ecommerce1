@@ -99,11 +99,13 @@ public class Quotation_list extends AppCompatActivity implements Quote_list_adap
 
                 JSONObject post_data;
                 try {
-                    JSONArray jsonArray=new JSONArray(response);
+                    JSONObject obj=new JSONObject(response);
+                    JSONArray jsonArray=obj.getJSONArray("quotes");
                     for(int i=0;i<jsonArray.length();i++) {
                         post_data = jsonArray.getJSONObject(i);
 /*[{"id":"110","prefix":"Q-","quote_number":"32","user_id":"39","created_date":"2018-06-27","expiry_date":
 "2018-07-04","name":"cluebix","mobile":"8149977891"}]*/
+/*{"success":"true","quotes":[{"id":"48","prefix":"Q-","quote_number":"16","user_id":"39","created_date":"2018-07-21","expiry_date":"2018-07-28","name":"cluebix","mobile":"896260777"},*/
                         String id = post_data.getString("id");
                         String prefix = post_data.getString("prefix");
                         String quote_number = post_data.getString("quote_number");

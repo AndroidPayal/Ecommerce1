@@ -150,32 +150,13 @@ public class Quotation_items_list extends AppCompatActivity {
             public void onResponse(final String response) {
                 Log.d("quotescreen1", "quotaion detail=" + response + "\n quote url=" + url + quote_no + "/" + user_id);
 
-                /*
-                *  {
-        "id": "129",
-        "quote_id": "Q-5",
-        "shopping_cart_id": "196",
-        "product_id": "9",
-        "product_name": "For_Demo",
-        "price": "200.00",
-        "qty": "1",
-        "description": "this is very good layer wall paper to display this time, this is very good",
-        "brand": "Cluebix Software",
+/*{"success":"true","quotes":[{"id":"28","quote_id":"Q-16","shopping_cart_id":"565","product_id":"20","product_name":"this is test product","price":"345.00","qty":"2","description":"this is dummy description","brand":"my comp","stock_status":"0","user_id":"39","amount":"10.00","percent":"%","created_date":"2018-07-21","expiry_date":"2018-07-28","product_code":"959794","sample":"0","sample_price":"58.00","manufacturing":"0","quantity":"2","name":"payal","mobile":"8962607775"}]}
+* */
 
-        "stock_status": "0",
-        "user_id": "39",
-        "amount": null,
-        "percent": null,
-        "created_date": null,
-        "expiry_date": null,
-        "sample": "1",
-        "sample_price": "0.00",
-        "manufacturing": "0",
-        "quantity": "1"
-    }*/
                 JSONObject post_data;
                 try {
-                    JSONArray jsonArray = new JSONArray(response);
+                    JSONObject obj=new JSONObject(response);
+                    JSONArray jsonArray = obj.getJSONArray("quotes");
                     for (int i = 0; i < jsonArray.length(); i++) {
                         post_data = jsonArray.getJSONObject(i);
                         Log.d("quotescreen1", "quotaion in=" + post_data.getString("id"));
@@ -531,81 +512,6 @@ public class Quotation_items_list extends AppCompatActivity {
     }
 
 
-
-
-
-
-
-/*
-
-
-    */
-
-
-    /**
-     * Background task to generate pdf from users content
-     * @author androidsrc.net
-     *
-     *//*
-
-    private class PdfGenerationTask extends AsyncTask<Void, Void, String> {
-
-        @Override
-        protected String doInBackground(Void... params) {
-
-            PdfDocument document = new PdfDocument();
-
-            // repaint the user's text into the page
-            View content = findViewById(R.id.pdf_content);
-
-            // crate a page description
-            int pageNumber = 1;
-            PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(content.getWidth(),
-                    content.getHeight() + 20, pageNumber).create();
-
-            // create a new page from the PageInfo
-            PdfDocument.Page page = document.startPage(pageInfo);
-
-            content.draw(page.getCanvas());
-
-            // do final processing of the page
-            document.finishPage(page);
-
-            SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyyhhmmss");
-            String pdfName = Base_url.pdf_name
-                    + sdf.format(Calendar.getInstance().getTime()) + ".pdf";
-
-            File outputFile = new File(Base_url.pdf_saved_path, pdfName);
-
-            try {
-                outputFile.createNewFile();
-                OutputStream out = new FileOutputStream(outputFile);
-                document.writeTo(out);
-                document.close();
-                out.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            return outputFile.getPath();
-        }
-
-        @Override
-        protected void onPostExecute(String filePath) {
-            if (filePath != null) {
-
-                Toast.makeText(getApplicationContext(),
-                        "Pdf saved at " + Base_url.pdf_saved_path, Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(getApplicationContext(),
-                        "Error in Pdf creation" + Base_url.pdf_saved_path, Toast.LENGTH_SHORT)
-                        .show();
-            }
-
-        }
-
-    }
-*/
 
 
 
