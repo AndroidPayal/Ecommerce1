@@ -193,7 +193,7 @@ android:layout_marginTop="?attr/actionBarSize"-->
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="22dp"
-                                    android:text="Fabric"
+                                    android:text="Mobiles"
                                     android:textColor="#000000"
                                     android:gravity="center"
                                     android:paddingTop="2dp"
@@ -228,7 +228,7 @@ android:layout_marginTop="?attr/actionBarSize"-->
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="22dp"
-                                    android:text="Decorative"
+                                    android:text="Bikes"
                                     android:textColor="#000000"
                                     android:gravity="center"
                                     android:paddingTop="2dp"
@@ -263,7 +263,7 @@ android:layout_marginTop="?attr/actionBarSize"-->
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="22dp"
-                                    android:text="Landscape"
+                                    android:text="Books"
                                     android:textColor="#000000"
                                     android:gravity="center"
                                     android:paddingTop="2dp"
@@ -298,7 +298,7 @@ android:layout_marginTop="?attr/actionBarSize"-->
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="22dp"
-                                    android:text="Customized"
+                                    android:text="Tools"
                                     android:textColor="#000000"
                                     android:gravity="center"
                                     android:paddingTop="2dp"
@@ -333,7 +333,7 @@ android:layout_marginTop="?attr/actionBarSize"-->
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="22dp"
-                                    android:text="Glass"
+                                    android:text="Furniture"
                                     android:textColor="#000000"
                                     android:gravity="center"
                                     android:paddingTop="2dp"
@@ -369,12 +369,11 @@ android:layout_marginTop="?attr/actionBarSize"-->
                 android:gravity="right"
                 android:padding="5dp"
                 android:drawablePadding="5dp"
-                android:visibility="gone"
                 />
             <View
                 android:id="@+id/view_for_margin"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="70dp"
                 android:visibility="gone"/>
 
             <LinearLayout

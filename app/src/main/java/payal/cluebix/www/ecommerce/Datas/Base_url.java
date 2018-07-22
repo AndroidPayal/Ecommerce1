@@ -5,7 +5,7 @@ package payal.cluebix.www.ecommerce.Datas;
  */
 
 public class Base_url {
-    public static final String base_url="http://democs.com/demo/vendor/";//http://192.168.1.100/Linked_in/
+    public static final String base_url="http://definedesigner.com/";//http://192.168.1.100/Linked_in/
 
     public static final String Login_url=base_url+"ApiController/checkCredential";
     public static final String Registration_url=base_url+"UserController/registerByCandidate";
