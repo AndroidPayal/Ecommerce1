@@ -136,7 +136,7 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
     EditText edit_P_name,edit_price,edit_sample_price,edit_qty,edit_desc,edit_retail_price;
     SearchableSpinner spinner_category,spin_company,spin_unit,spin_category_type;
     public static String selected_category="";
-    public static String selected_company="";
+    public static String selected_company="company";
     public static String selected_unit1="";
     public static String selected_type_category="";
     public static String selected_description="";
@@ -201,7 +201,6 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
                     if(items.get(i).isSelected()) {
                         selected_color_list.add(items.get(i).getName());
                     }
-
                 }
             }
         });
@@ -1049,14 +1048,14 @@ city,*/
         @Override
         protected void onPostExecute(String result) {
             Log.e("Apicontroller1", "Response from server: " + result);
-            if(result.equalsIgnoreCase("success")) {
+          //  if(result.equalsIgnoreCase("success")) {
                 textResp.setText("Status : " + result);
                 textOk.setVisibility(View.VISIBLE);
                 prog.setVisibility(View.INVISIBLE);
-            }else{
+          /*  }else{
                 dialog.dismiss();
                 Toast.makeText(Add_New_product.this, "Unfilled Detail or Server Error!", Toast.LENGTH_SHORT).show();
-            }
+            }*/
             super.onPostExecute(result);
         }
 

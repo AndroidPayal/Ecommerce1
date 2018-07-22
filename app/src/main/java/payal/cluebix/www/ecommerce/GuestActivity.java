@@ -37,6 +37,7 @@ import org.json.JSONObject;
 
 import payal.cluebix.www.ecommerce.Adapter.Recycler_item_adapter;
 import payal.cluebix.www.ecommerce.Adapter.Slider_adap_add_product;
+import payal.cluebix.www.ecommerce.Adapter.Slider_adapter;
 import payal.cluebix.www.ecommerce.Datas.Base_url;
 import payal.cluebix.www.ecommerce.Datas.data_dashboard;
 import payal.cluebix.www.ecommerce.Handlers.RquestHandler;
@@ -58,6 +59,7 @@ public class GuestActivity extends AppCompatActivity implements Recycler_item_ad
 
     String url1= Base_url.Dashboard_url;
     String url3=Base_url.My_cart_item_count;
+    String url5=Base_url.GetSliderImage;
 
     ArrayList<data_dashboard> product_item = new ArrayList<>();
     SessionManager session;
@@ -67,8 +69,8 @@ public class GuestActivity extends AppCompatActivity implements Recycler_item_ad
     ViewPager viewPager;
     private TextView[] dots;
     LinearLayout l2_dots;
-    List<Bitmap> slider_image=new ArrayList<>();
-    Slider_adap_add_product sliderPagerAdapter;
+    List<String> slider_image=new ArrayList<>();
+    Slider_adapter sliderPagerAdapter;
     LinearLayout loader_linear;
 
     String url4=Base_url.Load_more_url;
@@ -99,14 +101,7 @@ public class GuestActivity extends AppCompatActivity implements Recycler_item_ad
 
         setSupportActionBar(toolbar);
 
-
-
-
-        slider_image.clear();
-        slider_image.add(((BitmapDrawable) getResources().getDrawable(R.drawable.sl4)).getBitmap());
-        slider_image.add(((BitmapDrawable) getResources().getDrawable(R.drawable.sl2)).getBitmap());
-        slider_image.add(((BitmapDrawable) getResources().getDrawable(R.drawable.sl4)).getBitmap());
-        slider_image.add(((BitmapDrawable) getResources().getDrawable(R.drawable.sl2)).getBitmap());
+        getSliderImage();
 
         count=0;
         P_id_array_of_cartItems.clear();
@@ -129,7 +124,7 @@ public class GuestActivity extends AppCompatActivity implements Recycler_item_ad
            }
        });
 
-        init();
+        //init();
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(new SliderTimer(), 3000, 4000);
 
@@ -182,9 +177,49 @@ public class GuestActivity extends AppCompatActivity implements Recycler_item_ad
 
     }
 
+    private void getSliderImage() {
+        Log.d("DashboardFragment","setting slider image");
+        slider_image.clear();
+
+        StringRequest stringRequest=new StringRequest(Request.Method.POST, url5, new Response.Listener<String>(){
+            @Override
+            public void onResponse(String response) {
+//                Log.d(Tag,response);
+/*{"success":"true","cities":[{"id":"1","image":"slider_14.jpg"},*/
+
+                JSONObject post_data;
+                JSONObject obj;
+                try {
+                    JSONObject jsonObject=new JSONObject(response);
+                    String success=jsonObject.getString("success");
+                    JSONArray cities=jsonObject.getJSONArray("cities");
+                    for(int i=0;i<cities.length();i++){
+                        post_data=cities.getJSONObject(i);
+                        String image=post_data.getString("image");
+                        slider_image.add(image);
+                    }
+                    init();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("dashboard_error_res",error+"");
+                Toast.makeText(GuestActivity.this, "Server Connection Failed!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        RquestHandler.getInstance(GuestActivity.this).addToRequestQueue(stringRequest);
+
+
+
+    }
+
     private void init() {
 
-        sliderPagerAdapter = new Slider_adap_add_product(GuestActivity.this, slider_image);
+        sliderPagerAdapter = new Slider_adapter(GuestActivity.this, slider_image);
         viewPager.setAdapter(sliderPagerAdapter);
 
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {

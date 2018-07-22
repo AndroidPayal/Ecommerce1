@@ -30,6 +30,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -42,12 +43,15 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import payal.cluebix.www.ecommerce.Adapter.Recycler_item_adapter;
 import payal.cluebix.www.ecommerce.Adapter.Slider_adap_add_product;
+import payal.cluebix.www.ecommerce.Adapter.Slider_adapter;
 import payal.cluebix.www.ecommerce.Datas.Base_url;
+import payal.cluebix.www.ecommerce.Datas.company_data;
 import payal.cluebix.www.ecommerce.Datas.data_dashboard;
 import payal.cluebix.www.ecommerce.Handlers.RquestHandler;
 import payal.cluebix.www.ecommerce.Handlers.SessionManager;
@@ -66,6 +70,8 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
     String url1= Base_url.Dashboard_url;
     String url2=Base_url.Add_prod_to_Cart;
     String url3=Base_url.My_cart_item_count;
+    String url4=Base_url.Load_more_url;
+    String url5=Base_url.GetSliderImage;
 
     ArrayList<String> Product_id_array=new ArrayList<>();
     ArrayList<String> P_id_array_of_cartItems=new ArrayList<>();
@@ -81,14 +87,15 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
     ViewPager viewPager;
     private TextView[] dots;
     LinearLayout l2_dots;
-    List<Bitmap> slider_image=new ArrayList<>();
-    Slider_adap_add_product sliderPagerAdapter;
+    List<String> slider_image=new ArrayList<>();
+    Slider_adapter sliderPagerAdapter;
     LinearLayout loader_linear;
     View v2;
     SearchView tool_search;
     TextView load_more;
-    String url4=Base_url.Load_more_url;
+
     String Lastid="0";
+
 
     public DashboardFragment() {
     }
@@ -96,18 +103,6 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
          v =inflater.inflate(R.layout.updated, container, false);
 
-        slider_image.clear();
-        slider_image.add(((BitmapDrawable) getResources().getDrawable(R.drawable.sl4)).getBitmap());
-        slider_image.add(((BitmapDrawable) getResources().getDrawable(R.drawable.sl2)).getBitmap());
-        slider_image.add(((BitmapDrawable) getResources().getDrawable(R.drawable.sl4)).getBitmap());
-        slider_image.add(((BitmapDrawable) getResources().getDrawable(R.drawable.sl2)).getBitmap());
-
-/*
-        slider_image.add(((BitmapDrawable) getResources().getDrawable(R.drawable.people_login1)).getBitmap());
-        slider_image.add(((BitmapDrawable) getResources().getDrawable(R.drawable.logo2)).getBitmap());
-        slider_image.add(((BitmapDrawable) getResources().getDrawable(R.drawable.people_login)).getBitmap());
-        slider_image.add(((BitmapDrawable) getResources().getDrawable(R.drawable.logo2)).getBitmap());
-*/
 
         setHasOptionsMenu(true);
 
@@ -140,7 +135,7 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
         tool_search.setQueryHint("Search Here");
         tool_search.setOnQueryTextListener(this);
 
-        init();
+
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(new SliderTimer(), 3000, 4000);
 
@@ -151,6 +146,7 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
 
         load_more.setOnClickListener(this);
 
+        getSliderImage();
         count=cart_item_count();
         get_old_Element();
 
@@ -161,11 +157,49 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
         return v;
     }
 
+    private void getSliderImage() {
+        Log.d("DashboardFragment","setting slider image");
+        slider_image.clear();
+
+        StringRequest stringRequest=new StringRequest(Request.Method.POST, url5, new Response.Listener<String>(){
+            @Override
+            public void onResponse(String response) {
+                Log.d(Tag,response);
+/*{"success":"true","cities":[{"id":"1","image":"slider_14.jpg"},*/
+                JSONObject post_data;
+                JSONObject obj;
+                try {
+                    JSONObject jsonObject=new JSONObject(response);
+                    String success=jsonObject.getString("success");
+                    JSONArray cities=jsonObject.getJSONArray("cities");
+                    for(int i=0;i<cities.length();i++){
+                        post_data=cities.getJSONObject(i);
+                        String image=post_data.getString("image");
+                        slider_image.add(image);
+                    }
+                    init();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("dashboard_error_res",error+"");
+                Toast.makeText(getActivity(), "Server Connection Failed!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        RquestHandler.getInstance(getActivity()).addToRequestQueue(stringRequest);
+
+
+
+    }
 
 
     private void init() {
 
-        sliderPagerAdapter = new Slider_adap_add_product(getActivity(), slider_image);
+        sliderPagerAdapter = new Slider_adapter(getActivity(), slider_image);
         viewPager.setAdapter(sliderPagerAdapter);
 
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {

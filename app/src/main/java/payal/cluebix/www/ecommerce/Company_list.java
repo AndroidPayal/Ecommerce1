@@ -109,7 +109,7 @@ public class Company_list extends AppCompatActivity implements Company_Adapter.C
             @Override
             public void onClick(View v) {
                 final String name=edit_name.getText().toString().trim();
-                StringRequest stringRequest=new StringRequest(Request.Method.POST, url2, new Response.Listener<String>(){
+                StringRequest stringRequest=new StringRequest(Request.Method.POST, url2+Uid, new Response.Listener<String>(){
                     @Override
                     public void onResponse(String response) {
                         Log.d(Tag,response);
