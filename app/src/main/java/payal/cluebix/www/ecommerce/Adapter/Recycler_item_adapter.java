@@ -51,11 +51,9 @@ public class Recycler_item_adapter extends RecyclerView.Adapter<Recycler_item_ad
     public Recycler_item_adapter(Context mCtx, List<data_dashboard> productList) {
         this.mCtx = mCtx;
         this.productList = productList;
-        productList_Copy= new ArrayList<>(productList);
+//        productList_Copy= new ArrayList<>(productList);
 
 
-
-        //productList_Copy.addAll(productList);
     }
 
     @Override
@@ -118,7 +116,7 @@ public class Recycler_item_adapter extends RecyclerView.Adapter<Recycler_item_ad
 
 
         } catch (ParseException e) {
-            e.printStackTrace();
+            Log.e("items_adapter",""+e);
         }
 
         if (elapsedDays<= Base_url.new_lable_days) {

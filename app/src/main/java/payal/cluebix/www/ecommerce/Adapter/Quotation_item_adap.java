@@ -1,6 +1,8 @@
 package payal.cluebix.www.ecommerce.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -39,7 +41,7 @@ public class Quotation_item_adap extends RecyclerView.Adapter<Quotation_item_ada
 
     @Override
     public void onBindViewHolder(Quotation_item_adap.ProductViewHolder holder, int position) {
-        quotation2 a= productList.get(position);
+        final quotation2 a= productList.get(position);
 
         holder.invoice_sr_number.setText((position+1)+"");
 
@@ -49,6 +51,7 @@ public class Quotation_item_adap extends RecyclerView.Adapter<Quotation_item_ada
         holder.q_desc.setText("Description: "+a.getDescription());
         holder.q_qty.setText(a.getQty());
         holder.invoice_price.setText("Product price:"+a.getPrice());
+
         if (a.getSample().equals("1")) {
             holder.invoice_sample.setText("Sample:" + a.getSample_price());
             holder.q_prise.setText("Rs. "+(Float.parseFloat(a.getPrice())*Integer.parseInt(a.getQty())+
@@ -57,18 +60,16 @@ public class Quotation_item_adap extends RecyclerView.Adapter<Quotation_item_ada
         else {
             holder.invoice_sample.setText("");
             holder.q_prise.setText("Rs. "+(Float.parseFloat(a.getPrice())*Integer.parseInt(a.getQty())));
-
         }
         Log.d("quotation_item_adap__","qty="+a.getQty()+"\nsrNo:"+(position+1));
 
+        holder.image_Call.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCtx.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("tel://" + ""+a.getMobile())));
+            }
+        });
 
-/*
-        Picasso.with(mCtx)
-                .load(Base_url.IMAGE_DIRECTORY_NAME+a.getProduct_image_array().get(0))
-                .placeholder(R.drawable.loading) // optional
-                .error(R.drawable.error_load)         // optional
-                .into(holder.q_image);
-*/
     }
 
 
@@ -86,6 +87,7 @@ public class Quotation_item_adap extends RecyclerView.Adapter<Quotation_item_ada
     class ProductViewHolder extends RecyclerView.ViewHolder {
 
         TextView q_name,q_desc,q_prise,q_qty,invoice_sample,invoice_sr_number,invoice_price;
+        ImageView image_Call;
 
         public ProductViewHolder(View itemView) {
             super(itemView);
@@ -98,8 +100,16 @@ public class Quotation_item_adap extends RecyclerView.Adapter<Quotation_item_ada
             q_qty=(TextView)itemView.findViewById(R.id.q_qty);
             invoice_sample=(TextView)itemView.findViewById(R.id.invoice_sample);
             invoice_price=(TextView)itemView.findViewById(R.id.invoice_price);
+            image_Call=(ImageView)itemView.findViewById(R.id.image_call);
            // q_image.setOnClickListener(this);
 
+           /* image_Call.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mCtx.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("tel://" + ""+)));
+
+                }
+            });*/
         }
 
 

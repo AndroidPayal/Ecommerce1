@@ -7,6 +7,8 @@ package payal.cluebix.www.ecommerce.Datas;
 public class Base_url {
     public static final String base_url="http://definedesigner.com/";//http://192.168.1.100/Linked_in/
 
+    public static final String DownloadApp=base_url+"ApiController/downloadApp";
+
     public static final String Login_url=base_url+"ApiController/checkCredential";
     public static final String Registration_url=base_url+"UserController/registerByCandidate";
 
@@ -17,8 +19,7 @@ public class Base_url {
     public static final String ListgetCities = base_url+"ApiController/getCities";
     public static final String ListgetCategoryType = base_url+"ApiController/getCategoryType";
     public static final String GetSliderImage = base_url+"ApiController/getSliders";
-
-
+    public static final String SearchandFilterItems = base_url+"ApiController/search";/*/userId if logged in user hits this url*/
 
     public static final String Product_Detail_url=base_url+"ApiController/productDetail/";/*/product_id*/
     public static final String Update_product_detail=base_url+"ApiController/updatingProduct/";

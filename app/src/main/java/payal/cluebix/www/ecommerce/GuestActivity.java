@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
@@ -17,6 +18,7 @@ import android.support.v7.widget.TooltipCompat;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -42,6 +44,7 @@ import payal.cluebix.www.ecommerce.Adapter.Slider_adapter;
 import payal.cluebix.www.ecommerce.Datas.Base_url;
 import payal.cluebix.www.ecommerce.Datas.CategoryTypeData;
 import payal.cluebix.www.ecommerce.Datas.data_dashboard;
+import payal.cluebix.www.ecommerce.Datas.sample_Cart;
 import payal.cluebix.www.ecommerce.Handlers.RquestHandler;
 import payal.cluebix.www.ecommerce.Handlers.SessionManager;
 import payal.cluebix.www.ecommerce.Handlers.myDbClass;
@@ -85,7 +88,7 @@ public class GuestActivity extends AppCompatActivity implements Recycler_item_ad
 
 
     Toolbar toolbar;
-    SearchView tool_search;
+    TextView tool_search;
 
     ArrayList<String> Product_id_array=new ArrayList<>();
     ArrayList<String> P_id_array_of_cartItems=new ArrayList<>();
@@ -119,9 +122,9 @@ public class GuestActivity extends AppCompatActivity implements Recycler_item_ad
         P_id_array_of_cartItems.clear();
 
 
-       /* tool_search=(SearchView)findViewById(R.id.search_edit);
+        tool_search=(TextView)findViewById(R.id.guest_activity_search);
 
-        tool_search.setIconifiedByDefault(false);
+       /* tool_search.setIconifiedByDefault(false);
         tool_search.setSubmitButtonEnabled(true);
         tool_search.setQueryHint("Search Here");
         tool_search.setOnQueryTextListener(this);*/
@@ -165,10 +168,18 @@ public class GuestActivity extends AppCompatActivity implements Recycler_item_ad
 //        recyclerView.setAdapter(adapter);
 
 
-        tool_search = (SearchView) findViewById(R.id.guest_activity_search);
 
 
         load_more.setOnClickListener(this);
+
+        tool_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i=new Intent(GuestActivity.this,SearchAct.class);
+                startActivity(i);
+            }
+        });
+/*
 
         tool_search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -186,6 +197,7 @@ public class GuestActivity extends AppCompatActivity implements Recycler_item_ad
             }
         });
 
+*/
 
         callFab.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -342,6 +354,13 @@ public class GuestActivity extends AppCompatActivity implements Recycler_item_ad
 
     public int cart_item_count(){
        //count from local storage
+        //return no. of item in cart
+        ArrayList<sample_Cart> cart_array=new myDbClass(GuestActivity.this).fetchAllValue();
+        count=cart_array.size();
+        Log.d("count_product_detail","count of db cart="+count);
+
+        invalidateOptionsMenu();
+
         return count;
     }
 
@@ -486,6 +505,14 @@ public class GuestActivity extends AppCompatActivity implements Recycler_item_ad
                     load_more.setClickable(true);
 
                     JSONObject obj=new JSONObject(response);
+                    try{
+                        String error=obj.getString("error");
+                        if(error.equalsIgnoreCase("true")){
+                            Toast.makeText(GuestActivity.this, "No more Items!", Toast.LENGTH_SHORT).show();
+                            dialog.cancel();
+                        }
+                    }catch (JSONException e){e.printStackTrace();}
+
                     JSONArray jsonArray=obj.getJSONArray("products");
                     for(int i=0;i<jsonArray.length();i++) {
                         post_data = jsonArray.getJSONObject(i);
@@ -567,6 +594,12 @@ public class GuestActivity extends AppCompatActivity implements Recycler_item_ad
     public boolean onCreateOptionsMenu(Menu menu) {
         // TODO Auto-generated method stub
         getMenuInflater().inflate(R.menu.menu_toolbar_guest, menu);
+
+        MenuItem menuItem = menu.findItem(R.id.toolbar_guest_cart);
+
+        menuItem.setIcon(buildCounterDrawable(count, R.drawable.ic_shopping_cart));
+        Log.d("count_product_detail","count menu called="+count);
+
         return true;
     }
 
@@ -594,4 +627,31 @@ public class GuestActivity extends AppCompatActivity implements Recycler_item_ad
         super.onTrimMemory(level);
         new myDbClass(GuestActivity.this).DeleteAll();
     }
+
+    private Drawable buildCounterDrawable(int count, int backgroundImageId) {
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View view = inflater.inflate(R.layout.counter_menuitem_layout, null);
+        view.setBackgroundResource(backgroundImageId);
+
+      /*  if (count == 0) {
+            View counterTextPanel = view.findViewById(R.id.counterValuePanel);
+            counterTextPanel.setVisibility(View.GONE);
+        } else {*/
+        TextView textView = (TextView) view.findViewById(R.id.count);
+        textView.setText("" + count);
+        // }
+
+        view.measure(
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+        view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
+
+        view.setDrawingCacheEnabled(true);
+        view.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+        Bitmap bitmap = Bitmap.createBitmap(view.getDrawingCache());
+        view.setDrawingCacheEnabled(false);
+
+        return new BitmapDrawable(getResources(), bitmap);
+    }
+
 }

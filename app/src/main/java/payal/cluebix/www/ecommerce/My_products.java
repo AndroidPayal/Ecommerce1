@@ -110,23 +110,6 @@ public class My_products extends AppCompatActivity {
             }
         });
 
-//        grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//               // Toast.makeText(My_products.this, "clicked at : "+i, Toast.LENGTH_SHORT).show();
-//                Log.d("clicked_","myProductPage:"+i+"\nprod id:"+Product_id_array.get(i));
-//                /*
-//                * on grid item click open item detail
-//                * inside that in floating button show option of update */
-//
-//                Intent intent=new Intent(My_products.this,Product_My_Detail.class);
-//                intent.putExtra("current_product_id",Product_id_array.get(i));
-//                Log.d("_correct_res","send id:"+Product_id_array.get(i)+"\nitem array id="+product_item.get(i).getProductId()
-//                +"\nname:"+product_item.get(i).getProduct_name());
-//                startActivity(intent);
-//
-//            }
-//        });
 
 
     }
@@ -263,6 +246,15 @@ public class My_products extends AppCompatActivity {
                         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(i);
                         drawerLayout.closeDrawers();
+                        break;
+                    case R.id.share:
+                        String shareBody = Base_url.DownloadApp;
+                        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                        sharingIntent.setType("text/plain");
+                        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "MultiVendor App");
+                        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+                        startActivity(Intent.createChooser(sharingIntent,"MultiVendor App"));
+
                         break;
                 }
 

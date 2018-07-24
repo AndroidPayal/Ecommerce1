@@ -44,8 +44,9 @@ public class sample_Cart {
             "amount": "5.00",//comision amount
             "percent": "%"
         }*/
-    public sample_Cart(String cart_id,String product_id,String product_name,String price,String sample, String samplePrice,String qty
-            ,String user_id, String manufacturing,String description,String brand, String images_string,String quantity){
+    public sample_Cart(String cart_id,String product_id,String product_name,String price,String sample, String samplePrice
+            ,String qty,String user_id, String manufacturing,String description,String brand, String images_string,String quantity){
+
 
         this.cart_id=cart_id;
         this.product_id=product_id;

@@ -49,9 +49,12 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 
 import payal.cluebix.www.ecommerce.Adapter.Quotation_item_adap;
@@ -152,7 +155,11 @@ public class Quotation_items_list extends AppCompatActivity {
 
 /*{"success":"true","quotes":[{"id":"28","quote_id":"Q-16","shopping_cart_id":"565","product_id":"20","product_name":"this is test product","price":"345.00","qty":"2","description":"this is dummy description","brand":"my comp","stock_status":"0","user_id":"39","amount":"10.00","percent":"%","created_date":"2018-07-21","expiry_date":"2018-07-28","product_code":"959794","sample":"0","sample_price":"58.00","manufacturing":"0","quantity":"2","name":"payal","mobile":"8962607775"}]}
 * */
+/* new::==
+{"success":"true","quotes":[{"id":"18","quote_id":"Q-11","shopping_cart_id":"553","product_id":"58","product_name":"Demo_200","price":"2000.00","qty":"0","description":"This is a single layer wallpaper in a glossy finish.","brand":"Cluebix Software","stock_status":"0","user_id":"39","amount":"5.00","percent":"%","created_date":"2018-07-20","expiry_date":"2018-07-27","product_code":"968387","sample":"1","sample_price":"500.00","manufacturing":"1","quantity":"0","name":"tester","mobile":"9021073372"}]}*/
 
+                String created_date1="0000/00/00";
+                String expiry_date1="0000/00/00";
                 JSONObject post_data;
                 try {
                     JSONObject obj=new JSONObject(response);
@@ -172,14 +179,16 @@ public class Quotation_items_list extends AppCompatActivity {
                         String brand = post_data.getString("brand");
                         // String product_images = post_data.getString("product_images");
                         String user_id = post_data.getString("user_id");
-                        String created_date1 = post_data.getString("created_date");
-                        String expiry_date1 = post_data.getString("expiry_date");
+                         created_date1 = post_data.getString("created_date");
+                        expiry_date1 = post_data.getString("expiry_date");
                         String sample = post_data.getString("sample");
                         String sample_price = post_data.getString("sample_price");
+                        String product_code=post_data.getString("product_code");
+                        String mobile=post_data.getString("mobile");
 
                         product_item.add(new quotation2(id, quote_id, shopping_cart_id, user_id, product_id
                                 , product_name, price, qty, description, brand
-                                , sample, sample_price));//,product_images
+                                , sample, sample_price,product_code,mobile));//,product_images
 
                         quant = quant + Integer.parseInt(qty);
                         invoice_items++;
@@ -190,8 +199,8 @@ public class Quotation_items_list extends AppCompatActivity {
                             total_price = total_price + (Float.parseFloat(price) * Integer.parseInt(qty));
                         }
 
-                        created_Date.setText("Gen:" + created_date1);
-                        expiry_date.setText("Exp:" + expiry_date1);
+//                        created_Date.setText("Gen:" + created_date1);
+//                        expiry_date.setText("Exp:" + expiry_date1);
 
                         pdfcontent.setText(pdfcontent.getText() + "Product " + i + "_ID : " + product_id + "\nName : " + product_name
                                 + "\nPrice : " + price
@@ -201,6 +210,34 @@ public class Quotation_items_list extends AppCompatActivity {
                                 + "\n\n---------------------------\n");
 
                     }
+
+                    //code to change date format
+                    String start_dt = created_date1;
+                    DateFormat formatter = new SimpleDateFormat("yyyy-MM-DD");
+                    Date date = null;
+                    try {
+                        date = (Date)formatter.parse(start_dt);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    SimpleDateFormat newFormat = new SimpleDateFormat("dd-MM-yyyy");
+                    String finalString = newFormat.format(date);
+
+                         created_Date.setText("Gen:" + finalString);
+
+                     start_dt = expiry_date1;
+                     formatter = new SimpleDateFormat("yyyy-MM-DD");
+                     date = null;
+                    try {
+                        date = (Date)formatter.parse(start_dt);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                     newFormat = new SimpleDateFormat("dd-MM-yyyy");
+                     finalString = newFormat.format(date);
+
+                        expiry_date.setText("Exp:" + finalString);
+
                     t_Quantity.setText("Total Items Ordered: " + invoice_items);//quant
                     t_price.setText("Grand Total: " + total_price);
 
@@ -219,24 +256,26 @@ public class Quotation_items_list extends AppCompatActivity {
             }
         });
         RquestHandler.getInstance(Quotation_items_list.this).addToRequestQueue(stringRequest);
-    }else {
 
 
-            ArrayList<sample_Cart> datas = new myDbClass(Quotation_items_list.this).fetchAllValue();
+        }else {
+
+
+            ArrayList<quotation2> datas = new myDbClass(Quotation_items_list.this).fetchValuesForQuotation();//fetch quotation value
 
             for (int i = 0; i < datas.size(); i++) {
-                sample_Cart a=datas.get(i);
+                quotation2 a=datas.get(i);
                 quant = quant + Integer.parseInt(a.getQty());
                 invoice_items++;
                 if (a.getSample().equals("1")) {
                     total_price = total_price + (Float.parseFloat(a.getPrice()) * Integer.parseInt(a.getQty()))
-                            + Float.parseFloat(a.getSamplePrice());
+                            + Float.parseFloat(a.getSample_price());
                 } else {
                     total_price = total_price + (Float.parseFloat(a.getPrice()) * Integer.parseInt(a.getQty()));
                 }
 
 
-                pdfcontent.setText(pdfcontent.getText() + "Product " + i + "_ID : " + a.getProduct_id() + "\nName : " + a.getProduct_nam()
+                pdfcontent.setText(pdfcontent.getText() + "Product " + i + "_ID : " + a.getProduct_id() + "\nName : " + a.getProduct_name()
                         + "\nPrice : " + a.getPrice()
                         + "\nQuantity ordered : " + a.getQty()
                         + "\nProduct Description : " + a.getDescription()
@@ -244,8 +283,8 @@ public class Quotation_items_list extends AppCompatActivity {
                         + "\n\n---------------------------\n");
 
                 product_item.add(new quotation2("0", "0", "0", "0", a.getProduct_id()
-                        , a.getProduct_nam(), a.getPrice(), a.getQty(), a.getDescription(), a.getBrand()
-                        , a.getSample(), a.getSamplePrice()));
+                        , a.getProduct_name(), a.getPrice(), a.getQty(), a.getDescription(), a.getBrand()
+                        , a.getSample(), a.getSample_price(),a.getProduct_code(),a.getMobile()));
             }
 
             t_Quantity.setText("Total Items Ordered: " + invoice_items);//quant

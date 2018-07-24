@@ -256,6 +256,15 @@ navigationView.setItemIconTintList(ColorStateList2);
                         startActivity(i);
                         drawerLayout.closeDrawers();
                         break;
+                    case R.id.share:
+                        String shareBody = Base_url.DownloadApp;
+                        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                        sharingIntent.setType("text/plain");
+                        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "MultiVendor App");
+                        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+                        startActivity(Intent.createChooser(sharingIntent,"MultiVendor App"));
+
+                        break;
                 }
 
                 return true;

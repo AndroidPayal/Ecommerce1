@@ -46,6 +46,7 @@ import payal.cluebix.www.ecommerce.Adapter.Recycler_item_adapter;
 import payal.cluebix.www.ecommerce.Adapter.Slider_adapter;
 import payal.cluebix.www.ecommerce.Datas.Base_url;
 import payal.cluebix.www.ecommerce.Datas.data_dashboard;
+import payal.cluebix.www.ecommerce.Datas.sample_Cart;
 import payal.cluebix.www.ecommerce.Handlers.RquestHandler;
 import payal.cluebix.www.ecommerce.Handlers.SessionManager;
 import payal.cluebix.www.ecommerce.Handlers.myDbClass;
@@ -70,7 +71,7 @@ public class ProductDetail extends AppCompatActivity {
 
     SessionManager session;
     String Uid;String Uname,Umail,Udate1,Udate2,Umob;String sample_price;
-//    public static int count=0;
+    public static int count=0;
     String range_id="0";
     public static String quantity,sample;
 
@@ -100,7 +101,7 @@ public class ProductDetail extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_details);
-//        count=0;
+        count=0;
         manufacturing1=0;
 
         p_name=(TextView)findViewById(R.id.p_name);
@@ -196,10 +197,14 @@ public class ProductDetail extends AppCompatActivity {
                                 add_cart.setText("Added To Cart");
                                 add_cart.setClickable(false);
                             }
+                            count++;
 /*
  {"id":"100","product_id":"2","product_name":"Demo1","price":"200.00","qty":"1","user_id":"51","is_active":"1"}*/
 
                         }
+                        invalidateOptionsMenu();
+                        Log.d("count_product_detail","checking count value total of cart="+count);
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -214,12 +219,22 @@ public class ProductDetail extends AppCompatActivity {
             RquestHandler.getInstance(ProductDetail.this).addToRequestQueue(stringRequest2);
 
         }else{
-            if(new myDbClass(ProductDetail.this).checkIdExistance(AllData.get(0)))//calloing idExixtance check method with productId
-            {
-                //returns true if if exists
+
+
+        if(new myDbClass(ProductDetail.this).checkIdExistance(AllData.get(0)))//calloing idExixtance check method with productId
+            { //returns true if if this item exists in cart
                 add_cart.setText("Added To Cart");
                 add_cart.setClickable(false);
+
             }
+
+            //return no. of item in cart
+            ArrayList<sample_Cart> cart_array=new myDbClass(ProductDetail.this).fetchAllValue();
+            count=cart_array.size();
+            Log.d("count_product_detail","count of db cart="+count);
+
+            invalidateOptionsMenu();
+
         }
     }
 
@@ -269,6 +284,9 @@ public class ProductDetail extends AppCompatActivity {
                                     String success = obj.getString("success");
                                     if (success.equalsIgnoreCase("true")) {
                                         add_cart.setText("Added To Cart");
+                                        count++;
+                                        Log.d("count_product_detail","count="+count);
+                                        invalidateOptionsMenu();
                                     } else {
                                         add_cart.setText("Network error!Retry");
                                         add_cart.setClickable(true);
@@ -289,13 +307,19 @@ public class ProductDetail extends AppCompatActivity {
                         });
                         RquestHandler.getInstance(ProductDetail.this).addToRequestQueue(stringRequest);
                     }else{
+
+
                         //this code runs when guest user adds item to cart
-                        new myDbClass(ProductDetail.this).InsertAllValues(AllData.get(0),AllData.get(1),AllData.get(2),AllData.get                  (3),AllData.get(4) ,AllData.get(5),AllData.get(6),AllData.get(7),AllData.get(8),AllData.get(9),AllData.get(10)
+
+                        new myDbClass(ProductDetail.this).InsertAllValues(AllData.get(0),AllData.get(1),AllData.get(2),AllData                  .get(3),AllData.get(4) ,AllData.get(5),AllData.get(6),AllData.get(7),AllData.get(8),AllData.get(9),AllData                      .get(10)
                                 ,AllData.get(11),AllData.get(12),quantity+"" //quantity=quantity ordered
-                                ,AllData.get(14),AllData.get(15));
-                        /*AllData Array Val= Productid ,category_name,product_name , brand ,product_code ," +
-                "price ,unit ,manufacturing ,qty ,sample , sample_price , color , description */
+                                ,AllData.get(14),AllData.get(15),AllData.get(16));
+
                         add_cart.setText("Added To Cart");
+                        count++;
+                        Log.d("count_product_detail","count="+count);
+                        invalidateOptionsMenu();
+
                     }
                 }
                 else{
@@ -316,7 +340,7 @@ public class ProductDetail extends AppCompatActivity {
                 linear_detail.setVisibility(View.VISIBLE);*/
                 String product_id= null,category_name= null,type=null,product_name= null,brand= null,product_code= null
                         ,price= null,retail_price=null,manufacturing= null,qty= null,sample= null,unit= null,color
-                        = null,description= null,product_images = null,user_id= null,rangId= null,amount= null,percent;
+                        = null,description= null,product_images = null,user_id= null,rangId= null,amount= null,mobile=null,percent;
                 JSONObject post_data;
                 try {
                     JSONObject jsonObject=new JSONObject(response);
@@ -344,9 +368,12 @@ public class ProductDetail extends AppCompatActivity {
                          rangId = post_data.getString("rangId");
                          amount = post_data.getString("amount");
                          percent = post_data.getString("percent");
+                         mobile=post_data.getString("mobile");
+
                     }
 
-                    AllData.add(product_id);AllData.add(category_name);AllData.add(product_name);AllData.add(brand);AllData.add(product_code);AllData.add(retail_price);AllData.add(unit);AllData.add(manufacturing);AllData.add(qty);AllData.add(sample);AllData.add(sample_price);AllData.add(color);AllData.add(description);AllData.add("0");AllData.add(product_images);AllData.add(type);
+                    //AllData contains detail of this product to store it in database
+                    AllData.add(product_id);AllData.add(category_name);AllData.add(product_name);AllData.add(brand);AllData.add(product_code);AllData.add(retail_price);AllData.add(unit);AllData.add(manufacturing);AllData.add(qty);AllData.add(sample);AllData.add(sample_price);AllData.add(color);AllData.add(description);AllData.add("0");AllData.add(product_images);AllData.add(type);AllData.add(mobile);
 /*InsertAllValues(String Productid,String category_name, String product_name, String brand,String product_code,
             String price, String unit,String manufacturing, String qty,String sample, String sample_price,
                 String color, String description,String quantityOrder,String images)*/
@@ -574,8 +601,15 @@ public class ProductDetail extends AppCompatActivity {
     }
 
     @Override public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inf=getMenuInflater();
-        inf.inflate(R.menu.menu_cart, menu);
+      /*  MenuInflater inf=getMenuInflater();
+        inf.inflate(R.menu.menu_cart, menu);*/
+        getMenuInflater().inflate(R.menu.menu_cart, menu);
+
+        MenuItem menuItem = menu.findItem(R.id.action_cart);
+
+        menuItem.setIcon(buildCounterDrawable(count, R.drawable.ic_shopping_cart));
+        Log.d("count_product_detail","count menu called="+count);
+
         return true;
     }
 
@@ -586,10 +620,14 @@ public class ProductDetail extends AppCompatActivity {
             if(R.id.action_cart ==  item.getItemId()){
                 if (Umail!=null) {
                     Intent intent = new Intent(ProductDetail.this, CenterActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     intent.putExtra("cartTransition", true);
                     startActivity(intent);
                 }else{
                     Intent i=new Intent(ProductDetail.this,GuestCart.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(i);
                 }
             }

@@ -107,4 +107,11 @@
         android:textColor="@color/red"
         />
 
+    <ImageView
+        android:id="@+id/image_call"
+        android:layout_width="30dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/phone"/>
+
 </LinearLayout>
