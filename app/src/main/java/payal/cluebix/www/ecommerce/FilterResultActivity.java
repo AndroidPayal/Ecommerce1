@@ -324,7 +324,7 @@ public class FilterResultActivity extends AppCompatActivity implements Recycler_
 
 
 
-                    adapter= new Recycler_item_adapter(getApplicationContext(),product_item);
+                    adapter= new Recycler_item_adapter(FilterResultActivity.this,product_item);
                     adapter.setClickListener(FilterResultActivity.this);
                     filterProgressBar.setVisibility(View.GONE);
 
