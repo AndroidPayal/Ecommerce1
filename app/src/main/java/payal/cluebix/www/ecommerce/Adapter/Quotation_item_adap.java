@@ -1,11 +1,14 @@
 package payal.cluebix.www.ecommerce.Adapter;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,9 +26,13 @@ import payal.cluebix.www.ecommerce.Datas.Base_url;
 import payal.cluebix.www.ecommerce.Datas.quotation2;
 import payal.cluebix.www.ecommerce.R;
 
+import static android.support.v4.content.PermissionChecker.checkSelfPermission;
+
 public class Quotation_item_adap extends RecyclerView.Adapter<Quotation_item_adap.ProductViewHolder> {
     private Context mCtx;
     private ArrayList<quotation2> productList;
+    ClickListener clickListener;
+
 
     public Quotation_item_adap(Context mCtx, ArrayList<quotation2> productList) {
         this.mCtx = mCtx;
@@ -66,31 +73,40 @@ public class Quotation_item_adap extends RecyclerView.Adapter<Quotation_item_ada
         }
         Log.d("quotation_item_adap__", "qty=" + a.getQty() + "\nsrNo:" + (position + 1));
 
-        holder.image_Call.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // mCtx.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("tel://" + ""+a.getMobile())));
-                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel://" + "" + a.getMobile()));
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                if (ActivityCompat.checkSelfPermission(mCtx, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
-                    Toast.makeText(mCtx, "Call Permission not granted", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                mCtx.startActivity(intent);
-
-
-            }
-        });
+//        holder.image_Call.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // mCtx.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("tel://" + ""+a.getMobile())));
+//              /*  Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel://" + "" + a.getMobile()));
+//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                if (ActivityCompat.checkSelfPermission(mCtx, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+//                    // TODO: Consider calling
+//                    //    ActivityCompat#requestPermissions
+//                    // here to request the missing permissions, and then overriding
+//                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+//                    //                                          int[] grantResults)
+//                    // to handle the case where the user grants the permission. See the documentation
+//                    // for ActivityCompat#requestPermissions for more details.
+//                    Toast.makeText(mCtx, "Call Permission not granted", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+//                mCtx.startActivity(intent);
+//*/
+//
+//
+//
+//
+//            }
+//        });
 
     }
 
+
+
+
+    public void setClickListener(Quotation_item_adap.ClickListener clickListener){
+        this.clickListener=clickListener;
+    }
 
     public void notifyData(ArrayList<quotation2> myList) {
         this.productList = myList;
@@ -103,24 +119,24 @@ public class Quotation_item_adap extends RecyclerView.Adapter<Quotation_item_ada
     }
 
 
-    class ProductViewHolder extends RecyclerView.ViewHolder {
+    class ProductViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView q_name,q_desc,q_prise,q_qty,invoice_sample,invoice_sr_number,invoice_price;
+        TextView q_name, q_desc, q_prise, q_qty, invoice_sample, invoice_sr_number, invoice_price;
         ImageView image_Call;
 
         public ProductViewHolder(View itemView) {
             super(itemView);
-            invoice_sr_number=(TextView)itemView.findViewById(R.id.invoice_sr_number);
-            q_name=(TextView)itemView.findViewById(R.id.q_name);
-       //     q_brand=(TextView)itemView.findViewById(R.id.q_brand);
-            q_desc=(TextView)itemView.findViewById(R.id.q_desc);
-            q_prise=(TextView)itemView.findViewById(R.id.q_prise);
+            invoice_sr_number = (TextView) itemView.findViewById(R.id.invoice_sr_number);
+            q_name = (TextView) itemView.findViewById(R.id.q_name);
+            //     q_brand=(TextView)itemView.findViewById(R.id.q_brand);
+            q_desc = (TextView) itemView.findViewById(R.id.q_desc);
+            q_prise = (TextView) itemView.findViewById(R.id.q_prise);
             //q_image=(ImageView)itemView.findViewById(R.id.q_image);
-            q_qty=(TextView)itemView.findViewById(R.id.q_qty);
-            invoice_sample=(TextView)itemView.findViewById(R.id.invoice_sample);
-            invoice_price=(TextView)itemView.findViewById(R.id.invoice_price);
-            image_Call=(ImageView)itemView.findViewById(R.id.image_call);
-           // q_image.setOnClickListener(this);
+            q_qty = (TextView) itemView.findViewById(R.id.q_qty);
+            invoice_sample = (TextView) itemView.findViewById(R.id.invoice_sample);
+            invoice_price = (TextView) itemView.findViewById(R.id.invoice_price);
+            image_Call = (ImageView) itemView.findViewById(R.id.image_call);
+            // q_image.setOnClickListener(this);
 
            /* image_Call.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -129,10 +145,18 @@ public class Quotation_item_adap extends RecyclerView.Adapter<Quotation_item_ada
 
                 }
             });*/
+           image_Call.setOnClickListener(this);
         }
 
 
+        @Override
+        public void onClick(View v) {
+            if (clickListener!=null){
+                clickListener.callClicked(v,getPosition());
+            }
+        }
     }
-
+    public interface ClickListener{
+        void callClicked(View view, int position);}
 
 }

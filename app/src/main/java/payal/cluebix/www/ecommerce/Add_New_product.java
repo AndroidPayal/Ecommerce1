@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -151,6 +152,7 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
     ArrayList<Integer> max_range=new ArrayList<>();
     ArrayList<Integer> price_range=new ArrayList<>();
 
+    FloatingActionButton floatingActionButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -179,6 +181,8 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
         text_edit_quantity=(TextView)findViewById(R.id.edit_quantity_text);
         spin_category_type=(SearchableSpinner)findViewById(R.id.spin_category_type);
         change_image=(Button)findViewById(R.id.change_image);
+        floatingActionButton=(FloatingActionButton)findViewById(R.id.floatingActionButton);
+        floatingActionButton.setVisibility(View.GONE);
 
         session=new SessionManager(getApplicationContext());
         HashMap<String, String> user = session.getUserDetails();

@@ -1,8 +1,11 @@
 package payal.cluebix.www.ecommerce;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.pdf.PdfDocument;
+import android.net.Uri;
 import android.nfc.Tag;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -65,7 +68,9 @@ import payal.cluebix.www.ecommerce.Handlers.RquestHandler;
 import payal.cluebix.www.ecommerce.Handlers.SessionManager;
 import payal.cluebix.www.ecommerce.Handlers.myDbClass;
 
-public class Quotation_items_list extends AppCompatActivity {
+import static android.support.v4.content.PermissionChecker.checkSelfPermission;
+
+public class Quotation_items_list extends AppCompatActivity implements Quotation_item_adap.ClickListener{
 
     Quotation_item_adap adapter;
     RecyclerView recyclerView;
@@ -79,6 +84,7 @@ public class Quotation_items_list extends AppCompatActivity {
 
     SessionManager session;
     String Uid;String Uname,Umail,Udate1,Udate2,Umob;
+    String no="";
 
 
     @Override
@@ -122,6 +128,7 @@ public class Quotation_items_list extends AppCompatActivity {
         adapter=new Quotation_item_adap(getApplicationContext(),product_item);
         recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new DividerItemDecoration(this,linearLayoutManager.getOrientation()));
+        adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
 
 
@@ -552,8 +559,6 @@ public class Quotation_items_list extends AppCompatActivity {
 
 
 
-
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -566,14 +571,38 @@ public class Quotation_items_list extends AppCompatActivity {
             }else{
                 i = new Intent(Quotation_items_list.this, GuestActivity.class);
                 new myDbClass(Quotation_items_list.this).DeleteAll();
+
             }
             i.putExtra("cartTransition", "dash");
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i);
+            finish();
         }
     }
 
 
+    @Override
+    public void callClicked(View view, int position) {
+       // Toast.makeText(this, "calling...", Toast.LENGTH_SHORT).show();
+
+        if(Umail==null){
+            try {
+                ArrayList<quotation2> array = new myDbClass(Quotation_items_list.this).fetchValuesForQuotation();
+                no = array.get(position).getMobile();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }else{
+           no="" +product_item.get(position).getMobile();
+        }
+
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("tel://" + no)));
+        Log.d("Calling",product_item.get(position).getMobile()+"");
+
+          }
+
+
 
 }
+
 

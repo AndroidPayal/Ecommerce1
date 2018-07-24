@@ -194,7 +194,14 @@ public class Update_profile extends AppCompatActivity {
                            @Override
                            public void run() {
                                dialog.dismiss();
-                               Toast.makeText(Update_profile.this, ""+response, Toast.LENGTH_SHORT).show();
+
+                               try {
+                                   JSONObject jsonObject=new JSONObject(response);
+                                   Toast.makeText(Update_profile.this, ""+jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                               } catch (JSONException e) {
+                                   e.printStackTrace();
+                                   Toast.makeText(Update_profile.this, "Error!!", Toast.LENGTH_SHORT).show();
+                               }
                               /* Intent i=new Intent(Update_profile.this,Update_profile.class);
                                startActivity(i);*/
                                e_mob.setFocusable(false);

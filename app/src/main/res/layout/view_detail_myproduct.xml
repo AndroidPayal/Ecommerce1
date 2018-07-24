@@ -35,13 +35,12 @@
                 android:background="@drawable/input_background"
                 android:padding="2dp"
                 >
-                <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                <TextView
                     android:id="@+id/spin_category_type"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:textColor="@color/Black"
-                    app:hintText="Category Type"
-                    android:autofillHints="hints"/>
+                    />
             </LinearLayout>
         </LinearLayout>
 
@@ -64,13 +63,12 @@
                 android:background="@drawable/input_background"
                 android:padding="2dp"
                 >
-                <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                <TextView
                     android:id="@+id/spin_category"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:textColor="@color/Black"
-                    app:hintText="Select category"
-                    android:autofillHints="hints"/>
+                   />
                 </LinearLayout>
         </LinearLayout>
 

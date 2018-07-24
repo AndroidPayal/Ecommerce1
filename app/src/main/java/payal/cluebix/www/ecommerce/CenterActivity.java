@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;
@@ -25,6 +26,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -68,6 +70,7 @@ public class CenterActivity extends AppCompatActivity implements ProductDetail.C
     FragmentTransaction transaction;
     int count=0;
     TextView mtxtnotificationsbadge;
+    ImageView image_call;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +94,7 @@ public class CenterActivity extends AppCompatActivity implements ProductDetail.C
         floatb = (FloatingActionButton) findViewById(R.id.float_newProduct);
         search_tool2 = (Toolbar) findViewById(R.id.toolbar_search2);
         setSupportActionBar(toolbar);
+        image_call=(ImageView)findViewById(R.id.image_call);
 
         bottomNavigation = (BottomNavigationView) findViewById(R.id.bottom_navigation1);
 //         bottomNavigation.inflateMenu(R.menu.bottom_navigation);
@@ -102,6 +106,14 @@ public class CenterActivity extends AppCompatActivity implements ProductDetail.C
         transaction.replace(R.id.main_container, fragment).commit();
 
         initNavigationDrawer();
+
+
+        image_call.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("tel://" + Base_url.phoneNumber)));
+            }
+        });
 
   /*      bottomNavigation.setItemTextColor(ColorStateList1);
         bottomNavigation.setItemIconTintList(ColorStateList2);

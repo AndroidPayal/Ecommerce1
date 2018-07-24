@@ -17,12 +17,14 @@
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="match_parent"
-        android:layout_margin="3dp"
-        android:background="@drawable/edit_text_back"
+        android:layout_margin="5dp"
         android:drawablePadding="5dp"
         android:drawableStart="@drawable/ic_search_black_24dp"
         android:queryHint="Search Text"
+        android:background="@drawable/input_search_background"
         android:textColorHint="#b3abab"
+        android:hint="Search Here"
+
         />
     <Button
         android:id="@+id/main_act_search_button"
