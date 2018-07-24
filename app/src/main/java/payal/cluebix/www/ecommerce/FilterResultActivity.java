@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -33,19 +34,30 @@ import java.util.Map;
 import payal.cluebix.www.ecommerce.Adapter.Recycler_item_adapter;
 import payal.cluebix.www.ecommerce.Datas.data_dashboard;
 import payal.cluebix.www.ecommerce.Handlers.RquestHandler;
+import payal.cluebix.www.ecommerce.Handlers.SessionManager;
 
 
-
-public class FilterResultActivity extends AppCompatActivity {
+public class FilterResultActivity extends AppCompatActivity implements Recycler_item_adapter.ClickListener{
 
     public ArrayList<data_dashboard> resultSet ;
+    ArrayList<String> Product_id_array;
+    ArrayList<data_dashboard> product_item;
+    ArrayList<String> P_id_array_of_cartItems;
+    ArrayList<String> name_list;
+
    RecyclerView recyclerView;
     Recycler_item_adapter adapter;
     FloatingActionButton callFab;
  SearchView searchView;
  Button filterButton;
  ProgressBar filterProgressBar;
-
+ TextView nodataText;
+    SessionManager session;
+    HashMap<String,String> userSession;
+    String userId;
+    Bundle extras;
+    String location,minRange,maxRange,categoryType;
+    int spinnerPosition=0;
 
     ArrayList<data_dashboard> productList = new ArrayList<>();
 
@@ -55,17 +67,57 @@ public class FilterResultActivity extends AppCompatActivity {
         setContentView(R.layout.activity_filter_result);
 
 
+         Product_id_array=new ArrayList<>();
+
+        product_item = new ArrayList<>();
+
+         P_id_array_of_cartItems=new ArrayList<>();
+
+         name_list=new ArrayList<>();
+
+
+
+        session = new SessionManager(getApplicationContext());
+
+        userSession = session.getUserDetails();
+
+        userId = ""+userSession.get(session.KEY_ID);
+
+
+        final String url = "http://definedesigner.com/ApiController/search";
+
         filterProgressBar = findViewById(R.id.filter_progress);
+
+        nodataText = findViewById(R.id.nodata_text);
 
         callFab = (FloatingActionButton) findViewById(R.id.floatingActionButton);
 
         filterButton = (Button) findViewById(R.id.filterButton);
 
+
+        //checkcs and sets spinner position
+
+        if(!(getIntent().getIntExtra("spinnerPosition",0) == 0) )
+        {
+            spinnerPosition = getIntent().getIntExtra("spinnerPosition",0);
+        }
+
+
+
         filterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(getApplicationContext(),FilterActivity.class));
+                Intent intent = new Intent(getApplicationContext(),FilterActivity.class);
+                intent.putExtra("categoryType",categoryType);
+
+                if(spinnerPosition != 0) {
+                    intent.putExtra("spinnerPosition", spinnerPosition);
+                }
+
+                startActivity(intent);
+
+                finishAfterTransition();
 
             }
         });
@@ -107,15 +159,44 @@ public class FilterResultActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         recyclerView.setNestedScrollingEnabled(false);
 
+        location = "";
+        minRange = "";
+        maxRange = "";
+        categoryType = "";
 
 
-        Bundle extras = getIntent().getExtras();
+//         extras = getIntent().getExtras();
 
-        final String location = extras.getString("location");
-        final String minRange = extras.getString("minRange");
-        final String maxRange = extras.getString("maxRange");
-        final String username = extras.getString("username");
-        final String url = extras.getString("url");
+        location = getIntent().getStringExtra("location");
+        minRange = getIntent().getStringExtra("minRange");
+        maxRange = getIntent().getStringExtra("maxRange");
+        categoryType = getIntent().getStringExtra("categoryType");
+
+
+
+
+        if(location==null)
+        {
+            location = "";
+        }
+
+        if(minRange==null)
+        {
+            minRange = "";
+        }
+
+        if(maxRange==null)
+        {
+            maxRange = "";
+        }
+
+        if(categoryType==null)
+        {
+            categoryType = "";
+        }
+
+
+
 
         Log.d("appendedurl",""+url);
 
@@ -123,14 +204,6 @@ public class FilterResultActivity extends AppCompatActivity {
 
         StringRequest stringRequest=new StringRequest(Request.Method.POST, url, new Response.Listener<String>(){
 
-
-            ArrayList<String> Product_id_array=new ArrayList<>();
-
-            ArrayList<data_dashboard> product_item = new ArrayList<>();
-
-            ArrayList<String> P_id_array_of_cartItems=new ArrayList<>();
-
-            ArrayList<String> name_list=new ArrayList<>();
 
 
 
@@ -221,14 +294,18 @@ public class FilterResultActivity extends AppCompatActivity {
 
 //                        Lastid=product_id;
 
-                        Log.d("usersession",""+username);
+                        Log.d("usersession",""+userId);
 
-                        if (username.equals("null")) {
+                        if (userId.equals("null")) {
+
+                            Log.d("sessionnullvalue",""+userId);
 
                             product_item.add(new data_dashboard(product_id, product_name, product_code
 
                                     , color, retail_price, product_images, sample, manufacturing, qty, "", cart_disable));
                         } else {
+
+                            Log.d("sessionsetvalue",""+userId);
 
                             product_item.add(new data_dashboard(product_id, product_name, product_code
 
@@ -251,6 +328,11 @@ public class FilterResultActivity extends AppCompatActivity {
 
                     filterProgressBar.setVisibility(View.GONE);
 
+                    if(product_item.size()==0)
+                    {
+                        nodataText.setVisibility(View.VISIBLE);
+                    }
+
                     recyclerView.setAdapter(adapter);
 
 
@@ -269,6 +351,10 @@ public class FilterResultActivity extends AppCompatActivity {
 
                     Log.d("customExc",""+e);
 
+                    filterProgressBar.setVisibility(View.GONE);
+
+                    nodataText.setVisibility(View.VISIBLE);
+
                     e.printStackTrace();
 
                 }
@@ -285,6 +371,10 @@ public class FilterResultActivity extends AppCompatActivity {
 
                 filterProgressBar.setVisibility(View.GONE);
 
+                nodataText.setText("Connection Error");
+
+                nodataText.setVisibility(View.VISIBLE);
+
                 Log.d("dashboard_error_res",error+"");
 
                 Toast.makeText(FilterResultActivity.this, "Server Connection Failed!", Toast.LENGTH_SHORT).show();
@@ -298,6 +388,7 @@ public class FilterResultActivity extends AppCompatActivity {
                 parameters.put("location",location);
                 parameters.put("min",minRange);
                 parameters.put("max",maxRange);
+                parameters.put("category_type",categoryType);
                 return parameters;
             }
         };
@@ -310,12 +401,43 @@ public class FilterResultActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+
+        if(intent!=null) {
+            this.setIntent(intent);
+        }
+
+        super.onNewIntent(intent);
+    }
+
+    @Override
+    public void itemClicked(View view, int position) {
+        Intent i=new Intent(getApplicationContext(),ProductDetail.class);
+        i.putExtra("selected_prod_id",Product_id_array.get(position));
+        i.putExtra("ParentScreen","0");
+        startActivity(i);
+    }
+
+    @Override
+    public void onLongClick(View view, int position) {
+
+    }
+
+    @Override
+    public void sampleClicked(View view, int position) {
 
 
+        Intent i=new Intent(getApplicationContext(),ProductDetail.class);
+        i.putExtra("selected_prod_id",Product_id_array.get(position));
+        i.putExtra("ParentScreen","01");
+        startActivity(i);
+    }
 
+    @Override
+    public void Add_to_cart(View view, int position) {
 
-
-
+    }
 }
 
 

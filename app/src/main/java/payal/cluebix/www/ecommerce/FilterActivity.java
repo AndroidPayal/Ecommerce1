@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import payal.cluebix.www.ecommerce.Datas.Base_url;
+import payal.cluebix.www.ecommerce.Datas.CategoryTypeData;
 import payal.cluebix.www.ecommerce.Datas.data_dashboard;
 import payal.cluebix.www.ecommerce.Datas.unit_color_data;
 import payal.cluebix.www.ecommerce.Handlers.RquestHandler;
@@ -39,12 +40,13 @@ public class FilterActivity extends AppCompatActivity implements AdapterView.OnI
     public ArrayList<data_dashboard> copyofData;
 
     SearchableSpinner locationEditText;
+    SearchableSpinner categoryTypeSpinner;
     ArrayList<String> cityList=new ArrayList<>();
+    ArrayList<String> categoryTypeList=new ArrayList<>();
     String url_get_citites=Base_url.ListgetCities;
+    String url_get_categoryType=Base_url.ListgetCategoryType;
     public static String location;
-    SessionManager session;
-    HashMap<String,String> userSession;
-    String username;
+    public static String categoryType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,21 +54,21 @@ public class FilterActivity extends AppCompatActivity implements AdapterView.OnI
         setContentView(R.layout.activity_filter);
 
 
+
+
+        categoryTypeSpinner = (SearchableSpinner) findViewById(R.id.filter_cartegory_spinner);
         locationEditText = (SearchableSpinner) findViewById(R.id.filterLocationEditText);
         EditText minRangeEditText = (EditText) findViewById(R.id.filterMinRange);
         EditText maxRangeEditText = (EditText) findViewById(R.id.filterMaxRange);
 
         getCityList();
-
-        session = new SessionManager(getApplicationContext());
-
-         userSession = session.getUserDetails();
-
-        username = ""+userSession.get(session.KEY_ID);
-
-        Log.d("filterxyz",""+userSession.get(session.KEY_ID));
+        getCategoryList();
 
 
+
+
+        categoryType = "";
+        location = "";
 
 
 
@@ -76,6 +78,34 @@ public class FilterActivity extends AppCompatActivity implements AdapterView.OnI
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item, cityList);
         locationEditText.setAdapter(adapter);
         locationEditText.setOnItemSelectedListener(this);
+
+
+
+        ArrayAdapter<String> categoryStringAdapter = new ArrayAdapter<String>(FilterActivity.this,android.R.layout.simple_spinner_item, categoryTypeList);
+        categoryTypeSpinner.setAdapter(categoryStringAdapter);
+
+        categoryTypeSpinner.setOnItemSelectedListener(FilterActivity.this);
+
+
+        if(categoryTypeSpinner.getCount()>1){
+
+
+            if(getIntent().getIntExtra("spinnerPosition",0) != 0) {
+
+                int spinnerPosition = getIntent().getIntExtra("spinnerPosition",0);
+//                categoryTypeSpinner.setSelected(spinnerPosition);
+
+//            spinnerPosition = 0;
+
+                Log.d("spinnerpos",""+spinnerPosition);
+//
+                categoryTypeSpinner.setSelection(spinnerPosition);
+                Log.d("12345",""+getIntent().getStringExtra("categoryType"));
+
+            }}
+
+
+
 
         textView.setOnClickListener(new View.OnClickListener() {
 
@@ -108,45 +138,7 @@ public class FilterActivity extends AppCompatActivity implements AdapterView.OnI
                 // Number validation
 
 
-                try {
 
-
-                    if (minRangeEditText.getText().toString().isEmpty() ||minRangeEditText.getText().toString() == null) {
-                        minRange = "";
-
-                    } else {
-
-                        minRangeInt = Integer.parseInt(minRangeEditText.getText().toString());
-                    }
-
-
-
-
-
-                    if (maxRangeEditText.getText().toString().isEmpty() || maxRangeEditText.getText().toString() == null) {
-                        maxRange = "";
-
-                    } else {
-
-                        maxRangeInt = Integer.parseInt(maxRangeEditText.getText().toString());
-                    }
-
-
-                }
-
-                catch (NumberFormatException nfe)
-                {
-                    Toast.makeText(FilterActivity.this,"Enter Valid Number", Toast.LENGTH_SHORT).show();
-
-                    enterFlag = false;
-                }
-
-
-
-                // takeing validated integer
-
-
-                if(enterFlag){
 
                 minRange = minRangeEditText.getText().toString().trim();
                 maxRange = maxRangeEditText.getText().toString().trim();
@@ -156,22 +148,9 @@ public class FilterActivity extends AppCompatActivity implements AdapterView.OnI
 //
 //                }
 
-                    String url = "http://democs.com/demo/vendor/ApiController/search";
-
-                    if(username.equals(null) || username.equals(""))
-                    {
-
-                        url = "http://democs.com/demo/vendor/ApiController/search";
-                    }
-
-                    else if(!username.isEmpty()){
-
-                        url = "http://democs.com/demo/vendor/ApiController/search/"+username;
-                    }
 
                 Intent intent = new Intent(getApplicationContext(),FilterResultActivity.class);
-                        intent.putExtra("url",url);
-                        intent.putExtra("username",username);
+                        intent.putExtra("categoryType",categoryType);
                         intent.putExtra("location",location);
                         intent.putExtra("minRange",minRange);
                         intent.putExtra("maxRange",maxRange);
@@ -180,160 +159,11 @@ public class FilterActivity extends AppCompatActivity implements AdapterView.OnI
 
                 finishAfterTransition();
 
-                }
 
             }
         });
 
 
-//
-//        StringRequest stringRequest=new StringRequest(Request.Method.POST, url, new Response.Listener<String>(){
-//
-//
-//            ArrayList<String> Product_id_array=new ArrayList<>();
-//
-//            ArrayList<data_dashboard> product_item = new ArrayList<>();
-//
-//            ArrayList<String> P_id_array_of_cartItems=new ArrayList<>();
-//
-//            ArrayList<String> name_list=new ArrayList<>();
-//
-//
-//
-//
-//
-//
-//
-//            @Override
-//
-//            public void onResponse(String response) {//url1+Uid
-//
-//                Log.d("dashboard_correct_res","response load more="+response);
-//
-//
-//
-//                JSONObject post_data;
-//
-//                try {
-//
-//                    JSONObject obj=new JSONObject(response);
-//
-//                    JSONArray jsonArray=obj.getJSONArray("products");
-//
-//                    for(int i=0;i<jsonArray.length();i++) {
-//
-//                        post_data = jsonArray.getJSONObject(i);
-//
-///*
-//
-//{"id":"24","product_name":"this is test product","product_code":"896833","price":"345.00","retail_price":"700.00","color":"red","product_images":"79e,79f","sample":"0","unit":"ufndi","manufacturing":"0","qty":"4","amount":"5.00","percent":"%"},{
-//
-//* */
-//
-//                        String product_id = post_data.getString("id");
-//
-//                        String product_name = post_data.getString("product_name");
-//
-//                        String product_code= post_data.getString("product_code");
-//
-//                        String retail_price=post_data.getString("retail_price");
-//
-//                        String color = post_data.getString("color");
-//
-//                        String price = post_data.getString("price");
-//
-//                        String product_images = post_data.getString("product_images");
-//
-//                        String sample=post_data.getString("sample");
-//
-//                        String manufacturing=post_data.getString("manufacturing");
-//
-//                        String qty=post_data.getString("qty");
-//
-//                        String amount=post_data.getString("amount");
-//
-//                        String percent=post_data.getString("percent");
-//
-//
-//
-//
-//
-//                        Product_id_array.add(product_id);
-//
-//                        int cart_disable = 0;
-//
-//                        name_list.add(product_name);
-//
-//                        Log.d("filter jsonResponse",""+product_item);
-//
-//
-//
-//                        if(P_id_array_of_cartItems.contains(product_id))
-//
-//                            cart_disable=1;
-//
-//                        Log.d("product name","cart disable value="+cart_disable+" name="+product_name);
-//
-//
-//
-////                        Lastid=product_id;
-//
-//                        product_item.add(new data_dashboard(product_id, product_name,product_code
-//
-//                                , color, price, product_images, sample, manufacturing,qty, amount,cart_disable));
-//
-//
-//
-//
-//
-//                    }
-//
-//
-//                    copyofData = product_item;
-//
-////                    adapter.notifyData(product_item);
-//
-//
-//
-//
-//
-//                } catch (JSONException e) {
-//
-//                    e.printStackTrace();
-//
-//                }
-//
-//            Log.d("filter jsonResponse",""+response);
-//
-//            }
-//
-//        }, new Response.ErrorListener() {
-//
-//            @Override
-//
-//            public void onErrorResponse(VolleyError error) {
-//
-//                Log.d("dashboard_error_res",error+"");
-//
-//                Toast.makeText(FilterActivity.this, "Server Connection Failed!", Toast.LENGTH_SHORT).show();
-//
-//            }
-//
-//        }){
-//            @Override
-//            protected Map<String, String> getParams() throws AuthFailureError {
-//                Map<String , String> parameters= new HashMap<String, String>();
-//                parameters.put("location","");
-//                parameters.put("min","100");
-//                parameters.put("max","700");
-//                return parameters;
-//            }
-//        };
-//
-//        RquestHandler.getInstance(FilterActivity.this).addToRequestQueue(stringRequest);
-//
-//    }
-//
 
 
 
@@ -351,6 +181,9 @@ public class FilterActivity extends AppCompatActivity implements AdapterView.OnI
                 JSONObject post_data;
                 try {
                     JSONObject jsonObj=new JSONObject(response);
+
+                    Log.d("listfetch",""+response);
+
                     String success=jsonObj.getString("success");
                     JSONArray jsonArray=jsonObj.getJSONArray("cities");
                     for(int i=0;i<jsonArray.length();i++) {
@@ -361,6 +194,8 @@ public class FilterActivity extends AppCompatActivity implements AdapterView.OnI
                         //cityList.add(new unit_color_data(id,city));
                         cityList.add(city);
                     }
+
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -377,14 +212,110 @@ public class FilterActivity extends AppCompatActivity implements AdapterView.OnI
 
     }
 
+
+
+    private void getCategoryList() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url_get_categoryType, new Response.Listener<String>() {
+            @Override
+            public void onResponse(final String response) {
+                /*{
+                    "success": "true",
+                        "units": [
+                    {
+                        "id": "1",
+                            "type": "Wall",
+                            "created_at": "2018-07-11",
+                            "updated_at": "2018-07-20"
+                    },*/
+
+
+                JSONObject post_data;
+                try {
+                    JSONObject jsonObj=new JSONObject(response);
+                    String success=jsonObj.getString("success");
+                    JSONArray jsonArray=jsonObj.getJSONArray("units");
+                    for(int i=0;i<jsonArray.length();i++) {
+                        post_data = jsonArray.getJSONObject(i);
+                        String id="0";
+                        String categoryType=post_data.getString("type");
+
+                        //cityList.add(new unit_color_data(id,city));
+                        categoryTypeList.add(categoryType);
+                    }
+
+                    ArrayAdapter<String> categoryStringAdapter = new ArrayAdapter<String>(FilterActivity.this,android.R.layout.simple_spinner_item, categoryTypeList);
+                    categoryTypeSpinner.setAdapter(categoryStringAdapter);
+
+                    categoryTypeSpinner.setOnItemSelectedListener(FilterActivity.this);
+
+                    if(categoryTypeSpinner.getCount()>1){
+
+
+                        if(getIntent().getIntExtra("spinnerPosition",0) != 0) {
+
+                            int spinnerPosition = getIntent().getIntExtra("spinnerPosition",0);
+//                categoryTypeSpinner.setSelected(spinnerPosition);
+
+//            spinnerPosition = 0;
+
+                            Log.d("spinnerpos",""+spinnerPosition);
+//
+                            categoryTypeSpinner.setSelection(spinnerPosition,true);
+                            Log.d("12345",""+getIntent().getStringExtra("categoryType"));
+
+                        }}
+
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Filterscreen", "Volley error: "+error );
+                Toast.makeText(FilterActivity.this, "Server Connection Failed!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        RquestHandler.getInstance(FilterActivity.this).addToRequestQueue(stringRequest);
+
+    }
+
+
+
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        location=cityList.get(position);
+
+        if( parent.getId()==R.id.filterLocationEditText){
+
+            location=cityList.get(position);
+        }
+
+        else if( parent.getId()==R.id.filter_cartegory_spinner)
+        {
+            categoryType = categoryTypeList.get(position);
+
+        }
+
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+
+        if(intent != null)
+        {
+            setIntent(intent);
+        }
+
+
+        super.onNewIntent(intent);
     }
 }
 

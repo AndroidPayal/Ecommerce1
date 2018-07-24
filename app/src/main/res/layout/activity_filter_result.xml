@@ -88,4 +88,15 @@
         android:padding="2dp"
         android:src="@drawable/ic_call_white_24dp"
         />
+
+
+    <TextView
+        android:id="@+id/nodata_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No Data to display"
+        android:textSize="22sp"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        />
 </RelativeLayout>

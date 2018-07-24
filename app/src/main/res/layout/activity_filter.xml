@@ -28,7 +28,7 @@
 
     <com.toptoche.searchablespinnerlibrary.SearchableSpinner
         android:id="@+id/filterLocationEditText"
-        android:layout_width="wrap_content"
+        android:layout_width="140dp"
         android:layout_height="wrap_content"
         app:hintText="location"
 
@@ -40,11 +40,34 @@
 
 
     <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/input_background"
+        android:layout_marginTop="25dp"
+        >
+
+        <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+            android:id="@+id/filter_cartegory_spinner"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            app:hintText="category"
+
+            android:layout_gravity="center"
+            android:theme="@style/Widget.AppCompat.DropDownItem.Spinner"
+            />
+
+    </LinearLayout>
+
+
+
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="50dp"
         android:weightSum="2"
         >
 

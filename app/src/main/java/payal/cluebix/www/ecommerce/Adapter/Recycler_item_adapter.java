@@ -338,7 +338,8 @@ public class Recycler_item_adapter extends RecyclerView.Adapter<Recycler_item_ad
                 for(data_dashboard item : productList_Copy)
                 {
 
-                    if(item.getProduct_name().toLowerCase().contains(filterCharSequence))
+                    if((item.getProduct_name().toLowerCase().contains(filterCharSequence)) ||
+                            (item.getProduct_code().toLowerCase().contains(filterCharSequence)))
                     {
                         filteredList.add(item);
                     }

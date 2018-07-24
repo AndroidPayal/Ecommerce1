@@ -151,313 +151,332 @@
                     android:gravity="center"
                     android:orientation="horizontal" />
             </FrameLayout>
+
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
                 >
-                <HorizontalScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:scrollbars="none"
-                    >
-                    <LinearLayout
-
-                        android:id="@+id/linearButton"
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"
-
-                        >
-                        <android.support.v7.widget.CardView
-                            android:id="@+id/category_1"
-                            android:layout_width="80dp"
-                            android:layout_height="match_parent"
-                            app:cardCornerRadius="0dp"
-                            >
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical"
-                                >
-
-                                <ImageView
-                                    android:layout_width="52dp"
-                                    android:layout_height="50dp"
-                                    android:layout_gravity="center"
-                                    android:layout_marginTop="15dp"
-                                    android:background="@drawable/circle_color"
-                                    android:padding="10dp"
-                                    android:src="@drawable/ic_home_white_24dp" />
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="22dp"
-                                    android:text="Wall"
-                                    android:textColor="#000000"
-                                    android:gravity="center"
-                                    android:paddingTop="2dp"
-                                    />
-
-                            </LinearLayout>
-
-                        </android.support.v7.widget.CardView>
-
-
-                        <android.support.v7.widget.CardView
-                            android:id="@+id/category_2"
-                            android:layout_width="80dp"
-                            android:layout_height="match_parent"
-                            app:cardCornerRadius="0dp"
-                            >
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical"
-                                >
-
-                                <ImageView
-                                    android:layout_width="52dp"
-                                    android:layout_height="52dp"
-                                    android:layout_gravity="center"
-                                    android:src="@drawable/ic_directions_car_white_24dp"
-                                    android:background="@drawable/circle_orange"
-                                    android:padding="10dp"
-                                    android:layout_marginTop="15dp"
-                                    />
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="22dp"
-                                    android:text="Flour"
-                                    android:textColor="#000000"
-                                    android:gravity="center"
-                                    android:paddingTop="2dp"
-                                    />
-
-                            </LinearLayout>
-
-                        </android.support.v7.widget.CardView>
-
-
-                        <android.support.v7.widget.CardView
-                            android:id="@+id/category_3"
-                            android:layout_width="80dp"
-                            android:layout_height="match_parent"
-                            app:cardCornerRadius="0dp"
-
-                            >
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical"
-                                >
-
-                                <ImageView
-                                    android:layout_width="52dp"
-                                    android:layout_height="52dp"
-                                    android:layout_gravity="center"
-                                    android:src="@drawable/ic_computer_white_24dp"
-                                    android:background="@drawable/circle_green"
-                                    android:padding="10dp"
-                                    android:layout_marginTop="15dp"
-                                    />
-
-                                <TextView
-                                    android:id="@+id/textView2"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="22dp"
-                                    android:gravity="center"
-                                    android:paddingTop="2dp"
-                                    android:text="Celling"
-                                    android:textColor="#000000" />
-
-                            </LinearLayout>
-
-                        </android.support.v7.widget.CardView>
-
-
-                        <android.support.v7.widget.CardView
-                            android:id="@+id/category_4"
-                            android:layout_width="80dp"
-                            android:layout_height="match_parent"
-                            app:cardCornerRadius="0dp"
-
-                            >
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical"
-                                >
-
-                                <ImageView
-                                    android:layout_width="52dp"
-                                    android:layout_height="52dp"
-                                    android:layout_gravity="center"
-                                    android:src="@drawable/ic_phone_android_white_24dp"
-                                    android:background="@drawable/circle_cyananblue"
-                                    android:padding="10dp"
-                                    android:layout_marginTop="15dp"
-                                    />
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="22dp"
-                                    android:text="Fabric"
-                                    android:textColor="#000000"
-                                    android:gravity="center"
-                                    android:paddingTop="2dp"
-                                    />
-
-                            </LinearLayout>
-
-                        </android.support.v7.widget.CardView>
-
-
-                        <android.support.v7.widget.CardView
-                            android:id="@+id/category_5"
-                            android:layout_width="80dp"
-                            android:layout_height="match_parent"
-                            app:cardCornerRadius="0dp"
-                            >
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical"
-                                >
-
-                                <ImageView
-                                    android:layout_width="52dp"
-                                    android:layout_height="52dp"
-                                    android:layout_gravity="center"
-                                    android:src="@drawable/ic_motorcycle_white_24dp"
-                                    android:background="@drawable/circle_yellow"
-                                    android:padding="10dp"
-                                    android:layout_marginTop="15dp"
-                                    />
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="22dp"
-                                    android:text="Decorative"
-                                    android:textColor="#000000"
-                                    android:gravity="center"
-                                    android:paddingTop="2dp"
-                                    />
-
-                            </LinearLayout>
-
-                        </android.support.v7.widget.CardView>
-
-
-                        <android.support.v7.widget.CardView
-                            android:id="@+id/category_6"
-                            android:layout_width="80dp"
-                            android:layout_height="match_parent"
-                            app:cardCornerRadius="0dp"
-                            >
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical"
-                                >
-
-                                <ImageView
-                                    android:layout_width="52dp"
-                                    android:layout_height="52dp"
-                                    android:layout_gravity="center"
-                                    android:src="@drawable/ic_library_books_white_24dp"
-                                    android:background="@drawable/circle_purple"
-                                    android:padding="10dp"
-                                    android:layout_marginTop="15dp"
-                                    />
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="22dp"
-                                    android:text="Landscape"
-                                    android:textColor="#000000"
-                                    android:gravity="center"
-                                    android:paddingTop="2dp"
-                                    />
-
-                            </LinearLayout>
-
-                        </android.support.v7.widget.CardView>
-
-
-                        <android.support.v7.widget.CardView
-                            android:layout_width="80dp"
-                            android:layout_height="match_parent"
-                            app:cardCornerRadius="0dp"
-                            android:id="@+id/category_7"
-                            >
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical"
-                                >
-
-                                <ImageView
-                                    android:layout_width="52dp"
-                                    android:layout_height="52dp"
-                                    android:layout_gravity="center"
-                                    android:src="@drawable/ic_tools_white_24dp"
-                                    android:background="@drawable/circle_primaryblue"
-                                    android:padding="10dp"
-                                    android:layout_marginTop="15dp"
-                                    />
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="22dp"
-                                    android:text="Customized"
-                                    android:textColor="#000000"
-                                    android:gravity="center"
-                                    android:paddingTop="2dp"
-                                    />
-
-                            </LinearLayout>
-
-                        </android.support.v7.widget.CardView>
-
-
-                        <android.support.v7.widget.CardView
-                            android:id="@+id/category_8"
-                            android:layout_width="80dp"
-                            android:layout_height="match_parent"
-                            app:cardCornerRadius="0dp"
-                            >
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical"
-                                >
-
-                                <ImageView
-                                    android:layout_width="52dp"
-                                    android:layout_height="52dp"
-                                    android:layout_gravity="center"
-                                    android:src="@drawable/ic__furniture_white_24dp"
-                                    android:background="@drawable/circle_green"
-                                    android:padding="10dp"
-                                    android:layout_marginTop="15dp"
-                                    />
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="22dp"
-                                    android:text="Glass"
-                                    android:textColor="#000000"
-                                    android:gravity="center"
-                                    android:paddingTop="2dp"
-                                    />
-
-                            </LinearLayout>
-
-                        </android.support.v7.widget.CardView>
-
-
-
-
-                    </LinearLayout>
-                </HorizontalScrollView>
-            </LinearLayout>
 
             <android.support.v7.widget.RecyclerView
-                android:layout_below="@id/linearButton"
+                android:layout_marginTop="5dp"
+                android:id="@+id/guest_category_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+            </android.support.v7.widget.RecyclerView>
+            </LinearLayout>
+
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="100dp"-->
+                <!--&gt;-->
+                <!--<HorizontalScrollView-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="100dp"-->
+                    <!--android:scrollbars="none"-->
+                    <!--&gt;-->
+                    <!--<LinearLayout-->
+
+                        <!--android:id="@+id/linearButton"-->
+                        <!--android:orientation="horizontal"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="100dp"-->
+
+                        <!--&gt;-->
+                        <!--<android.support.v7.widget.CardView-->
+                            <!--android:id="@+id/category_1"-->
+                            <!--android:layout_width="80dp"-->
+                            <!--android:layout_height="match_parent"-->
+                            <!--app:cardCornerRadius="0dp"-->
+                            <!--&gt;-->
+                            <!--<LinearLayout-->
+                                <!--android:layout_width="match_parent"-->
+                                <!--android:layout_height="match_parent"-->
+                                <!--android:orientation="vertical"-->
+                                <!--&gt;-->
+
+                                <!--<ImageView-->
+                                    <!--android:layout_width="52dp"-->
+                                    <!--android:layout_height="50dp"-->
+                                    <!--android:layout_gravity="center"-->
+                                    <!--android:layout_marginTop="15dp"-->
+                                    <!--android:background="@drawable/circle_color"-->
+                                    <!--android:padding="10dp"-->
+                                    <!--android:src="@drawable/ic_home_white_24dp" />-->
+                                <!--<TextView-->
+                                    <!--android:layout_width="match_parent"-->
+                                    <!--android:layout_height="22dp"-->
+                                    <!--android:text="Wall"-->
+                                    <!--android:textColor="#000000"-->
+                                    <!--android:gravity="center"-->
+                                    <!--android:paddingTop="2dp"-->
+                                    <!--/>-->
+
+                            <!--</LinearLayout>-->
+
+                        <!--</android.support.v7.widget.CardView>-->
+
+
+                        <!--<android.support.v7.widget.CardView-->
+                            <!--android:id="@+id/category_2"-->
+                            <!--android:layout_width="80dp"-->
+                            <!--android:layout_height="match_parent"-->
+                            <!--app:cardCornerRadius="0dp"-->
+                            <!--&gt;-->
+                            <!--<LinearLayout-->
+                                <!--android:layout_width="match_parent"-->
+                                <!--android:layout_height="match_parent"-->
+                                <!--android:orientation="vertical"-->
+                                <!--&gt;-->
+
+                                <!--<ImageView-->
+                                    <!--android:layout_width="52dp"-->
+                                    <!--android:layout_height="52dp"-->
+                                    <!--android:layout_gravity="center"-->
+                                    <!--android:src="@drawable/ic_directions_car_white_24dp"-->
+                                    <!--android:background="@drawable/circle_orange"-->
+                                    <!--android:padding="10dp"-->
+                                    <!--android:layout_marginTop="15dp"-->
+                                    <!--/>-->
+                                <!--<TextView-->
+                                    <!--android:layout_width="match_parent"-->
+                                    <!--android:layout_height="22dp"-->
+                                    <!--android:text="Flour"-->
+                                    <!--android:textColor="#000000"-->
+                                    <!--android:gravity="center"-->
+                                    <!--android:paddingTop="2dp"-->
+                                    <!--/>-->
+
+                            <!--</LinearLayout>-->
+
+                        <!--</android.support.v7.widget.CardView>-->
+
+
+                        <!--<android.support.v7.widget.CardView-->
+                            <!--android:id="@+id/category_3"-->
+                            <!--android:layout_width="80dp"-->
+                            <!--android:layout_height="match_parent"-->
+                            <!--app:cardCornerRadius="0dp"-->
+
+                            <!--&gt;-->
+                            <!--<LinearLayout-->
+                                <!--android:layout_width="match_parent"-->
+                                <!--android:layout_height="match_parent"-->
+                                <!--android:orientation="vertical"-->
+                                <!--&gt;-->
+
+                                <!--<ImageView-->
+                                    <!--android:layout_width="52dp"-->
+                                    <!--android:layout_height="52dp"-->
+                                    <!--android:layout_gravity="center"-->
+                                    <!--android:src="@drawable/ic_computer_white_24dp"-->
+                                    <!--android:background="@drawable/circle_green"-->
+                                    <!--android:padding="10dp"-->
+                                    <!--android:layout_marginTop="15dp"-->
+                                    <!--/>-->
+
+                                <!--<TextView-->
+                                    <!--android:id="@+id/textView2"-->
+                                    <!--android:layout_width="match_parent"-->
+                                    <!--android:layout_height="22dp"-->
+                                    <!--android:gravity="center"-->
+                                    <!--android:paddingTop="2dp"-->
+                                    <!--android:text="Celling"-->
+                                    <!--android:textColor="#000000" />-->
+
+                            <!--</LinearLayout>-->
+
+                        <!--</android.support.v7.widget.CardView>-->
+
+
+                        <!--<android.support.v7.widget.CardView-->
+                            <!--android:id="@+id/category_4"-->
+                            <!--android:layout_width="80dp"-->
+                            <!--android:layout_height="match_parent"-->
+                            <!--app:cardCornerRadius="0dp"-->
+
+                            <!--&gt;-->
+                            <!--<LinearLayout-->
+                                <!--android:layout_width="match_parent"-->
+                                <!--android:layout_height="match_parent"-->
+                                <!--android:orientation="vertical"-->
+                                <!--&gt;-->
+
+                                <!--<ImageView-->
+                                    <!--android:layout_width="52dp"-->
+                                    <!--android:layout_height="52dp"-->
+                                    <!--android:layout_gravity="center"-->
+                                    <!--android:src="@drawable/ic_phone_android_white_24dp"-->
+                                    <!--android:background="@drawable/circle_cyananblue"-->
+                                    <!--android:padding="10dp"-->
+                                    <!--android:layout_marginTop="15dp"-->
+                                    <!--/>-->
+                                <!--<TextView-->
+                                    <!--android:layout_width="match_parent"-->
+                                    <!--android:layout_height="22dp"-->
+                                    <!--android:text="Fabric"-->
+                                    <!--android:textColor="#000000"-->
+                                    <!--android:gravity="center"-->
+                                    <!--android:paddingTop="2dp"-->
+                                    <!--/>-->
+
+                            <!--</LinearLayout>-->
+
+                        <!--</android.support.v7.widget.CardView>-->
+
+
+                        <!--<android.support.v7.widget.CardView-->
+                            <!--android:id="@+id/category_5"-->
+                            <!--android:layout_width="80dp"-->
+                            <!--android:layout_height="match_parent"-->
+                            <!--app:cardCornerRadius="0dp"-->
+                            <!--&gt;-->
+                            <!--<LinearLayout-->
+                                <!--android:layout_width="match_parent"-->
+                                <!--android:layout_height="match_parent"-->
+                                <!--android:orientation="vertical"-->
+                                <!--&gt;-->
+
+                                <!--<ImageView-->
+                                    <!--android:layout_width="52dp"-->
+                                    <!--android:layout_height="52dp"-->
+                                    <!--android:layout_gravity="center"-->
+                                    <!--android:src="@drawable/ic_motorcycle_white_24dp"-->
+                                    <!--android:background="@drawable/circle_yellow"-->
+                                    <!--android:padding="10dp"-->
+                                    <!--android:layout_marginTop="15dp"-->
+                                    <!--/>-->
+                                <!--<TextView-->
+                                    <!--android:layout_width="match_parent"-->
+                                    <!--android:layout_height="22dp"-->
+                                    <!--android:text="Decorative"-->
+                                    <!--android:textColor="#000000"-->
+                                    <!--android:gravity="center"-->
+                                    <!--android:paddingTop="2dp"-->
+                                    <!--/>-->
+
+                            <!--</LinearLayout>-->
+
+                        <!--</android.support.v7.widget.CardView>-->
+
+
+                        <!--<android.support.v7.widget.CardView-->
+                            <!--android:id="@+id/category_6"-->
+                            <!--android:layout_width="80dp"-->
+                            <!--android:layout_height="match_parent"-->
+                            <!--app:cardCornerRadius="0dp"-->
+                            <!--&gt;-->
+                            <!--<LinearLayout-->
+                                <!--android:layout_width="match_parent"-->
+                                <!--android:layout_height="match_parent"-->
+                                <!--android:orientation="vertical"-->
+                                <!--&gt;-->
+
+                                <!--<ImageView-->
+                                    <!--android:layout_width="52dp"-->
+                                    <!--android:layout_height="52dp"-->
+                                    <!--android:layout_gravity="center"-->
+                                    <!--android:src="@drawable/ic_library_books_white_24dp"-->
+                                    <!--android:background="@drawable/circle_purple"-->
+                                    <!--android:padding="10dp"-->
+                                    <!--android:layout_marginTop="15dp"-->
+                                    <!--/>-->
+                                <!--<TextView-->
+                                    <!--android:layout_width="match_parent"-->
+                                    <!--android:layout_height="22dp"-->
+                                    <!--android:text="Landscape"-->
+                                    <!--android:textColor="#000000"-->
+                                    <!--android:gravity="center"-->
+                                    <!--android:paddingTop="2dp"-->
+                                    <!--/>-->
+
+                            <!--</LinearLayout>-->
+
+                        <!--</android.support.v7.widget.CardView>-->
+
+
+                        <!--<android.support.v7.widget.CardView-->
+                            <!--android:layout_width="80dp"-->
+                            <!--android:layout_height="match_parent"-->
+                            <!--app:cardCornerRadius="0dp"-->
+                            <!--android:id="@+id/category_7"-->
+                            <!--&gt;-->
+                            <!--<LinearLayout-->
+                                <!--android:layout_width="match_parent"-->
+                                <!--android:layout_height="match_parent"-->
+                                <!--android:orientation="vertical"-->
+                                <!--&gt;-->
+
+                                <!--<ImageView-->
+                                    <!--android:layout_width="52dp"-->
+                                    <!--android:layout_height="52dp"-->
+                                    <!--android:layout_gravity="center"-->
+                                    <!--android:src="@drawable/ic_tools_white_24dp"-->
+                                    <!--android:background="@drawable/circle_primaryblue"-->
+                                    <!--android:padding="10dp"-->
+                                    <!--android:layout_marginTop="15dp"-->
+                                    <!--/>-->
+                                <!--<TextView-->
+                                    <!--android:layout_width="match_parent"-->
+                                    <!--android:layout_height="22dp"-->
+                                    <!--android:text="Customized"-->
+                                    <!--android:textColor="#000000"-->
+                                    <!--android:gravity="center"-->
+                                    <!--android:paddingTop="2dp"-->
+                                    <!--/>-->
+
+                            <!--</LinearLayout>-->
+
+                        <!--</android.support.v7.widget.CardView>-->
+
+
+                        <!--<android.support.v7.widget.CardView-->
+                            <!--android:id="@+id/category_8"-->
+                            <!--android:layout_width="80dp"-->
+                            <!--android:layout_height="match_parent"-->
+                            <!--app:cardCornerRadius="0dp"-->
+                            <!--&gt;-->
+                            <!--<LinearLayout-->
+                                <!--android:layout_width="match_parent"-->
+                                <!--android:layout_height="match_parent"-->
+                                <!--android:orientation="vertical"-->
+                                <!--&gt;-->
+
+                                <!--<ImageView-->
+                                    <!--android:layout_width="52dp"-->
+                                    <!--android:layout_height="52dp"-->
+                                    <!--android:layout_gravity="center"-->
+                                    <!--android:src="@drawable/ic__furniture_white_24dp"-->
+                                    <!--android:background="@drawable/circle_green"-->
+                                    <!--android:padding="10dp"-->
+                                    <!--android:layout_marginTop="15dp"-->
+                                    <!--/>-->
+                                <!--<TextView-->
+                                    <!--android:layout_width="match_parent"-->
+                                    <!--android:layout_height="22dp"-->
+                                    <!--android:text="Glass"-->
+                                    <!--android:textColor="#000000"-->
+                                    <!--android:gravity="center"-->
+                                    <!--android:paddingTop="2dp"-->
+                                    <!--/>-->
+
+                            <!--</LinearLayout>-->
+
+                        <!--</android.support.v7.widget.CardView>-->
+
+
+
+
+                    <!--</LinearLayout>-->
+                <!--</HorizontalScrollView>-->
+            <!--</LinearLayout>-->
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_below="@id/guest_category_recycler"
                 android:id="@+id/recycler1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
