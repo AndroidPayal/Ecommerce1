@@ -205,7 +205,7 @@ public class GuestActivity extends AppCompatActivity implements Recycler_item_ad
                 @Override
                 public void onClick(View view) {
 
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("tel://" + "8149977891")));
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("tel://" + Base_url.phoneNumber)));
 
                 }
             });

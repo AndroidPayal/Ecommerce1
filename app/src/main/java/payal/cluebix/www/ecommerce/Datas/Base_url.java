@@ -11,6 +11,8 @@ public class Base_url {
 
     public static final String Login_url=base_url+"ApiController/checkCredential";
     public static final String Registration_url=base_url+"UserController/registerByCandidate";
+    public static final String phoneNumber="8871001016";
+
 
     public static final String Dashboard_url=base_url+"ApiController/shopUnit/";/*/user_id*/
     public static final String Load_more_url=base_url+"ApiController/loadMore/";/*/Last Product's id */

@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Map;
 
 import payal.cluebix.www.ecommerce.Adapter.Recycler_item_adapter;
+import payal.cluebix.www.ecommerce.Datas.Base_url;
 import payal.cluebix.www.ecommerce.Datas.data_dashboard;
 import payal.cluebix.www.ecommerce.Handlers.RquestHandler;
 import payal.cluebix.www.ecommerce.Handlers.SessionManager;
@@ -126,7 +127,7 @@ public class FilterResultActivity extends AppCompatActivity implements Recycler_
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("tel://"+"1234567890")));
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("tel://"+Base_url.phoneNumber )));
             }
         });
 

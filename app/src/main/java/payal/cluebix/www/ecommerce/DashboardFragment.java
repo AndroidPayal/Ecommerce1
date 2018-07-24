@@ -72,6 +72,7 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
     RecyclerView recyclerView;
     Recycler_item_adapter adapter;
     RecyclerView categoryRecyclerView;
+    FloatingActionButton callFab;
 
     String url1= Base_url.Dashboard_url;
     String url2=Base_url.Add_prod_to_Cart;
@@ -105,6 +106,8 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
 
     String Lastid="0";
 //    FloatingActionButton floatingActionButton_mainuser;
+
+
 
     public DashboardFragment() {
     }
