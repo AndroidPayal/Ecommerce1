@@ -1,7 +1,9 @@
 package payal.cluebix.www.ecommerce;
 
 import android.app.ProgressDialog;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
 import android.text.TextUtils;
@@ -102,6 +104,7 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
     TextView load_more;
 
     String Lastid="0";
+//    FloatingActionButton floatingActionButton_mainuser;
 
     public DashboardFragment() {
     }
@@ -135,6 +138,7 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
         v2=(View)v.findViewById(R.id.view_for_margin);
         tool_search=(TextView) getActivity().findViewById(R.id.main_activity_search);
         load_more=(TextView)v.findViewById(R.id.load_more);
+     //   floatingActionButton_mainuser=(FloatingActionButton)v.findViewById(R.id.floatingActionButton_mainuser);
 
 
         tool_search.setOnClickListener(new View.OnClickListener() {
@@ -168,6 +172,10 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
 //        adapter= new Recycler_item_adapter(getActivity(),product_item);
 //        adapter.setClickListener(this);
 //        recyclerView.setAdapter(adapter);
+
+
+               // startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("tel://" + "8149977891")));
+
 
         return v;
     }

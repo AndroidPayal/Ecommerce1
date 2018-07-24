@@ -118,8 +118,10 @@ public class GuestActivity extends AppCompatActivity implements Recycler_item_ad
 
         getSliderImage();
 
+
         count=0;
         P_id_array_of_cartItems.clear();
+
 
 
         tool_search=(TextView)findViewById(R.id.guest_activity_search);
@@ -357,6 +359,9 @@ public class GuestActivity extends AppCompatActivity implements Recycler_item_ad
         //return no. of item in cart
         ArrayList<sample_Cart> cart_array=new myDbClass(GuestActivity.this).fetchAllValue();
         count=cart_array.size();
+        for(int i=0;i<cart_array.size();i++ )
+                P_id_array_of_cartItems.add(cart_array.get(i).getProduct_id());
+
         Log.d("count_product_detail","count of db cart="+count);
 
         invalidateOptionsMenu();
@@ -490,7 +495,7 @@ public class GuestActivity extends AppCompatActivity implements Recycler_item_ad
     }
 
     @Override
-    public void onClick(View v) {
+    public void onClick(View v) {//load more button clicked
         load_more.setClickable(false);
         final ProgressDialog dialog = ProgressDialog.show(GuestActivity.this, "","Loading...", true);
         dialog.show();

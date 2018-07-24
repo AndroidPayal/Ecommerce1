@@ -48,6 +48,7 @@ public class SearchAct extends AppCompatActivity implements View.OnClickListener
     RecyclerView recyclerView;
     Recycler_item_adapter adapter;
      ProgressDialog dialog;
+    TextView text_No_Data_matched;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +68,7 @@ public class SearchAct extends AppCompatActivity implements View.OnClickListener
         searchv=(EditText) findViewById(R.id.main_activity_search);
         searchButton=(Button)findViewById(R.id.main_act_search_button);
         recyclerView=(RecyclerView)findViewById(R.id.recycler1);
+        text_No_Data_matched=(TextView)findViewById(R.id.text_No_Data_matched);
 
         if (Umail!=null){
             Log.d("urlval1",url1);
@@ -151,14 +153,20 @@ public class SearchAct extends AppCompatActivity implements View.OnClickListener
 
                     }
 
+                    text_No_Data_matched.setVisibility(View.GONE);
                     adapter.notifyData(product_item);
                     dialog.cancel();
                     Log.d("items",product_item+"");
-                    Toast.makeText(SearchAct.this, "adapter formed", Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(SearchAct.this, "adapter formed", Toast.LENGTH_SHORT).show();
 
                 } catch (JSONException e) {
                     Log.e("items","exsc="+e);
+                    product_item.clear();
+                    Product_id_array.clear();
                     dialog.cancel();
+                    text_No_Data_matched.setVisibility(View.VISIBLE);
+                    adapter.notifyData(product_item);
+
                 }
 
             }
