@@ -325,7 +325,7 @@ public class FilterResultActivity extends AppCompatActivity implements Recycler_
 
 
                     adapter= new Recycler_item_adapter(getApplicationContext(),product_item);
-
+                    adapter.setClickListener(FilterResultActivity.this);
                     filterProgressBar.setVisibility(View.GONE);
 
                     if(product_item.size()==0)
@@ -413,7 +413,8 @@ public class FilterResultActivity extends AppCompatActivity implements Recycler_
 
     @Override
     public void itemClicked(View view, int position) {
-        Intent i=new Intent(getApplicationContext(),ProductDetail.class);
+
+        Intent i=new Intent(FilterResultActivity.this,ProductDetail.class);
         i.putExtra("selected_prod_id",Product_id_array.get(position));
         i.putExtra("ParentScreen","0");
         startActivity(i);
@@ -427,8 +428,7 @@ public class FilterResultActivity extends AppCompatActivity implements Recycler_
     @Override
     public void sampleClicked(View view, int position) {
 
-
-        Intent i=new Intent(getApplicationContext(),ProductDetail.class);
+        Intent i=new Intent(FilterResultActivity.this,ProductDetail.class);
         i.putExtra("selected_prod_id",Product_id_array.get(position));
         i.putExtra("ParentScreen","01");
         startActivity(i);

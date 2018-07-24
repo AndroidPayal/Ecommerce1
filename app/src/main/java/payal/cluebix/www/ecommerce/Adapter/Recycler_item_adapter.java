@@ -186,6 +186,7 @@ public class Recycler_item_adapter extends RecyclerView.Adapter<Recycler_item_ad
         @Override
         public void onClick(View view) {
             if (clickListener!=null){
+
                 clickListener.itemClicked(view,getPosition());
             }
         }
@@ -193,6 +194,7 @@ public class Recycler_item_adapter extends RecyclerView.Adapter<Recycler_item_ad
         @Override
         public boolean onLongClick(View view) {
             if (clickListener!=null){
+
                 clickListener.onLongClick(view,getPosition());
             }
             return true;

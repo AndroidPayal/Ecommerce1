@@ -48,10 +48,12 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import payal.cluebix.www.ecommerce.Adapter.CategoryTypeAdapter;
 import payal.cluebix.www.ecommerce.Adapter.Recycler_item_adapter;
 import payal.cluebix.www.ecommerce.Adapter.Slider_adap_add_product;
 import payal.cluebix.www.ecommerce.Adapter.Slider_adapter;
 import payal.cluebix.www.ecommerce.Datas.Base_url;
+import payal.cluebix.www.ecommerce.Datas.CategoryTypeData;
 import payal.cluebix.www.ecommerce.Datas.company_data;
 import payal.cluebix.www.ecommerce.Datas.data_dashboard;
 import payal.cluebix.www.ecommerce.Handlers.RquestHandler;
@@ -67,6 +69,7 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
     private String Tag="Dashboard_screen";
     RecyclerView recyclerView;
     Recycler_item_adapter adapter;
+    RecyclerView categoryRecyclerView;
 
     String url1= Base_url.Dashboard_url;
     String url2=Base_url.Add_prod_to_Cart;
@@ -77,6 +80,9 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
     ArrayList<String> Product_id_array=new ArrayList<>();
     ArrayList<String> P_id_array_of_cartItems=new ArrayList<>();
     ArrayList<String> name_list=new ArrayList<>();
+
+    CategoryTypeAdapter categoryTypeAdapter;
+    ArrayList<CategoryTypeData> category_item = new ArrayList<>();
 
     ArrayList<data_dashboard> product_item;
 
@@ -122,6 +128,7 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
 
 
         recyclerView=(RecyclerView)v.findViewById(R.id.recycler1);
+        categoryRecyclerView = (RecyclerView) v.findViewById(R.id.vendor_category_recycler);
         viewPager=(ViewPager)v.findViewById(R.id.front_viewPager);
         l2_dots=(LinearLayout)v.findViewById(R.id.l2_dots);
         loader_linear=(LinearLayout)v.findViewById(R.id.loader);
@@ -156,6 +163,7 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
         getSliderImage();
         count=cart_item_count();
         get_old_Element();
+        getCategoryType();
 
 //        adapter= new Recycler_item_adapter(getActivity(),product_item);
 //        adapter.setClickListener(this);
@@ -163,6 +171,9 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
 
         return v;
     }
+
+
+
 
     private void getSliderImage() {
         Log.d("DashboardFragment","setting slider image");
@@ -307,6 +318,111 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
         RquestHandler.getInstance(getActivity()).addToRequestQueue(stringRequest);
 
     }
+
+
+
+    private void getCategoryType()
+    {
+        category_item = new ArrayList<>();
+
+
+
+        String urlCat = "http://democs.com/demo/vendor/ApiController/getCategoryType";
+
+        StringRequest stringRequest=new StringRequest(Request.Method.POST, urlCat, new Response.Listener<String>(){
+            @Override
+            public void onResponse(String response) {//url1+Uid
+                Log.d("category_correct_res",response);
+
+                ArrayList<Integer> backgroundIds = new ArrayList<>();
+
+                int indexOfDrawable=0;
+
+                backgroundIds = new ArrayList<>();
+                backgroundIds.add(R.drawable.circle_color);
+                backgroundIds.add(R.drawable.circle_cyananblue);
+                backgroundIds.add(R.drawable.circle_green);
+                backgroundIds.add(R.drawable.circle_orange);
+                backgroundIds.add(R.drawable.circle_primaryblue);
+                backgroundIds.add(R.drawable.circle_purple);
+                backgroundIds.add(R.drawable.circle_yellow);
+
+//
+//                {
+//                    "success": "true",
+//                        "units": [
+//                    {
+//                        "id": "1",
+//                            "type": "Wall",
+//                            "created_at": "2018-07-11",
+//                            "updated_at": "2018-07-11"
+//                    },
+
+                JSONObject post_data;
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+
+                    JSONArray jsonArray = jsonObject.getJSONArray("units"); //new JSONArray(jsonObject.getJSONArray("units"));
+
+                    for(int i=0;i<jsonArray.length();i++) {
+                        post_data = jsonArray.getJSONObject(i);
+/*
+{"id":"24","product_name":"this is test product","product_code":"896833","price":"345.00","retail_price":"0.00","color":"red","product_images":"79e,79f","sample":"0","unit":"ufndi","manufacturing":"0","qty":"4","amount":"5.00","percent":"%"},
+* */
+                        String categoryName = post_data.getString("type");
+
+                        Log.d("CATTEST",""+categoryName);
+
+                        category_item.add(new CategoryTypeData(categoryName,backgroundIds.get(indexOfDrawable)));
+
+                        if(indexOfDrawable == backgroundIds.size() -1)
+                        {
+                            indexOfDrawable = 0;
+                        }
+
+                        else if(indexOfDrawable < backgroundIds.size()-1)
+                        {
+                            ++indexOfDrawable;
+                        }
+
+
+
+
+                    }
+
+//                    adapter.notifyData(product_item);
+
+
+                    categoryTypeAdapter= new CategoryTypeAdapter(getActivity(),category_item);
+//                    adapter.setClickListener(GuestActivity.this);
+                    categoryRecyclerView.setHasFixedSize(true);
+
+                    categoryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayout.HORIZONTAL,false));
+                    categoryRecyclerView.setNestedScrollingEnabled(false);
+
+                    categoryRecyclerView.setAdapter(categoryTypeAdapter);
+
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("dashboard_error_res",error+"");
+                Toast.makeText(getActivity(), "Server Connection Failed!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        RquestHandler.getInstance(getActivity().getApplicationContext()).addToRequestQueue(stringRequest);
+
+    }
+
+
+
+
 
     public int cart_item_count(){
         StringRequest stringRequest2=new StringRequest(Request.Method.POST, url3+Uid, new Response.Listener<String>(){
