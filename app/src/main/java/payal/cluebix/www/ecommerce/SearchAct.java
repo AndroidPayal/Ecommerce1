@@ -99,7 +99,11 @@ public class SearchAct extends AppCompatActivity implements View.OnClickListener
         if(v.getId()==R.id.main_act_search_button){
             String newText=searchv.getText().toString().trim();
             searchv.clearFocus();
+            //searchv.setFocusableInTouchMode(true);
+            searchv.setFocusableInTouchMode(false);
+            searchv.setFocusable(false);
             searchv.setFocusableInTouchMode(true);
+            searchv.setFocusable(true);
             dialog.show();
             GetSearchedItem(newText);
         }

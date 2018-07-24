@@ -85,7 +85,7 @@ public class My_products extends AppCompatActivity {
 
 
         //sets GridAdapter data set
-        adapter=new MyProductsAdapter(getApplicationContext(),product_item);
+        adapter=new MyProductsAdapter(My_products.this,product_item);
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(this,2));
