@@ -1,9 +1,12 @@
 package payal.cluebix.www.ecommerce;
 
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.util.Linkify;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -26,9 +29,18 @@ public class Register extends AppCompatActivity {
         text=(TextView)findViewById(R.id.text_register_link);
         String wikiViewURL =  ""+ Base_url.Registration_url;
                 //"<a href=\"http://democs.com/demo/vender/UserController/registerByCandidate\">Click Here For Registration</a>";//com.google.android.wikinotes.db.wikinotes/wikinotes/
-        text.setText(wikiViewURL);
-        text.setLinkTextColor(Color.BLACK);
-        Linkify.addLinks(text , Linkify.WEB_URLS);
+       // text.setText(wikiViewURL);
+       // text.setLinkTextColor(Color.BLACK);
+       // Linkify.addLinks(text , Linkify.WEB_URLS);
+
+        text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri uri = Uri.parse(Base_url.base_url+Base_url.Registration_url); // missing 'http://' will cause crashed
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            }
+        });
 
     }
 }

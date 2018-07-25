@@ -172,6 +172,7 @@ public class Company_list extends AppCompatActivity implements Company_Adapter.C
 
 
     private void get_old_element() {
+        Log.d("getcompanies","inside");
 /*
 * {
     "success": "true",
@@ -202,8 +203,8 @@ public class Company_list extends AppCompatActivity implements Company_Adapter.C
                         String id = post_data.getString("id");
                         String name = post_data.getString("name");
                         String created_by = post_data.getString("created_by");
-                        String createdAt = post_data.getString("createdAt");
-                        String updatedAt = post_data.getString("updatedAt");
+                        String createdAt = post_data.getString("created_at");
+                        String updatedAt = post_data.getString("updated_at");
 
                         unit_id_array.add(id);
                         company_list.add(new company_data(id, name,created_by,createdAt,updatedAt));

@@ -32,7 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:layout_marginTop="28dp"
-        android:text="Please varify your\nRegisterd Mobile Number"
+        android:text="Please verify your\nRegistered Mobile Number"
         android:textColor="@color/White"
         android:gravity="center_horizontal"
         android:textSize="18dp"

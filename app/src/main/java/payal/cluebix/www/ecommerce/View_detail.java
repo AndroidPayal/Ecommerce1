@@ -25,6 +25,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -42,6 +43,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import payal.cluebix.www.ecommerce.Adapter.Recycler_item_adapter;
 import payal.cluebix.www.ecommerce.Adapter.Slider_adap_add_product;
@@ -100,6 +102,8 @@ public class View_detail extends AppCompatActivity implements View.OnClickListen
 
     String url2= Base_url.Get_approved_myproducts;
     String url_Color_fetch=Base_url.List_all_color;
+    String url4=Base_url.Product_price_range;/*Product id*/
+    String url_update=Base_url.Update_product_detail;/*Product id*/
 
 
     CheckBox sample_availability,check_manufacture;
@@ -114,7 +118,6 @@ public class View_detail extends AppCompatActivity implements View.OnClickListen
     public static String selected_description="";
     public static String sample_state="false",manufacture_state="false";
 
-    String url4=Base_url.Product_price_range;/*Product id*/
 
 
     ArrayList<EditText> editTextArrayList;
@@ -303,6 +306,11 @@ public class View_detail extends AppCompatActivity implements View.OnClickListen
                                 sample_layout.setVisibility(View.GONE);
                             }
 
+
+                            Log.d("field","calling range function");
+
+                            getPriceRanges(product_id);
+                            Log.d("field","called range function");
                             String[] selected_color=color.split(",");
                             Log.d("selectedcolor",selected_color.length+"");
 //                            for(int j=0;j<selected_color.length;j++){
@@ -319,10 +327,11 @@ public class View_detail extends AppCompatActivity implements View.OnClickListen
                             check_manufacture.setClickable(false);
                             sample_availability.setClickable(false);
                             edit_qty.setClickable(false);
-                            edit_sample_price.setClickable(false);
+                            edit_sample_price.setFocusable(false);
                             edit_P_name.setFocusable(false);
                             edit_desc.setFocusable(false);
                             spin_color.setFocusable(false);
+
                           /*  spin_color.setClickable(false);
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                                 spin_color.setContextClickable(false);
@@ -333,7 +342,7 @@ public class View_detail extends AppCompatActivity implements View.OnClickListen
                             init(slider_image);
                             addBottomDots(0);
 
-                            getPriceRanges(product_id);
+
                             break;
                         }
 
@@ -376,15 +385,19 @@ public class View_detail extends AppCompatActivity implements View.OnClickListen
                         String min=data.getString("min");
                         String max=data.getString("max");
                         String price_range1=data.getString("price_range");
+                        Log.d("field","before calling on add field");
+
 
                         min_range.add(Integer.parseInt(min));
                         max_range.add(Integer.parseInt(max));
-                        price_range.add(Integer.parseInt(price_range1));
+                        price_range.add((int) Float.parseFloat(price_range1));
 
                         onAddFieldOld(min,max,price_range1);
+                        Log.d("field","called on add  field");
+
                     }
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    Log.e("field","Excep="+e);
                 }
 
             }
@@ -452,6 +465,8 @@ public class View_detail extends AppCompatActivity implements View.OnClickListen
     }
 
     public void onAddFieldOld(String min,String max,String price_range){
+        Log.d("field","inside add field");
+
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View rowView = inflater.inflate(R.layout.field, null);
 
@@ -479,7 +494,8 @@ public class View_detail extends AppCompatActivity implements View.OnClickListen
         e2.setText(max);
         e3.setText(price_range);
 
-
+       // linearLayout.setEnabled(false);
+Log.d("field","sdded field");
         //unique id of new element= view.getid/e1.getid + i
         //arraylists bnaynge,ek array view ka baki string ka,and on Delete me view match krke us position se all arrays k elements hta denge
         //and submit click pr id array k use se edittext value fetch krenge
@@ -502,7 +518,8 @@ public class View_detail extends AppCompatActivity implements View.OnClickListen
                    check_manufacture.setClickable(true);
                    sample_availability.setClickable(true);
                    edit_qty.setClickable(true);
-                   edit_sample_price.setClickable(true);
+                   edit_sample_price.setFocusable(true);
+                   edit_sample_price.setFocusableInTouchMode(true);
                    edit_P_name.setFocusable(false);
                    edit_P_name.setFocusableInTouchMode(true);
                    edit_desc.setFocusable(false);
@@ -515,7 +532,32 @@ public class View_detail extends AppCompatActivity implements View.OnClickListen
                }},2000);
        }
        if(v.getId()==R.id.submit_new_prod){
-/*color[], price, min[], max[], price_range[], qty, sample, unit*/
+/*color[], price, manufacturing,  retail_price,  min[], max[], price_range[], qty, sample, sample_price, unit*/
+
+
+           StringRequest stringRequest = new StringRequest(Request.Method.POST, url_update + product_id, new Response.Listener<String>() {
+               @Override
+               public void onResponse(final String response) {
+
+               }
+           }, new Response.ErrorListener() {
+               @Override
+               public void onErrorResponse(VolleyError error) {
+                   dialog.cancel();
+                   Log.d("Login_error_response", error.toString());
+                   Toast.makeText(View_detail.this, "Server Connection Failed!", Toast.LENGTH_SHORT).show();
+               }
+           }){
+               @Override
+               protected Map<String, String> getParams() throws AuthFailureError {
+                   Map<String , String> parameters= new HashMap<String, String>();
+                //   parameters.put("color",email);
+                 //  parameters.put("password",pass);
+                   return parameters;
+               }
+           };
+           RquestHandler.getInstance(View_detail.this).addToRequestQueue(stringRequest);
+
 
        }
     }

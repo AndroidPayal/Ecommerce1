@@ -24,7 +24,7 @@ public class Base_url {
     public static final String SearchandFilterItems = base_url+"ApiController/search";/*/userId if logged in user hits this url*/
 
     public static final String Product_Detail_url=base_url+"ApiController/productDetail/";/*/product_id*/
-    public static final String Update_product_detail=base_url+"ApiController/updatingProduct/";
+    public static final String Update_product_detail=base_url+"ApiController/updatingProduct/";/*product id*/
 
     public static final String Update_Cart_quantity=base_url+"ApiController/updateShoppingCart/";//cart_id/user_id/quantity
     public static final String Remove_cart_product=base_url+"ApiController/removeCartProduct/";/*cart_id / current user id*/

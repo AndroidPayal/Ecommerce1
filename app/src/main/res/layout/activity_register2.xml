@@ -125,7 +125,7 @@
                     android:layout_marginTop="10dp"
                     android:drawablePadding="8dp"
                     android:drawableLeft="@drawable/ic_telephone"
-                    android:text="www.definedesigner.com"
+                    android:text="8871001016"
                     android:textIsSelectable="true"
                     />
                 <TextView
