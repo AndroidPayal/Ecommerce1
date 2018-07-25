@@ -43,6 +43,8 @@ public class Company_list extends AppCompatActivity implements Company_Adapter.C
     ArrayList<String> unit_id_array=new ArrayList<>();
     String url1= Base_url.List_all_company;/*/userId*/
     String url2= Base_url.Add_new_company;/*/userId*/
+    EditText edit_name;
+    String name;
 
     SessionManager session;
     String Uid;String Uname,Umail,Udate1,Udate2,Umob;
@@ -94,7 +96,7 @@ public class Company_list extends AppCompatActivity implements Company_Adapter.C
         alertDialog.show();
 
 
-        final EditText edit_name=(EditText)dialogView.findViewById(R.id.edit_company_name);
+        edit_name=(EditText)dialogView.findViewById(R.id.edit_company_name);
         Button submit=(Button)dialogView.findViewById(R.id.dialog_button_apply);
         Button cancel=(Button)dialogView.findViewById(R.id.dialog_button_cancel);
 
@@ -108,21 +110,38 @@ public class Company_list extends AppCompatActivity implements Company_Adapter.C
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String name=edit_name.getText().toString().trim();
+                name=edit_name.getText().toString().trim();
                 StringRequest stringRequest=new StringRequest(Request.Method.POST, url2+Uid, new Response.Listener<String>(){
                     @Override
                     public void onResponse(String response) {
                         Log.d(Tag,response);
 
+
+
+                        Log.d("companytestinsert",""+response);
+
                         alertDialog.cancel();
-                        company_list.add(new company_data("-1",name,Uid,"00-00-0000","00-00-0000"));
-                        adapter.notifyData(company_list);
+                       /* company_list.add(new company_data("-1",name,Uid,"00-00-0000","00-00-0000"));
+                        adapter.notifyData(company_list);*/
                         JSONObject post_data;
                         try {
+
+
                             JSONObject jsonObject=new JSONObject(response);
                             String success=jsonObject.getString("success");
                             String msg=jsonObject.getString("message");
+
+                            if(success.equals("true"))
+                            {
                             Toast.makeText(Company_list.this, msg, Toast.LENGTH_SHORT).show();
+                                company_list.add(new company_data("-1",name,Uid,"00-00-0000","00-00-0000"));
+                                adapter.notifyData(company_list);
+                            }
+                            else{
+                                Toast.makeText(Company_list.this, "Erorr occured", Toast.LENGTH_SHORT).show();
+                            }
+
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -164,11 +183,14 @@ public class Company_list extends AppCompatActivity implements Company_Adapter.C
             "createdAt": "2018-06-01",
             "updatedAt": "0000-00-00"
         },*/
+        Log.d("companyjson",url1+Uid);
         StringRequest stringRequest=new StringRequest(Request.Method.POST, url1+Uid, new Response.Listener<String>(){
             @Override
             public void onResponse(String response) {
                 Log.d(Tag,response);
-
+/*{"success":"true","companies":[{"id":"6","name":"bmw","created_by":"12","created_at":"2018-07-24",
+"updated_at":"0000-00-00"},{"id":"8","name":"company_floura","created_by":"12","created_at":"2018-07-24"
+,"updated_at":"0000-00-00"},{"id":"9","name":"chair","created_by":"12","created_at":"2018-07-2*/
                 JSONObject post_data;
                 try {
                     JSONObject jsonObject=new JSONObject(response);
@@ -188,6 +210,9 @@ public class Company_list extends AppCompatActivity implements Company_Adapter.C
                     }
                     adapter.notifyData(company_list);
                 } catch (JSONException e) {
+
+                    Log.d("jsoncompany",""+e);
+
                     e.printStackTrace();
                 }
 
