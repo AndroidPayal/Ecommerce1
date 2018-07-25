@@ -59,7 +59,7 @@ public class Quotation_item_adap extends RecyclerView.Adapter<Quotation_item_ada
 
         holder.q_name.setText(a.getProduct_name());
         //holder.q_brand.setText("Brand: "+a.getBrand());
-        holder.q_desc.setText("Description: " + a.getDescription());
+        holder.q_desc.setText("Product code: " + a.getProduct_code());
         holder.q_qty.setText(a.getQty());
         holder.invoice_price.setText("Product price:" + a.getPrice());
 
