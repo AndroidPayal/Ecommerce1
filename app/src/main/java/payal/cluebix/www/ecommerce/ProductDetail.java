@@ -66,7 +66,7 @@ public class ProductDetail extends AppCompatActivity {
     String url1= Base_url.Product_Detail_url;/*/product id*/
     String url2= Base_url.Add_prod_to_Cart;/*/product id*/
     String url3=Base_url.My_cart_item_count;/*userid*/
-    String url4=Base_url.Product_price_range;/*range id*/
+    String url4=Base_url.Product_price_range;/*Product id*/
 
     TextView p_name,desc,prize,tcolor,add_cart,category,category_type,p_available,t_sample,t_unit,t_unit2,text_sample_price;
     TextView first1,first2,first3,second1,second2,second3,third1,third2,third3,p_code;

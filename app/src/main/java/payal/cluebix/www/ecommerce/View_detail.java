@@ -1,12 +1,21 @@
 package payal.cluebix.www.ecommerce;
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -30,10 +39,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import payal.cluebix.www.ecommerce.Adapter.Recycler_item_adapter;
 import payal.cluebix.www.ecommerce.Adapter.Slider_adap_add_product;
+import payal.cluebix.www.ecommerce.Adapter.Slider_adapter;
 import payal.cluebix.www.ecommerce.Datas.Base_url;
 import payal.cluebix.www.ecommerce.Datas.category_data;
 import payal.cluebix.www.ecommerce.Datas.company_data;
@@ -45,15 +57,15 @@ import payal.cluebix.www.ecommerce.Handlers.SessionManager;
  * Created by speed on 24-Jul-18.
  */
 
-public class View_detail extends AppCompatActivity {
+public class View_detail extends AppCompatActivity implements View.OnClickListener {
 
     MultiSpinnerSearch spin_color;
     LinearLayout linearLayout;
     ViewPager vp;
-    Slider_adap_add_product sliderPagerAdapter;
+    Slider_adapter sliderPagerAdapter;
     private TextView[] dots;
     LinearLayout l2_dots;
-    List<Bitmap> slider_image=new ArrayList<>();
+    List<String> slider_image=new ArrayList<>();
     TextView button_image_add;
 
     ProgressBar prog;
@@ -87,11 +99,8 @@ public class View_detail extends AppCompatActivity {
     final List<KeyPairBoolData> bool_color = new ArrayList<KeyPairBoolData>();
 
     String url2= Base_url.Get_approved_myproducts;
-    String url_Category_fetch=Base_url.List_all_category;
     String url_Color_fetch=Base_url.List_all_color;
-    String url_Unit_fetch=Base_url.List_all_unit;
-    String url_type_Unit_fetch=Base_url.List_all_type_category;
-    String url_Company_fetch=Base_url.List_all_company;
+
 
     CheckBox sample_availability,check_manufacture;
     Button submit;//,change_image
@@ -104,6 +113,8 @@ public class View_detail extends AppCompatActivity {
     public static String selected_type_category="";
     public static String selected_description="";
     public static String sample_state="false",manufacture_state="false";
+
+    String url4=Base_url.Product_price_range;/*Product id*/
 
 
     ArrayList<EditText> editTextArrayList;
@@ -121,6 +132,8 @@ public class View_detail extends AppCompatActivity {
      String product_code ,color,category_name,manufacturing,qty,sample,unit;
     String current_product_id,type,price,retail_price,sample_price,product_images,created_date,created_by,city,is_active,request;
     LinearLayout sample_layout;
+    TextView addField;
+    public static int index=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,6 +147,7 @@ public class View_detail extends AppCompatActivity {
 
           sample_layout = (LinearLayout) findViewById(R.id.linear_sample);
 
+        addField=(TextView)findViewById(R.id.AddField);
         vp=(ViewPager)findViewById(R.id.vp1);
         button_image_add=(TextView)findViewById(R.id.button_image_add);
         l2_dots=(LinearLayout)findViewById(R.id.ll_dots);
@@ -181,6 +195,8 @@ public class View_detail extends AppCompatActivity {
             }
         });
 
+        floatingActionButton.setOnClickListener(this);
+        submit.setOnClickListener(this);
     }
 
     private void getColorList() {
@@ -280,6 +296,8 @@ public class View_detail extends AppCompatActivity {
                             if(sample.equals("1")){
                                 sample_availability.setChecked(true);
                                 edit_sample_price.setText(sample_price);
+                                sample_layout.setVisibility(View.VISIBLE);
+
                             }else{
                                 sample_availability.setChecked(false);
                                 sample_layout.setVisibility(View.GONE);
@@ -292,6 +310,7 @@ public class View_detail extends AppCompatActivity {
                                  //   spin_color.setItems();
 //                            }
 
+                            slider_image= Arrays.asList(product_images.split(","));
 
 
                             spin_color.setClickable(false);
@@ -303,8 +322,18 @@ public class View_detail extends AppCompatActivity {
                             edit_sample_price.setClickable(false);
                             edit_P_name.setFocusable(false);
                             edit_desc.setFocusable(false);
-                            spin_color.setClickable(false);
+                            spin_color.setFocusable(false);
+                          /*  spin_color.setClickable(false);
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                spin_color.setContextClickable(false);
+                            }
+                            spin_color.setEnabled(false);*/
+                            addField.setClickable(false);
 
+                            init(slider_image);
+                            addBottomDots(0);
+
+                            getPriceRanges(product_id);
                             break;
                         }
 
@@ -324,8 +353,173 @@ public class View_detail extends AppCompatActivity {
         });
         RquestHandler.getInstance(View_detail.this).addToRequestQueue(stringRequest);
 
+    }
 
+    private void getPriceRanges(String product_id) {
+        StringRequest stringRequest=new StringRequest(Request.Method.POST, url4+product_id, new Response.Listener<String>(){
+            @Override
+            public void onResponse(String response) {
+
+/*{"success":"true","price_range":[{"id":"3","created_by":"39","pid":"24",
+"product_id":"24","min":"1","max":"2","price_range":"235.00"}]}*/
+                JSONObject jsonObj;
+                try {
+                    jsonObj=new JSONObject(response);
+                    String success=jsonObj.getString("success");
+                    JSONArray array=jsonObj.getJSONArray("price_range");
+                    for(int i=0;i<array.length();i++) {
+                        JSONObject data = array.getJSONObject(i);
+                        String id=data.getString("id");
+                        String created_by=data.getString("created_by");
+                        String pid=data.getString("pid");
+                        String product_id=data.getString("product_id");
+                        String min=data.getString("min");
+                        String max=data.getString("max");
+                        String price_range1=data.getString("price_range");
+
+                        min_range.add(Integer.parseInt(min));
+                        max_range.add(Integer.parseInt(max));
+                        price_range.add(Integer.parseInt(price_range1));
+
+                        onAddFieldOld(min,max,price_range1);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("dashboard_error_res",error+"");
+                Toast.makeText(View_detail.this, "Server Connection Failed!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        RquestHandler.getInstance(View_detail.this).addToRequestQueue(stringRequest);
 
     }
+
+    private void init(List<String> slider_image) {
+
+        Log.d("images","slider images="+slider_image);
+        try {
+            sliderPagerAdapter = new Slider_adapter(View_detail.this, slider_image);
+            vp.setAdapter(sliderPagerAdapter);
+
+            vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                @Override
+                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                }
+
+                @Override
+                public void onPageSelected(int position) {
+                    try {
+                        addBottomDots(position);
+                    }catch (Exception e){e.printStackTrace();}
+
+                }
+
+                @Override
+                public void onPageScrollStateChanged(int state) {
+                }
+            });
+        }catch (Exception e){
+
+            Log.e("images Error",""+e);
+        }
+    }
+
+
+    private void addBottomDots( int currentPage) {
+        try {
+            dots = new TextView[slider_image.size()];
+
+            l2_dots.removeAllViews();
+            l2_dots.bringToFront();
+            for (int i = 0; i < dots.length; i++) {
+                dots[i] = new TextView(getApplicationContext());
+                dots[i].setText(Html.fromHtml("&#8226;"));
+                dots[i].setTextSize(35);
+                dots[i].setTextColor(Color.parseColor("#000000"));
+                l2_dots.addView(dots[i]);
+            }
+
+            if (dots.length > 0)
+                dots[currentPage].setTextColor(Color.parseColor("#FFFFFF"));
+        }catch (Exception e){e.printStackTrace();}
+    }
+
+    public void onAddFieldOld(String min,String max,String price_range){
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View rowView = inflater.inflate(R.layout.field, null);
+
+        // Add the new row before the add field button.
+        EditText e1=rowView.findViewById(R.id.from_edit_text);
+        EditText e2=rowView.findViewById(R.id.to_edit_text);
+        EditText e3=rowView.findViewById(R.id.prize_edit_text);
+//        final int i=(rowView.generateViewId()-1);
+
+        editTextArrayList=new ArrayList<>();
+
+        editTextArrayList.add(e1);
+        editTextArrayList.add(e2);
+        editTextArrayList.add(e3);
+
+        ranges.add(editTextArrayList);
+
+        rowView.setId(index);
+        ++index;
+
+
+        linearLayout.addView(rowView, linearLayout.getChildCount());
+
+        e1.setText(min);
+        e2.setText(max);
+        e3.setText(price_range);
+
+
+        //unique id of new element= view.getid/e1.getid + i
+        //arraylists bnaynge,ek array view ka baki string ka,and on Delete me view match krke us position se all arrays k elements hta denge
+        //and submit click pr id array k use se edittext value fetch krenge
+    }
+
+    @Override
+    public void onClick(View v) {
+        //float button clicked to edit details
+       if(v.getId()==R.id.floatingActionButton){
+           final ProgressDialog dialog = ProgressDialog.show(View_detail.this, "","wait...", true);
+           new Handler().postDelayed(new Runnable() {
+               @Override
+               public void run() {
+                   dialog.dismiss();
+                   //spin_color.setClickable(false);
+                   edit_price.setFocusable(true);
+                   edit_price.setFocusableInTouchMode(true);
+                   edit_retail_price.setFocusable(true);
+                   edit_retail_price.setFocusableInTouchMode(true);
+                   check_manufacture.setClickable(true);
+                   sample_availability.setClickable(true);
+                   edit_qty.setClickable(true);
+                   edit_sample_price.setClickable(true);
+                   edit_P_name.setFocusable(false);
+                   edit_P_name.setFocusableInTouchMode(true);
+                   edit_desc.setFocusable(false);
+                   edit_desc.setFocusableInTouchMode(true);
+                   spin_color.setFocusable(true);
+                   spin_color.setFocusableInTouchMode(true);
+                   addField.setClickable(true);
+                   submit.setVisibility(View.VISIBLE);
+
+               }},2000);
+       }
+       if(v.getId()==R.id.submit_new_prod){
+/*color[], price, min[], max[], price_range[], qty, sample, unit*/
+
+       }
+    }
+
+
 
 }
