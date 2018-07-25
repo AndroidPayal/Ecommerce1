@@ -405,6 +405,7 @@
                 android:textColor="@color/Black"
                 android:text="Prize Range/Discounts(Optional) :-"/>
              <TextView
+                 android:id="@+id/AddField"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -414,7 +415,6 @@
                  android:background="@color/colorPrimary"
                  android:text="ADD"
                  android:drawableRight="@drawable/ic_add_circle_black_24dp"
-                 android:onClick="onAddField"
                 />
 
             </LinearLayout>
@@ -493,7 +493,7 @@
             android:gravity="center"
             android:textColor="#fff"
             android:textSize="15dp"
-            android:text="Submit Details"/>
+            android:text="UPDATE"/>
 
 
 
