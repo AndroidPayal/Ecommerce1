@@ -58,6 +58,7 @@ public class CenterActivity extends AppCompatActivity implements ProductDetail.C
     private DrawerLayout drawerLayout;
     Toolbar toolbar, search_tool2;
     FloatingActionButton floatb;
+    FloatingActionButton callFabb;
     Button filterButton;
 
 //    private ArrayList<ImageEntry> mSelectedImages = new ArrayList<>();
@@ -98,6 +99,16 @@ public class CenterActivity extends AppCompatActivity implements ProductDetail.C
 
         bottomNavigation = (BottomNavigationView) findViewById(R.id.bottom_navigation1);
 //         bottomNavigation.inflateMenu(R.menu.bottom_navigation);
+
+        callFabb = (FloatingActionButton) findViewById(R.id.vendor_callfab);
+
+        callFabb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("tel://" + Base_url.phoneNumber)));
+            }
+        });
+
 
         fragmentManager = getSupportFragmentManager();
         fragment = new DashboardFragment();
@@ -163,10 +174,12 @@ navigationView.setItemIconTintList(ColorStateList2);
                 int id = item.getItemId();
                 switch (id) {
                     case R.id.bottom_nav_home:
+                        callFabb.setVisibility(View.VISIBLE);
                         search_tool2.setVisibility(View.VISIBLE);
                         fragment = new DashboardFragment();
                         break;
                     case R.id.bottom_nav_cart:
+                        callFabb.setVisibility(View.GONE);
                         search_tool2.setVisibility(GONE);
                         fragment = new CartFragment();
                         break;
@@ -331,9 +344,14 @@ navigationView.setItemIconTintList(ColorStateList2);
 
         Log.d("onresume","onresume called");
 
+        if(getIntent() != null){
+
+
+
         if(getIntent().getBooleanExtra("cartTransition",false)){
             getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new CartFragment()).commit();
             search_tool2.setVisibility(GONE);
+            callFabb.setVisibility(View.GONE);
             toolbar.setVisibility(View.VISIBLE);
             bottomNavigation.setSelectedItemId(R.id.bottom_nav_cart);
             getIntent().putExtra("cartTransition",false);
@@ -343,6 +361,8 @@ navigationView.setItemIconTintList(ColorStateList2);
             getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new DashboardFragment()).commit();
             bottomNavigation.setSelectedItemId(R.id.bottom_nav_home);
             getIntent().putExtra("dashTransition",false);
+        }
+
         }
 
         super.onPostResume();

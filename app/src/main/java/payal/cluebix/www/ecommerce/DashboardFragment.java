@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
 import android.text.TextUtils;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.SearchView;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -73,6 +74,8 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
     Recycler_item_adapter adapter;
     RecyclerView categoryRecyclerView;
     FloatingActionButton callFab;
+    ImageView errImg;
+    TextView errText;
 
     String url1= Base_url.Dashboard_url;
     String url2=Base_url.Add_prod_to_Cart;
@@ -143,6 +146,8 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
         load_more=(TextView)v.findViewById(R.id.load_more);
      //   floatingActionButton_mainuser=(FloatingActionButton)v.findViewById(R.id.floatingActionButton_mainuser);
 
+        errText = (TextView) v.findViewById(R.id.dashboard_err_text);
+        errImg = (ImageView) v.findViewById(R.id.dashboard_err_img);
 
         tool_search.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -215,8 +220,11 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+
+
+
                 Log.d("dashboard_error_res",error+"");
-                Toast.makeText(getActivity(), "Server Connection Failed!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "Server Connection Failed!", Toast.LENGTH_SHORT).show();
             }
         });
         RquestHandler.getInstance(getActivity()).addToRequestQueue(stringRequest);
@@ -309,6 +317,13 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
                     adapter.setClickListener(DashboardFragment.this);
                     recyclerView.setAdapter(adapter);
 
+                    if(product_item.size()<1)
+                    {
+
+                        errImg.setVisibility(View.VISIBLE);
+                        errText.setText("No Data Found");
+                        errText.setVisibility(View.VISIBLE);
+                    }
 
                     loader_linear.setVisibility(View.GONE);
                     v2.setVisibility(View.VISIBLE);
@@ -322,8 +337,12 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                loader_linear.setVisibility(View.GONE);
+                errImg.setVisibility(View.VISIBLE);
+                errText.setVisibility(View.VISIBLE);
+
                 Log.d("dashboard_error_res",error+"");
-                Toast.makeText(getActivity(), "Server Connection Failed!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "Server Connection Failed!", Toast.LENGTH_SHORT).show();
             }
         });
         RquestHandler.getInstance(getActivity()).addToRequestQueue(stringRequest);
@@ -424,7 +443,7 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("dashboard_error_res",error+"");
-                Toast.makeText(getActivity(), "Server Connection Failed!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "Server Connection Failed!", Toast.LENGTH_SHORT).show();
             }
         });
         RquestHandler.getInstance(getActivity().getApplicationContext()).addToRequestQueue(stringRequest);
@@ -593,8 +612,10 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
+
+
                     Log.d("dashboard_error_res", error + "");
-                    Toast.makeText(getActivity(), "Server Connection Failed!", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getActivity(), "Server Connection Failed!", Toast.LENGTH_SHORT).show();
                 }
             });
             RquestHandler.getInstance(getActivity()).addToRequestQueue(stringRequest);

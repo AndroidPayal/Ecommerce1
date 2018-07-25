@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
@@ -23,6 +24,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -61,6 +63,9 @@ public class GuestActivity extends AppCompatActivity implements Recycler_item_ad
 
     RecyclerView recyclerView;
     Recycler_item_adapter adapter;
+
+    TextView errText;
+    ImageView errImg;
 
     RecyclerView categoryRecyclerView;
     CategoryTypeAdapter categoryTypeAdapter;
@@ -117,6 +122,9 @@ public class GuestActivity extends AppCompatActivity implements Recycler_item_ad
         setSupportActionBar(toolbar);
 
         getSliderImage();
+
+        errText = (TextView) findViewById(R.id.guest_err_text);
+        errImg = (ImageView) findViewById(R.id.guest_err_img);
 
 
         count=0;
@@ -243,6 +251,9 @@ public class GuestActivity extends AppCompatActivity implements Recycler_item_ad
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("dashboard_error_res",error+"");
+
+
+
                 Toast.makeText(GuestActivity.this, "Server Connection Failed!", Toast.LENGTH_SHORT).show();
             }
         });
@@ -335,6 +346,12 @@ public class GuestActivity extends AppCompatActivity implements Recycler_item_ad
                     adapter.setClickListener(GuestActivity.this);
                     recyclerView.setAdapter(adapter);
 
+                    if(product_item.size()<1)
+                    {
+                        loader_linear.setVisibility(View.GONE);
+                        errText.setText("No Data Found");
+                        errText.setVisibility(View.VISIBLE);
+                    }
 
                     loader_linear.setVisibility(View.GONE);
                     load_more.setVisibility(View.VISIBLE);
@@ -347,6 +364,12 @@ public class GuestActivity extends AppCompatActivity implements Recycler_item_ad
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("dashboard_error_res",error+"");
+
+                loader_linear.setVisibility(View.GONE);
+                load_more.setVisibility(View.GONE);
+                errImg.setVisibility(View.VISIBLE);
+                errText.setVisibility((View.VISIBLE));
+
                 Toast.makeText(GuestActivity.this, "Server Connection Failed!", Toast.LENGTH_SHORT).show();
             }
         });

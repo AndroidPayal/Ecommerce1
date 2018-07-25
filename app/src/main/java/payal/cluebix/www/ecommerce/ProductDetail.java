@@ -22,6 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -36,6 +37,7 @@ import com.android.volley.toolbox.StringRequest;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -91,6 +93,9 @@ public class ProductDetail extends AppCompatActivity {
 
     public static ClickListener clickListener;
 
+    TextView errText;
+    ImageView errImg;
+
 
     public ProductDetail(){}
     public ProductDetail(ClickListener clicklistener){
@@ -134,6 +139,9 @@ public class ProductDetail extends AppCompatActivity {
         orderSample=(CheckBox)findViewById(R.id.check_order_sample);
         linear_detail=(LinearLayout)findViewById(R.id.linear_detail);
         linear_detail_start=(LinearLayout)findViewById(R.id.linear_detail_start);
+
+        errText = (TextView) findViewById(R.id.productdetail_err_txt);
+        errImg = (ImageView) findViewById(R.id.productdetail_err_img);
 
 
         prod_id=getIntent().getStringExtra("selected_prod_id");
@@ -429,6 +437,12 @@ public class ProductDetail extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+
+                linear_detail_start.setVisibility(View.GONE);
+                errImg.setVisibility(View.VISIBLE);
+                errText.setVisibility(View.VISIBLE);
+
+
                 Log.d("dashboard_error_res",error+"");
                 Toast.makeText(ProductDetail.this, "Server Connection Failed!", Toast.LENGTH_SHORT).show();
             }

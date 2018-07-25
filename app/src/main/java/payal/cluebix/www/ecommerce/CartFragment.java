@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -56,12 +58,15 @@ public class CartFragment extends Fragment implements CartAdapter.ClickListener 
     String url2= Base_url.Remove_cart_product;/*cart id / current user id*/
     String url3=Base_url.All_Cart_element;/*/user_id*/
     String url4=Base_url.Send_quotation_to_superVendor;/*user_id*/
+    FloatingActionButton callFabb;
 
     SessionManager session;
     String Uname,Uid;
     TextView cartsub_total,cartsub_total2,t_checkout;
     int total=0; float GrandTotal=0;
     private static int itemCount=0;
+    private TextView errTxt;
+    private ImageView errImg;
 
     LinearLayout linear_cart,linear_cart_start;
 
@@ -97,6 +102,11 @@ public class CartFragment extends Fragment implements CartAdapter.ClickListener 
         recyclerView=(RecyclerView)v.findViewById(R.id.recycler_cart);
         linear_cart=(LinearLayout)v.findViewById(R.id.linear_cart);
         linear_cart_start=(LinearLayout)v.findViewById(R.id.linear_cart_start);
+        errTxt = (TextView) v.findViewById(R.id.vendorcart_err_txt);
+        errImg = (ImageView) v.findViewById(R.id.vendorcart_err_img);
+        callFabb = (FloatingActionButton) getActivity().findViewById(R.id.vendor_callfab);
+
+        callFabb.setVisibility(View.GONE);
 
 
         session=new SessionManager(getContext());
@@ -415,6 +425,14 @@ conditional statement.","brand":"Define One Special","product_images":"","quanti
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("dashboard_error_res",error+"");
+
+                linear_cart_start.setVisibility(View.GONE);
+
+                errImg.setVisibility(View.VISIBLE);
+                errTxt.setVisibility(View.VISIBLE);
+                t_checkout.setVisibility(View.GONE);
+
+
                 Toast.makeText(getActivity(), "Server Connection Failed!", Toast.LENGTH_SHORT).show();
             }
         });

@@ -537,6 +537,25 @@
     android:padding="2dp"
     android:src="@drawable/ic_call_white_24dp"
     />
+
+    <ImageView
+        android:id="@+id/guest_err_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/err_connection_img"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        />
+    <TextView
+        android:id="@+id/guest_err_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/guest_err_img"
+        android:text="Connection Error"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        />
+
 </RelativeLayout>
 
 

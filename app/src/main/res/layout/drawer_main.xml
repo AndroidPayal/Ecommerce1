@@ -11,6 +11,9 @@
         android:clipChildren="false"
         tools:openDrawer="start">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -106,6 +109,20 @@
 
     </android.support.design.widget.CoordinatorLayout>
 
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/vendor_callfab"
+            android:layout_marginBottom="75dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="4dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            app:fabSize="normal"
+            android:src="@drawable/ic_call_white_24dp"
+            />
+
+    </RelativeLayout>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/navigation_view"

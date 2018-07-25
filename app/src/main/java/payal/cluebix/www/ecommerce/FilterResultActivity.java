@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -45,7 +46,7 @@ public class FilterResultActivity extends AppCompatActivity implements Recycler_
     ArrayList<data_dashboard> product_item;
     ArrayList<String> P_id_array_of_cartItems;
     ArrayList<String> name_list;
-
+    TextView categoryTitletext;
    RecyclerView recyclerView;
     Recycler_item_adapter adapter;
     FloatingActionButton callFab;
@@ -59,6 +60,7 @@ public class FilterResultActivity extends AppCompatActivity implements Recycler_
     Bundle extras;
     String location,minRange,maxRange,categoryType;
     int spinnerPosition=0;
+    ImageView errImg;
 
     ArrayList<data_dashboard> productList = new ArrayList<>();
 
@@ -94,6 +96,10 @@ public class FilterResultActivity extends AppCompatActivity implements Recycler_
         callFab = (FloatingActionButton) findViewById(R.id.floatingActionButton);
 
         filterButton = (Button) findViewById(R.id.filterButton);
+
+        categoryTitletext = (TextView) findViewById(R.id.filterresult_category_label);
+
+        errImg = (ImageView) findViewById(R.id.filterresult_err_img);
 
 
         //checkcs and sets spinner position
@@ -143,7 +149,19 @@ public class FilterResultActivity extends AppCompatActivity implements Recycler_
             @Override
             public boolean onQueryTextChange(String newText) {
 
+                nodataText.setVisibility(View.GONE);
+
                 adapter.getFilter().filter(newText);
+
+
+
+                Log.d("spectitemcount",""+adapter.getItemCount());
+
+//                if(adapter.getItemCount()<1)
+//                {
+//                    nodataText.setText("Not found");
+//                    nodataText.setVisibility(View.VISIBLE);
+//                }
 
                 return false;
             }
@@ -197,6 +215,13 @@ public class FilterResultActivity extends AppCompatActivity implements Recycler_
         }
 
 
+        if(!categoryType.isEmpty() && !categoryType.equals(null))
+        {
+            categoryTitletext.setText(categoryType);
+            categoryTitletext.setVisibility(View.VISIBLE);
+
+        }
+
 
 
         Log.d("appendedurl",""+url);
@@ -204,10 +229,6 @@ public class FilterResultActivity extends AppCompatActivity implements Recycler_
 
 
         StringRequest stringRequest=new StringRequest(Request.Method.POST, url, new Response.Listener<String>(){
-
-
-
-
 
 
 
@@ -354,6 +375,8 @@ public class FilterResultActivity extends AppCompatActivity implements Recycler_
 
                     filterProgressBar.setVisibility(View.GONE);
 
+                    errImg.setVisibility(View.VISIBLE);
+
                     nodataText.setVisibility(View.VISIBLE);
 
                     e.printStackTrace();
@@ -372,6 +395,7 @@ public class FilterResultActivity extends AppCompatActivity implements Recycler_
 
                 filterProgressBar.setVisibility(View.GONE);
 
+                errImg.setVisibility(View.VISIBLE);
                 nodataText.setText("Connection Error");
 
                 nodataText.setVisibility(View.VISIBLE);
@@ -439,6 +463,9 @@ public class FilterResultActivity extends AppCompatActivity implements Recycler_
     public void Add_to_cart(View view, int position) {
 
     }
+
+
+
 }
 
 

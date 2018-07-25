@@ -7,7 +7,12 @@
     tools:context=".FilterResultActivity"
     android:focusableInTouchMode="true"
     >
-
+    <LinearLayout
+        android:id="@+id/filterresult_toplayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_search2"
         android:layout_width="match_parent"
@@ -62,6 +67,22 @@
         </LinearLayout>
 
     </android.support.v7.widget.Toolbar>
+
+        <TextView
+            android:id="@+id/filterresult_category_label"
+            android:padding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:text=""
+            android:fontFamily="seri"
+            android:textColor="#fff"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:background="#000"
+
+            />
+    </LinearLayout>
 <ProgressBar
     android:id="@+id/filter_progress"
     android:layout_width="match_parent"
@@ -71,7 +92,7 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/filterRecycler"
-        android:layout_below="@id/toolbar_search2"
+        android:layout_below="@id/filterresult_toplayout"
         android:layout_margin="2dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -90,13 +111,24 @@
         />
 
 
-    <TextView
-        android:id="@+id/nodata_text"
+    <ImageView
+        android:id="@+id/filterresult_err_img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No Data to display"
-        android:textSize="22sp"
+        android:src="@drawable/err_connection_img"
         android:layout_centerInParent="true"
         android:visibility="gone"
         />
+
+    <TextView
+        android:id="@+id/nodata_text"
+        android:layout_below="@id/filterresult_err_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Connection Error"
+        android:textSize="18sp"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        />
+
 </RelativeLayout>
