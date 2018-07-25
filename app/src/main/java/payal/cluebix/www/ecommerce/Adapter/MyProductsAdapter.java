@@ -25,6 +25,7 @@ import payal.cluebix.www.ecommerce.Datas.sample_myProduct;
 import payal.cluebix.www.ecommerce.My_products;
 import payal.cluebix.www.ecommerce.Product_My_Detail;
 import payal.cluebix.www.ecommerce.R;
+import payal.cluebix.www.ecommerce.View_detail;
 
 /**
  * Created by speed on 12-Apr-18.
@@ -125,7 +126,7 @@ public class MyProductsAdapter extends RecyclerView.Adapter<MyProductsAdapter.Vi
 
             int position = getAdapterPosition();
 
-            Intent intent=new Intent(mCtx,Product_My_Detail.class);
+            Intent intent=new Intent(mCtx,View_detail.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra("current_product_id",productList.get(position).getProductId());
 

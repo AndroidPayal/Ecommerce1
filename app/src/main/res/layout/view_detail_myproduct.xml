@@ -222,41 +222,6 @@
 
         </LinearLayout>
 
-        <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-           <!--android:weightSum="1"-->
-            <!--android:layout_margin="3dp"-->
-            <!--android:orientation="horizontal"-->
-            <!--&gt;-->
-
-            <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:padding="2dp"-->
-                <!--android:layout_gravity="center_vertical"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:text="Available : "-->
-                <!--android:textColor="@color/black"-->
-                <!--android:gravity="center"-->
-                <!--/>-->
-
-            <!--<EditText-->
-                <!--android:id="@+id/edit_quantity"-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_weight="0.4"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:padding="4dp"-->
-                <!--android:layout_marginLeft="1dp"-->
-                <!--android:hint="1234567"-->
-                <!--android:text=""-->
-                <!--android:background="@drawable/input_background"-->
-                <!--android:gravity="center"-->
-                <!--android:textColor="@color/Black"-->
-                <!--android:textSize="15sp"-->
-                <!--android:inputType="number"-->
-                <!--/>-->
-
-        <!--</LinearLayout>-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -283,13 +248,12 @@
                 android:padding="1dp"
                 android:gravity="center"
                 >
-            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+            <TextView
             android:id="@+id/spin_unit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/Black"
                 android:gravity="center"
-            app:hintText="Select Unit"
             android:inputType="textMultiLine"/>
                 </LinearLayout>
 
@@ -300,32 +264,6 @@
                 android:textColor="@color/Black"
                 android:text="I'm Manufacturer"
                 />
-         <!--   <TextView
-                android:layout_width="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:padding="2dp"
-                android:layout_gravity="center_vertical"
-                android:layout_height="match_parent"
-                android:text="Available : "
-                android:textColor="@color/black"
-                android:gravity="center"
-                />
-
-            <EditText
-                android:id="@+id/edit_quantity"
-                android:layout_width="0dp"
-                android:layout_weight="0.8"
-                android:layout_height="match_parent"
-                android:padding="4dp"
-                android:layout_marginLeft="1dp"
-                android:hint=""
-                android:text=""
-                android:background="@drawable/input_background"
-                android:gravity="center"
-                android:textColor="@color/Black"
-                android:textSize="15sp"
-                android:inputType="number"
-                />-->
 
 
         </LinearLayout>
@@ -356,12 +294,11 @@
                 android:background="@drawable/input_background"
                 android:padding="2dp"
                 >
-        <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+        <TextView
         android:id="@+id/spin_company"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:textColor="@color/Black"
-            app:hintText="Select Company"
             />
                 </LinearLayout>
         </LinearLayout>
@@ -383,15 +320,7 @@
                 android:layout_weight="1"
                 android:text="Have Sample"
                 android:textColor="@color/Black" />
-<!--
-            <CheckBox
-        android:id="@+id/check_manufacture"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:textColor="@color/Black"
-        android:text="I'm Manufacturer"
-        />-->
+
             <TextView
                 android:id="@+id/edit_quantity_text"
                 android:layout_width="wrap_content"

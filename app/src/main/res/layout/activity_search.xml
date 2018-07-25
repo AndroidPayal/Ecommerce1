@@ -23,6 +23,7 @@
         android:queryHint="Search Text"
         android:background="@drawable/input_search_background"
         android:textColorHint="#b3abab"
+        android:maxLines="1"
         android:hint="Search Here"
 
         />

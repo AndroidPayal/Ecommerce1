@@ -142,6 +142,8 @@
             android:theme="@style/AppThemeNoActionBar" />
         <activity android:name=".SearchAct"
             ></activity>
+        <activity android:name=".View_detail"
+            ></activity>
     </application>
 
 </manifest>

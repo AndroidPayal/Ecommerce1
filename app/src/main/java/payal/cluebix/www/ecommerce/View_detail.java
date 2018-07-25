@@ -22,6 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.androidbuts.multispinnerfilter.KeyPairBoolData;
 import com.androidbuts.multispinnerfilter.MultiSpinnerSearch;
+import com.androidbuts.multispinnerfilter.SpinnerListener;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import org.json.JSONArray;
@@ -95,8 +96,8 @@ public class View_detail extends AppCompatActivity {
     CheckBox sample_availability,check_manufacture;
     Button submit;//,change_image
     EditText edit_P_name,edit_price,edit_sample_price,edit_qty,edit_desc,edit_retail_price;
-    SearchableSpinner spin_company,spin_unit;
-    TextView spin_category_type,spinner_category;
+    TextView spin_company;
+    TextView spin_category_type,spinner_category,spin_unit;
     public static String selected_category="";
     public static String selected_company="company";
     public static String selected_unit1="";
@@ -119,7 +120,7 @@ public class View_detail extends AppCompatActivity {
      String brand,description;
      String product_code ,color,category_name,manufacturing,qty,sample,unit;
     String current_product_id,type,price,retail_price,sample_price,product_images,created_date,created_by,city,is_active,request;
-
+    LinearLayout sample_layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,15 +132,17 @@ public class View_detail extends AppCompatActivity {
 
         current_product_id=getIntent().getStringExtra("current_product_id");
 
+          sample_layout = (LinearLayout) findViewById(R.id.linear_sample);
+
         vp=(ViewPager)findViewById(R.id.vp1);
         button_image_add=(TextView)findViewById(R.id.button_image_add);
         l2_dots=(LinearLayout)findViewById(R.id.ll_dots);
         submit=(Button)findViewById(R.id.submit_new_prod);
         spin_color=(MultiSpinnerSearch)findViewById(R.id.spin_color);
         spinner_category=(TextView) findViewById(R.id.spin_category);
-        spin_company=(SearchableSpinner) findViewById(R.id.spin_company);
+        spin_company=(TextView) findViewById(R.id.spin_company);
         edit_P_name=(EditText)findViewById(R.id.edit_name);
-        spin_unit=(SearchableSpinner) findViewById(R.id.spin_unit);
+        spin_unit=(TextView) findViewById(R.id.spin_unit);
         edit_price=(EditText)findViewById(R.id.edit_price);
         edit_retail_price=(EditText)findViewById(R.id.retailprise);
         edit_qty=(EditText)findViewById(R.id.edit_quantity);
@@ -163,8 +166,63 @@ public class View_detail extends AppCompatActivity {
         unit_list.clear();unit_name_list.clear();company_name_list.clear();company_list.clear();
         min_range.clear();max_range.clear();price_range.clear();type_list.clear();type_name_list.clear();
 
+        getColorList();
         get_current_product_detail();
 
+        spin_color.setItems(bool_color, -1, new SpinnerListener() {
+            @Override
+            public void onItemsSelected(List<KeyPairBoolData> items) {
+                selected_color_list.clear();
+                for(int i=0; i<items.size(); i++) {
+                    if(items.get(i).isSelected()) {
+                        selected_color_list.add(items.get(i).getName());
+                    }
+                }
+            }
+        });
+
+    }
+
+    private void getColorList() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url_Color_fetch, new Response.Listener<String>() {
+            @Override
+            public void onResponse(final String response) {
+                /*{"success":"true","colors":[{"id":"1","color_name":"black"},*/
+                JSONObject post_data;
+                try {
+                    JSONObject jsonObj=new JSONObject(response);
+                    String success=jsonObj.getString("success");
+                    JSONArray jsonArray=jsonObj.getJSONArray("colors");
+                    for(int i=0;i<jsonArray.length();i++) {
+                        post_data = jsonArray.getJSONObject(i);
+                        String id=post_data.getString("id");
+                        String color_name=post_data.getString("color_name");
+
+                        color_list.add(new unit_color_data(id,color_name));
+
+                        color_name_list.add(color_name);
+
+                        KeyPairBoolData keyPairBoolData = new KeyPairBoolData();
+                        keyPairBoolData.setId(i);
+                        keyPairBoolData.setName(color_name);
+                        keyPairBoolData.setSelected(false);
+                        bool_color.add(keyPairBoolData);
+                        //Log.d(Tag,color_name+"  "+i);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Tag", "Volley erroe: "+error );
+                Toast.makeText(View_detail.this, "Server Connection Failed!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        RquestHandler.getInstance(View_detail.this).addToRequestQueue(stringRequest);
+        
     }
 
     private void get_current_product_detail() {
@@ -206,15 +264,46 @@ public class View_detail extends AppCompatActivity {
                             spinner_category.setText(category_name);
                             edit_P_name.setText(product_name);
                             edit_desc.setText(description);
-                            //spin_color.setSelection();
                             edit_price.setText(price);
+                            edit_retail_price.setText(retail_price);
+                            spin_unit.setText(unit);
+                            spin_company.setText(brand);
+                            if(manufacturing.equals("1")){
+                                check_manufacture.setChecked(true);
+                                text_edit_quantity.setVisibility(View.GONE);
+                                edit_qty.setVisibility(View.GONE);
+                            }else{
+                                check_manufacture.setChecked(false);
+                                text_edit_quantity.setVisibility(View.VISIBLE);
+                                edit_qty.setText(qty);
+                            }
+                            if(sample.equals("1")){
+                                sample_availability.setChecked(true);
+                                edit_sample_price.setText(sample_price);
+                            }else{
+                                sample_availability.setChecked(false);
+                                sample_layout.setVisibility(View.GONE);
+                            }
+
+                            String[] selected_color=color.split(",");
+                            Log.d("selectedcolor",selected_color.length+"");
+//                            for(int j=0;j<selected_color.length;j++){
+//                                if(color_name_list.contains(selected_color[j]))
+                                 //   spin_color.setItems();
+//                            }
 
 
 
-                            edit_P_name.setClickable(false);
-                            edit_desc.setText(description);
                             spin_color.setClickable(false);
-                            edit_price.setClickable(false);
+                            edit_price.setFocusable(false);
+                            edit_retail_price.setFocusable(false);
+                            check_manufacture.setClickable(false);
+                            sample_availability.setClickable(false);
+                            edit_qty.setClickable(false);
+                            edit_sample_price.setClickable(false);
+                            edit_P_name.setFocusable(false);
+                            edit_desc.setFocusable(false);
+                            spin_color.setClickable(false);
 
                             break;
                         }
