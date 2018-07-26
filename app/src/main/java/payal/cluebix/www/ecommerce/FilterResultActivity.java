@@ -266,8 +266,7 @@ public class FilterResultActivity extends AppCompatActivity implements Recycler_
 
                     JSONObject obj=new JSONObject(response);
 
-                    if(!obj.getString("error").equals("true"))
-                    {
+
                     if(obj.getString("success").equals("true"))
                     {
 
@@ -346,28 +345,8 @@ public class FilterResultActivity extends AppCompatActivity implements Recycler_
                                     , color, price, product_images, sample, manufacturing, qty, "", cart_disable));
                         }
 
-                    } }}
+                    } }
 
-                    else if(obj.getString("error").equals("true"))
-                    {
-
-                        if(product_item.size()<1)
-                        {
-                            Log.d("condcheck","item size"+product_item.size());
-
-                            filterProgressBar.setVisibility(View.GONE);
-
-//                            errImg.setVisibility(View.VISIBLE);
-
-                            nodataText.setText("No Result Found");
-
-                            categoryTitletext.setVisibility(View.GONE);
-
-                            nodataText.setVisibility(View.VISIBLE);
-
-                        }
-
-                    }
 
 
 
@@ -402,6 +381,22 @@ public class FilterResultActivity extends AppCompatActivity implements Recycler_
 
                     Log.d("customExc",""+e);
 
+                    if(product_item.size()<1)
+                    {
+                        Log.d("condcheck","item size"+product_item.size());
+
+                        filterProgressBar.setVisibility(View.GONE);
+
+//                            errImg.setVisibility(View.VISIBLE);
+
+                        nodataText.setText("No Result Found");
+
+                        categoryTitletext.setVisibility(View.GONE);
+
+                        nodataText.setVisibility(View.VISIBLE);
+
+                    }
+
                     e.printStackTrace();
 
                 }
@@ -419,6 +414,7 @@ public class FilterResultActivity extends AppCompatActivity implements Recycler_
                 Log.d("responseerror",""+error);
 
                 filterProgressBar.setVisibility(View.GONE);
+                categoryTitletext.setVisibility(View.GONE);
 
                 errImg.setVisibility(View.VISIBLE);
                 nodataText.setText("Connection Error");
