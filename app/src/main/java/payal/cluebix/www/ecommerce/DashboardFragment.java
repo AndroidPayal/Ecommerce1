@@ -170,6 +170,10 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setNestedScrollingEnabled(false);
 
+
+
+
+
         load_more.setOnClickListener(this);
 
         getSliderImage();
@@ -316,6 +320,20 @@ public class DashboardFragment extends Fragment implements Recycler_item_adapter
                     adapter= new Recycler_item_adapter(getActivity(),product_item);
                     adapter.setClickListener(DashboardFragment.this);
                     recyclerView.setAdapter(adapter);
+
+                    recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                        @Override
+                        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                            super.onScrolled(recyclerView, dx, dy);
+                            Log.d("scrolllist","scroll event triggered");
+                            if (dy > 0 && callFab.getVisibility() == View.VISIBLE) {
+                                callFab.hide();
+                            } else if (dy < 0 && callFab.getVisibility() != View.VISIBLE) {
+                                callFab.show();
+                            }
+
+                        }
+                    });
 
                     if(product_item.size()<1)
                     {
