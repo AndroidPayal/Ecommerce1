@@ -87,7 +87,7 @@ public class FilterResultActivity extends AppCompatActivity implements Recycler_
         userId = ""+userSession.get(session.KEY_ID);
 
 
-        final String url = "http://definedesigner.com/ApiController/search";
+        final String url = Base_url.SearchandFilterItems;
 
         filterProgressBar = findViewById(R.id.filter_progress);
 
@@ -221,6 +221,10 @@ public class FilterResultActivity extends AppCompatActivity implements Recycler_
             categoryTitletext.setVisibility(View.VISIBLE);
 
         }
+        else{
+
+            categoryTitletext.setVisibility(View.GONE);
+        }
 
 
 
@@ -262,8 +266,16 @@ public class FilterResultActivity extends AppCompatActivity implements Recycler_
 
                     JSONObject obj=new JSONObject(response);
 
+                    if(!obj.getString("error").equals("true"))
+                    {
+                    if(obj.getString("success").equals("true"))
+                    {
+
+                        Log.d("condcheck","condition true");
 
                     JSONArray jsonArray=obj.getJSONArray("products");
+
+
 
                     for(int i=0;i<jsonArray.length();i++) {
 
@@ -334,11 +346,28 @@ public class FilterResultActivity extends AppCompatActivity implements Recycler_
                                     , color, price, product_images, sample, manufacturing, qty, "", cart_disable));
                         }
 
+                    } }}
+
+                    else if(obj.getString("error").equals("true"))
+                    {
+
+                        if(product_item.size()<1)
+                        {
+                            Log.d("condcheck","item size"+product_item.size());
+
+                            filterProgressBar.setVisibility(View.GONE);
+
+//                            errImg.setVisibility(View.VISIBLE);
+
+                            nodataText.setText("No Result Found");
+
+                            categoryTitletext.setVisibility(View.GONE);
+
+                            nodataText.setVisibility(View.VISIBLE);
+
+                        }
+
                     }
-
-
-
-
 
 
 
@@ -373,12 +402,6 @@ public class FilterResultActivity extends AppCompatActivity implements Recycler_
 
                     Log.d("customExc",""+e);
 
-                    filterProgressBar.setVisibility(View.GONE);
-
-                    errImg.setVisibility(View.VISIBLE);
-
-                    nodataText.setVisibility(View.VISIBLE);
-
                     e.printStackTrace();
 
                 }
@@ -392,6 +415,8 @@ public class FilterResultActivity extends AppCompatActivity implements Recycler_
             @Override
 
             public void onErrorResponse(VolleyError error) {
+
+                Log.d("responseerror",""+error);
 
                 filterProgressBar.setVisibility(View.GONE);
 
@@ -465,7 +490,29 @@ public class FilterResultActivity extends AppCompatActivity implements Recycler_
     }
 
 
+    @Override
+    protected void onPostResume() {
 
+        if(categoryType==null)
+        {
+            categoryType = "";
+        }
+
+
+        if(!categoryType.isEmpty() && !categoryType.equals(null))
+        {
+            categoryTitletext.setText(categoryType);
+            categoryTitletext.setVisibility(View.VISIBLE);
+
+        }
+        else{
+
+            categoryTitletext.setVisibility(View.GONE);
+        }
+
+
+        super.onPostResume();
+    }
 }
 
 

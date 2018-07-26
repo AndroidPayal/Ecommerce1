@@ -419,8 +419,8 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
                         String id=post_data.getString("id");
                         String name=post_data.getString("name");
                         String created_by=post_data.getString("created_by");
-                        String createdAt=post_data.getString("createdAt");
-                        String updatedAt=post_data.getString("updatedAt");
+                        String createdAt=post_data.getString("created_at");
+                        String updatedAt=post_data.getString("updated_at");
 
                         company_list.add(new company_data(id,name,created_by,createdAt,updatedAt));
                         company_name_list.add(name);
