@@ -57,6 +57,7 @@ public class My_products extends AppCompatActivity {
 
     SessionManager session;
     String Uid,Uname;
+    TextView user_name1,user_date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +67,8 @@ public class My_products extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        grid=(GridView)findViewById(R.id.grid_view);
         fab=(FloatingActionButton)findViewById(R.id.fab);
-      //  notapproved=(Button)findViewById(R.id.notApproved);
+        user_date=(TextView)findViewById(R.id.user_date);
+        user_name1=(TextView)findViewById(R.id.user_name1);
         setSupportActionBar(toolbar);
 
         recyclerView = (RecyclerView) findViewById(R.id.my_product_recyclerView);
@@ -76,9 +78,13 @@ public class My_products extends AppCompatActivity {
         HashMap<String, String> user = session.getUserDetails();
         Uname = user.get(SessionManager.KEY_NAME);
         Uid = user.get(SessionManager.KEY_ID);
+        String Ucreated=user.get(SessionManager.KEY_createDate);
+
         Log.d("session","name_userId="+Uid+"\nemail_user_name="+Uname);
 
 
+        user_name1.setText(Uname);
+        user_date.setText(Ucreated);
         get_old_Element();
 
         initNavigationDrawer();

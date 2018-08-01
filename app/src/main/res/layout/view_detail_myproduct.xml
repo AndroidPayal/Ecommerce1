@@ -115,7 +115,7 @@
             <EditText
                 android:id="@+id/edit_desc"
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
+                android:layout_height="wrap_content"
                 android:padding="2dp"
                 android:background="@drawable/input_background"
                 android:textColor="@color/Black"
@@ -248,12 +248,13 @@
                 android:padding="1dp"
                 android:gravity="center"
                 >
-            <TextView
+            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
             android:id="@+id/spin_unit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/Black"
                 android:gravity="center"
+                android:minWidth="120dp"
             android:inputType="textMultiLine"/>
                 </LinearLayout>
 
@@ -509,6 +510,6 @@
         android:layout_height="wrap_content"
         app:fabSize="normal"
         android:padding="2dp"
-        android:src="@drawable/ic_call_white_24dp"
+        android:src="@android:drawable/ic_menu_edit"
         />
 </RelativeLayout>

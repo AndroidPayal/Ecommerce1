@@ -15,7 +15,7 @@ import payal.cluebix.www.ecommerce.Datas.Base_url;
 
 public class Register extends AppCompatActivity {
 
-    TextView text;
+    TextView text,phone_no;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +26,7 @@ public class Register extends AppCompatActivity {
 
         setContentView(R.layout.activity_register2);
 
+        phone_no=(TextView)findViewById(R.id.phone_no);
         text=(TextView)findViewById(R.id.text_register_link);
         String wikiViewURL =  ""+ Base_url.Registration_url;
                 //"<a href=\"http://democs.com/demo/vender/UserController/registerByCandidate\">Click Here For Registration</a>";//com.google.android.wikinotes.db.wikinotes/wikinotes/
@@ -36,11 +37,13 @@ public class Register extends AppCompatActivity {
         text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Uri uri = Uri.parse(Base_url.base_url+Base_url.Registration_url); // missing 'http://' will cause crashed
+                Uri uri = Uri.parse(Base_url.Registration_url); // missing 'http://' will cause crashed
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent);
             }
         });
+
+        phone_no.setText(Base_url.phoneNumber);
 
     }
 }

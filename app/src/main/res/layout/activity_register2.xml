@@ -114,10 +114,11 @@
                     android:drawablePadding="8dp"
                     android:textIsSelectable="true"
                     android:drawableLeft="@drawable/ic_location_pin"
-                    android:text="NEAR adhyapak layout building, block no.236 lig g 50, sonegaon"
+                    android:text="C-179, Near Ratan Place Katora Talab, Raipur Chhattisgarh 492001"
                     android:textAllCaps="true"
                     />
                 <TextView
+                    android:id="@+id/phone_no"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorPrimaryDark"
@@ -125,7 +126,7 @@
                     android:layout_marginTop="10dp"
                     android:drawablePadding="8dp"
                     android:drawableLeft="@drawable/ic_telephone"
-                    android:text="8871001016"
+                    android:text="000"
                     android:textIsSelectable="true"
                     />
                 <TextView
@@ -155,7 +156,10 @@
                 android:textColor="#8f0a0a"
                 android:textStyle="bold"
                 android:text="@string/register_page"
-                android:background="@color/colorTransparent"/>
+                android:padding="3dp"
+                android:layout_margin="5dp"
+                android:layout_gravity="right"
+                android:background="@color/colorAccent"/>
         </LinearLayout>
     </FrameLayout>
 </LinearLayout>

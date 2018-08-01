@@ -137,7 +137,7 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
     EditText edit_P_name,edit_price,edit_sample_price,edit_qty,edit_desc,edit_retail_price;
     SearchableSpinner spinner_category,spin_company,spin_unit,spin_category_type;
     public static String selected_category="";
-    public static String selected_company="company";
+    public static String selected_company="";
     public static String selected_unit1="";
     public static String selected_type_category="";
     public static String selected_description="";
@@ -304,12 +304,29 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
         }
 
         if (view.getId()==R.id.submit_new_prod) {
-            if (setRanges()&& !(TextUtils.isEmpty(selected_category) &&
-                    edit_P_name.getText().toString().trim().equals("") &&
-                        TextUtils.isEmpty(selected_company) &&
-                            edit_price.getText().toString().trim().equals("")
-                                && edit_retail_price.getText().toString().trim().equals(""))) {
-                new Add_New_product.UploadFileToServer().execute();
+            if (   !edit_P_name.getText().toString().trim().equals("") &&
+                           ! edit_price.getText().toString().trim().equals("")
+                                && !edit_retail_price.getText().toString().trim().equals("")) {
+
+                Log.d("conditioncheck","unit="+selected_unit1+" com="+selected_company+"categ="+selected_category+" type="+selected_type_category+" color="+selected_color_list);
+                if (!selected_unit1.equals("")
+                        &&!selected_company.equals("")
+                            &&! selected_category.equals("")
+                                && !TextUtils.isEmpty(selected_type_category)
+                                    &&! selected_color_list.isEmpty()) {
+                    if (slider_image.size() > 0) {
+                        if (setRanges()) {
+                            new Add_New_product.UploadFileToServer().execute();
+                        } else {
+                            // Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(this, "Please Select Images!", Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    Toast.makeText(this, "Fill Category, Type, Company, Unit & Color!", Toast.LENGTH_SHORT).show();
+                }
+
                 Log.d("submitTest","inside if");
             }else{
                 Log.d("submitTest","inside else only range="+setRanges());
@@ -317,9 +334,12 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
                 if(setRanges()){
                     Log.d("submitTest","inside else if");
 
-                    edit_P_name.setError("Can't be empty");
-                    edit_price.setError("Can't be empty");
-                    edit_retail_price.setError("Can't be empty");
+                    if (edit_P_name.getText().toString().trim().equals(""))
+                        edit_P_name.setError("Can't be empty");
+                    if (edit_price.getText().toString().trim().equals(""))
+                        edit_price.setError("Can't be empty");
+                    if (edit_retail_price.getText().toString().trim().equals(""))
+                        edit_retail_price.setError("Can't be empty");
                 }//else toast of invalid range will come
             }
         }
@@ -338,6 +358,9 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
                 break;
             case R.id.spin_unit:
                 selected_unit1=unit_name_list.get(i);
+                break;
+            case R.id.spin_category_type:
+                selected_type_category=type_name_list.get(i);
                 break;
         }
     }
@@ -799,36 +822,15 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
 
 
     public void onDelete(View v){
-
-
-
         View parentView = (View) v.getParent();
-
-
-//        min_range_edit.remove(parentView.getId());
-//        max_range_edit.remove(parentView.getId());
-//        price_range_edit.remove(parentView.getId());
-
-
-
-        if(parentView.getId()==ranges.size()-1) {
-
-
+        if(parentView.getId()>=ranges.size()-1) {//== i replaced with >=
             --index;
-
             ranges.remove(parentView.getId());
             linearLayout.removeView((View) parentView);
-
-//            Toast.makeText(getApplicationContext(), "ranges size : " + ranges.size() + "Index : " + parentView.getId(), Toast.LENGTH_SHORT).show();
         }
-
         else{
-            Toast.makeText(getApplicationContext(),"remove from last", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"Remove From Last", Toast.LENGTH_SHORT).show();
         }
-
-
-
-        //Log.d("ranges","remove linear id="+linearLayout.getId());
     }
 
     private void init() {
@@ -927,7 +929,7 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
             String responseString = null;
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(url1+Uid);
-            Log.d("Apicontroller1","url="+url1+Uid);
+            //Log.d("Apicontroller1","url="+url1+Uid);
             try {
                 AndroidMultiPartEntity entity = new AndroidMultiPartEntity(
                         new AndroidMultiPartEntity.ProgressListener() {
@@ -936,13 +938,6 @@ public class Add_New_product extends AppCompatActivity implements View.OnClickLi
                                 publishProgress((int) ((num / (float) totalSize) * 100));
                             }
                         });
-
-             /*   if(setRanges() && TextUtils.isEmpty(selected_category) &&
-                        edit_P_name.getText().toString().trim().equals("") &&
-                        TextUtils.isEmpty(selected_company) &&
-                        edit_price.getText().toString().trim().equals("")
-                        ) {*/
-
 
                     for (int j = 0; j < min_range.size(); j++) {
                         entity.addPart("min[]", new StringBody(min_range.get(j) + ""));
@@ -1004,7 +999,7 @@ created_date,
 created_by,
 city,*/
                     totalSize = entity.getContentLength();
-                    Log.d("Tag___", "total data size=" + totalSize + ""
+                    Log.d("Tag___", "total data size=" + totalSize + " type:"+selected_type_category
                             + "category:" + selected_category
                             + "product name:" + edit_P_name.getText().toString().trim() + "brand:" + selected_company
                             + "desc:" + selected_description
@@ -1016,30 +1011,14 @@ city,*/
                     HttpResponse response = httpclient.execute(httppost);
                     HttpEntity r_entity = response.getEntity();
 
-                    int statusCode = response.getStatusLine().getStatusCode();
-                  //  if (statusCode == 200) {
+                    final int statusCode = response.getStatusLine().getStatusCode();
+
+                    if (statusCode<=200)
                         responseString = EntityUtils.toString(r_entity);
-                 /*   } else {
-                        responseString = "Error occurred! Http Status Code: "
-                                + statusCode;
-                    }*/
-           /*     }
-                else{
-                    //ranges putted are not valid
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if(!setRanges()) {
-                                edit_P_name.setError("Can't be empty");
-                                edit_price.setError("Can't be empty");
-                            }else
-                                {
-                                    //invalid range toast will come
-                                }
-                            //Toast.makeText(Add_New_product.this, "Fill Fields", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }*/
+                    else{//not 200 means some errror
+                        responseString = "Success";
+                    }
+
 
             } catch (ClientProtocolException e) {
                 responseString = e.toString();
@@ -1064,7 +1043,6 @@ city,*/
         }
 
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
